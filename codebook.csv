@@ -1,0 +1,567 @@
+question_id_mapped,question_wording,question_kind,code,value
+[dem] gender,NA,multiple_sole,1,male
+[dem] gender,NA,multiple_sole,2,female
+[dem] degree_of_urbanisation,NA,multiple_sole,1,City
+[dem] degree_of_urbanisation,NA,multiple_sole,2,Rural area
+[dem] education_level,NA,multiple_sole,1,I don’t have a formal education
+[dem] education_level,NA,multiple_sole,2,I have some high school or secondary school education
+[dem] education_level,NA,multiple_sole,3,completed high school or obtained an equivalent diploma
+[dem] education_level,NA,multiple_sole,4,I have completed a university or equivalent degree
+[dem] education_level,NA,multiple_sole,5,Other/I'd rather not answer this question
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,1,Facebook
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,2,Twitter
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,3,Instagram
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,4,Snapchat
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,5,Pinterest
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,6,Google+
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,7,LinkedIn
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,8,Reddit
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,9,WhatsApp
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,10,WeChat
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,11,Viber
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,12,Line
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,13,YouTube
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,14,My own blog
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,15,None of these
+[aud] social_networks_regularly_used,Which of these do you use at least a few times a week?,multiple,16,I don't use any social media platform
+[aud] social_media_activity_rank,"When you use social media, which of the following do you do most often?",ranking,1,Commenting on other people's posts
+[aud] social_media_activity_rank,"When you use social media, which of the following do you do most often?",ranking,2,Sharing interesting content
+[aud] social_media_activity_rank,"When you use social media, which of the following do you do most often?",ranking,3,Creating posts to express my opinion
+[aud] social_media_activity_rank,"When you use social media, which of the following do you do most often?",ranking,4,Reading what other people have to say
+[aud] social_media_activity_rank,"When you use social media, which of the following do you do most often?",ranking,5,Connecting with new people
+[aud] online_sharing_frequency,How often do you share or post something online?,multiple_sole,1,Most days
+[aud] online_sharing_frequency,How often do you share or post something online?,multiple_sole,2,At least once a week
+[aud] online_sharing_frequency,How often do you share or post something online?,multiple_sole,3,A few times a month
+[aud] online_sharing_frequency,How often do you share or post something online?,multiple_sole,4,At least once a month
+[aud] online_sharing_frequency,How often do you share or post something online?,multiple_sole,5,Less often
+[aud] online_sharing_frequency,How often do you share or post something online?,multiple_sole,6,Never
+[aud] sharing_network_size,"When you share or post something online, how many people do you usually reach?",multiple_sole,1,Under 100
+[aud] sharing_network_size,"When you share or post something online, how many people do you usually reach?",multiple_sole,2,101 - 500
+[aud] sharing_network_size,"When you share or post something online, how many people do you usually reach?",multiple_sole,3,501 - 1 000
+[aud] sharing_network_size,"When you share or post something online, how many people do you usually reach?",multiple_sole,4,1 000 - 2 000
+[aud] sharing_network_size,"When you share or post something online, how many people do you usually reach?",multiple_sole,5,2 001 - 5 000
+[aud] sharing_network_size,"When you share or post something online, how many people do you usually reach?",multiple_sole,6,5 001 - 10 000
+[aud] sharing_network_size,"When you share or post something online, how many people do you usually reach?",multiple_sole,7,More than 10 000
+[aud] member_organization,In which of the following are you a member?,multiple,1,Sports club
+[aud] member_organization,In which of the following are you a member?,multiple,2,Political party
+[aud] member_organization,In which of the following are you a member?,multiple,3,Church or other religious institution
+[aud] member_organization,In which of the following are you a member?,multiple,4,"Other type of club (music / art, entertainment, social work etc.)"
+[aud] member_organization,In which of the following are you a member?,multiple,5,None of the above
+[aud] organization_activities_timeperweek,How much time per week do you spend on activities in the organizations you are a member of?,multiple_sole,1,Less than 1 hour
+[aud] organization_activities_timeperweek,How much time per week do you spend on activities in the organizations you are a member of?,multiple_sole,2,1 - 3 hours
+[aud] organization_activities_timeperweek,How much time per week do you spend on activities in the organizations you are a member of?,multiple_sole,3,3 - 5 hours
+[aud] organization_activities_timeperweek,How much time per week do you spend on activities in the organizations you are a member of?,multiple_sole,4,5 - 10 hours
+[aud] organization_activities_timeperweek,How much time per week do you spend on activities in the organizations you are a member of?,multiple_sole,5,10 - 20 hours
+[aud] organization_activities_timeperweek,How much time per week do you spend on activities in the organizations you are a member of?,multiple_sole,6,More than 20 hours
+[aud] media_tv_hours,On average how much time do you spend watching TV / TV shows per day?,multiple_sole,1,None
+[aud] media_tv_hours,On average how much time do you spend watching TV / TV shows per day?,multiple_sole,2,1 - 30 minutes
+[aud] media_tv_hours,On average how much time do you spend watching TV / TV shows per day?,multiple_sole,3,30 minutes - 1 hour
+[aud] media_tv_hours,On average how much time do you spend watching TV / TV shows per day?,multiple_sole,4,1 - 2 hours
+[aud] media_tv_hours,On average how much time do you spend watching TV / TV shows per day?,multiple_sole,5,2 - 3 hours
+[aud] media_tv_hours,On average how much time do you spend watching TV / TV shows per day?,multiple_sole,6,3 - 4 hours
+[aud] media_tv_hours,On average how much time do you spend watching TV / TV shows per day?,multiple_sole,7,4 - 5 hours
+[aud] media_tv_hours,On average how much time do you spend watching TV / TV shows per day?,multiple_sole,8,More than 5 hours
+[aud] media_radio_hours,On average how much time do you spend listening to the radio per day?,multiple_sole,1,None
+[aud] media_radio_hours,On average how much time do you spend listening to the radio per day?,multiple_sole,2,1 - 30 minutes
+[aud] media_radio_hours,On average how much time do you spend listening to the radio per day?,multiple_sole,3,30 minutes - 1 hour
+[aud] media_radio_hours,On average how much time do you spend listening to the radio per day?,multiple_sole,4,1 - 2 hours
+[aud] media_radio_hours,On average how much time do you spend listening to the radio per day?,multiple_sole,5,2 - 3 hours
+[aud] media_radio_hours,On average how much time do you spend listening to the radio per day?,multiple_sole,6,3 - 4 hours
+[aud] media_radio_hours,On average how much time do you spend listening to the radio per day?,multiple_sole,7,4 - 5 hours
+[aud] media_radio_hours,On average how much time do you spend listening to the radio per day?,multiple_sole,8,More than 5 hours
+[aud] media_print_hours,On average how much time do you spend reading printed newspapers or magazines per day?,multiple_sole,1,None
+[aud] media_print_hours,On average how much time do you spend reading printed newspapers or magazines per day?,multiple_sole,2,1 - 30 minutes
+[aud] media_print_hours,On average how much time do you spend reading printed newspapers or magazines per day?,multiple_sole,3,30 minutes - 1 hour
+[aud] media_print_hours,On average how much time do you spend reading printed newspapers or magazines per day?,multiple_sole,4,1 - 2 hours
+[aud] media_print_hours,On average how much time do you spend reading printed newspapers or magazines per day?,multiple_sole,5,2 - 3 hours
+[aud] media_print_hours,On average how much time do you spend reading printed newspapers or magazines per day?,multiple_sole,6,More than 3 hours
+[dem] residency,Do you live in the country you're currently in?,multiple_sole,1,"Yes, as a citizen"
+[dem] residency,Do you live in the country you're currently in?,multiple_sole,2,"Yes, but not as a citizen"
+[dem] residency,Do you live in the country you're currently in?,multiple_sole,3,"No, I’m a temporary visitor"
+[dem] residency,Do you live in the country you're currently in?,multiple_sole,4,Other
+[dem] household_size,"How many people are in the household where you currently live, including yourself?",multiple_sole,1,1
+[dem] household_size,"How many people are in the household where you currently live, including yourself?",multiple_sole,2,2
+[dem] household_size,"How many people are in the household where you currently live, including yourself?",multiple_sole,3,3
+[dem] household_size,"How many people are in the household where you currently live, including yourself?",multiple_sole,4,4
+[dem] household_size,"How many people are in the household where you currently live, including yourself?",multiple_sole,5,5 or more
+[dem] immigration,How did you or your family get to the United Kingdom?,multiple_sole,1,I moved here
+[dem] immigration,How did you or your family get to the United Kingdom?,multiple_sole,2,One or both of my parents moved here before I was born
+[dem] immigration,How did you or your family get to the United Kingdom?,multiple_sole,3,My grandparents moved here
+[dem] immigration,How did you or your family get to the United Kingdom?,multiple_sole,4,My family has been here for a longer time
+[dem] immigration,How did you or your family get to the United Kingdom?,multiple_sole,5,None of the above
+[dem] origin,Where did you or your family come from?,multiple,1,"Western, Southern or Northern Europe"
+[dem] origin,Where did you or your family come from?,multiple,2,Eastern Europe (includes Russia)
+[dem] origin,Where did you or your family come from?,multiple,3,Middle East (includes Turkey) and North Africa
+[dem] origin,Where did you or your family come from?,multiple,4,Sub-Saharan Africa
+[dem] origin,Where did you or your family come from?,multiple,5,North America
+[dem] origin,Where did you or your family come from?,multiple,6,Central America (includes the Caribbean)
+[dem] origin,Where did you or your family come from?,multiple,7,South America
+[dem] origin,Where did you or your family come from?,multiple,8,Central Asia (includes the Caucasus)
+[dem] origin,Where did you or your family come from?,multiple,9,East Asia (includes China)
+[dem] origin,Where did you or your family come from?,multiple,10,South Asia (includes India)
+[dem] origin,Where did you or your family come from?,multiple,11,South-East Asia
+[dem] origin,Where did you or your family come from?,multiple,12,Oceania / Pacific Islands
+[dem] origin,Where did you or your family come from?,multiple,13,Other
+[dem] settlement_size,Which best describes the place where you currently live?,multiple_sole,1,Countryside
+[dem] settlement_size,Which best describes the place where you currently live?,multiple_sole,2,Town with fewer than 1 000 people
+[dem] settlement_size,Which best describes the place where you currently live?,multiple_sole,3,Town with 1 000 - 50 000 people
+[dem] settlement_size,Which best describes the place where you currently live?,multiple_sole,4,City with 50 000 - 250 000 people
+[dem] settlement_size,Which best describes the place where you currently live?,multiple_sole,5,City with 250 000 - 1 million people
+[dem] settlement_size,Which best describes the place where you currently live?,multiple_sole,6,City with 1 million - 5 million people
+[dem] settlement_size,Which best describes the place where you currently live?,multiple_sole,7,City with 5 million - 10 million people
+[dem] settlement_size,Which best describes the place where you currently live?,multiple_sole,8,City with more than 10 million people
+[dem] hometown,Did you grow up in the place where you currently live?,multiple_sole,1,Yes
+[dem] hometown,Did you grow up in the place where you currently live?,multiple_sole,2,No
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,1,"Employed, working 30 or more hours per week"
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,2,"Employed, working 1 to ­29 hours per week"
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,3,"Not employed, currently looking for work"
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,4,"Not employed, currently NOT looking for work"
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,5,Retired
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,6,"In school, university or practical training"
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,7,"Disabled, not able to work"
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,8,Entrepreneur / Employer
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,9,Self­-employed / Freelancer
+[dem] employment_status,Which of the following categories best describes your employment status?,multiple_sole,10,None of the above
+[dem] employment_status_in_education,"While in school, university or practical training, are you...?",multiple_sole,1,...employed
+[dem] employment_status_in_education,"While in school, university or practical training, are you...?",multiple_sole,2,"...not employed, currently looking for work"
+[dem] employment_status_in_education,"While in school, university or practical training, are you...?",multiple_sole,3,"...not employed, currently NOT looking for work"
+[dem] work_type_routine,"How routine are the tasks you perform at work? If you do not work currently, think about your last job.",multiple_sole,1,Very routine
+[dem] work_type_routine,"How routine are the tasks you perform at work? If you do not work currently, think about your last job.",multiple_sole,2,Somewhat routine
+[dem] work_type_routine,"How routine are the tasks you perform at work? If you do not work currently, think about your last job.",multiple_sole,3,Not very routine
+[dem] work_type_routine,"How routine are the tasks you perform at work? If you do not work currently, think about your last job.",multiple_sole,4,Not at all routine
+[dem] work_type_routine,"How routine are the tasks you perform at work? If you do not work currently, think about your last job.",multiple_sole,5,I’ve never worked
+[dem] work_type_manual,"Do the tasks you perform at work involve manual / physical activity? If you do not work currently, think about your last job.",multiple_sole,1,"Yes, a lot"
+[dem] work_type_manual,"Do the tasks you perform at work involve manual / physical activity? If you do not work currently, think about your last job.",multiple_sole,2,"Yes, some"
+[dem] work_type_manual,"Do the tasks you perform at work involve manual / physical activity? If you do not work currently, think about your last job.",multiple_sole,3,"No, not much"
+[dem] work_type_manual,"Do the tasks you perform at work involve manual / physical activity? If you do not work currently, think about your last job.",multiple_sole,4,"No, none at all"
+[dem] work_type_manual,"Do the tasks you perform at work involve manual / physical activity? If you do not work currently, think about your last job.",multiple_sole,5,I’ve never worked
+[dem] lgbtq,"Do you identify as lesbian, gay, bisexual, transgender, or queer?",multiple_sole,1,Yes
+[dem] lgbtq,"Do you identify as lesbian, gay, bisexual, transgender, or queer?",multiple_sole,2,No
+[dem] lgbtq,"Do you identify as lesbian, gay, bisexual, transgender, or queer?",multiple_sole,3,Prefer not to say
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,1,Under 200
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,2,200 -   400
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,3,400 -   800
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,4,800 -  1 600
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,5,1 600 -  2 400
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,6,2 400 -  3 200
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,7,3 200 -  4 800
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,8,4 800 -  6 400
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,9,6 400 -  8 000
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,10,8 000 -  9 600
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,11,9 600 - 12 000
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,12,More than 12 000
+[dem] income_net_monthly,"What is your household’s monthly income after taxes, in Pounds Sterling?",multiple_sole,13,Prefer not to say
+[dem] disposable_income,"What share of your household income is spent on basic needs (food, housing, clothes)?",multiple_sole,1,All of it
+[dem] disposable_income,"What share of your household income is spent on basic needs (food, housing, clothes)?",multiple_sole,2,Most of it
+[dem] disposable_income,"What share of your household income is spent on basic needs (food, housing, clothes)?",multiple_sole,3,About half
+[dem] disposable_income,"What share of your household income is spent on basic needs (food, housing, clothes)?",multiple_sole,4,Less than half
+[dem] disposable_income,"What share of your household income is spent on basic needs (food, housing, clothes)?",multiple_sole,5,Only a little
+[dem] disposable_income,"What share of your household income is spent on basic needs (food, housing, clothes)?",multiple_sole,6,Don't know
+[dem] household_finances_past12months,"Compared to 12 months ago, your household financial situation is...",multiple_sole,1,... a lot better
+[dem] household_finances_past12months,"Compared to 12 months ago, your household financial situation is...",multiple_sole,2,... a little better
+[dem] household_finances_past12months,"Compared to 12 months ago, your household financial situation is...",multiple_sole,3,... the same
+[dem] household_finances_past12months,"Compared to 12 months ago, your household financial situation is...",multiple_sole,4,... a little worse
+[dem] household_finances_past12months,"Compared to 12 months ago, your household financial situation is...",multiple_sole,5,... a lot worse
+[dem] household_finances_past12months,"Compared to 12 months ago, your household financial situation is...",multiple_sole,6,Don't know
+[dem] financial_security,How secure do you feel about your current financial situation?,multiple_sole,1,Very secure
+[dem] financial_security,How secure do you feel about your current financial situation?,multiple_sole,2,Somewhat secure
+[dem] financial_security,How secure do you feel about your current financial situation?,multiple_sole,3,Not very secure
+[dem] financial_security,How secure do you feel about your current financial situation?,multiple_sole,4,Not at all secure
+[dem] financial_security,How secure do you feel about your current financial situation?,multiple_sole,5,Prefer not to answer
+[dem] change_household_finances_next12months,How do you expect the financial position of your household to change over the next 12 months? It will...,multiple_sole,1,... get a lot better
+[dem] change_household_finances_next12months,How do you expect the financial position of your household to change over the next 12 months? It will...,multiple_sole,2,... get a little better
+[dem] change_household_finances_next12months,How do you expect the financial position of your household to change over the next 12 months? It will...,multiple_sole,3,... stay the same
+[dem] change_household_finances_next12months,How do you expect the financial position of your household to change over the next 12 months? It will...,multiple_sole,4,... get a little worse
+[dem] change_household_finances_next12months,How do you expect the financial position of your household to change over the next 12 months? It will...,multiple_sole,5,... get a lot worse
+[dem] change_household_finances_next12months,How do you expect the financial position of your household to change over the next 12 months? It will...,multiple_sole,6,Don't know
+[dem] job_security,How secure do you feel about your work situation?,multiple_sole,1,Very secure
+[dem] job_security,How secure do you feel about your work situation?,multiple_sole,2,Somewhat secure
+[dem] job_security,How secure do you feel about your work situation?,multiple_sole,3,Not very secure
+[dem] job_security,How secure do you feel about your work situation?,multiple_sole,4,Not at all secure
+[dem] job_security,How secure do you feel about your work situation?,multiple_sole,5,Not applicable
+[dem] status_national_economy,How well do you think the national economy in the United Kingdom is presently performing?,multiple_sole,1,Very well
+[dem] status_national_economy,How well do you think the national economy in the United Kingdom is presently performing?,multiple_sole,2,Fairly well
+[dem] status_national_economy,How well do you think the national economy in the United Kingdom is presently performing?,multiple_sole,3,Neither well nor poorly
+[dem] status_national_economy,How well do you think the national economy in the United Kingdom is presently performing?,multiple_sole,4,Fairly poorly
+[dem] status_national_economy,How well do you think the national economy in the United Kingdom is presently performing?,multiple_sole,5,Very poorly
+[dem] status_national_economy,How well do you think the national economy in the United Kingdom is presently performing?,multiple_sole,6,I don't know
+[dem] change_economy_country_past12months,How do you think the general economic situation in the United Kingdom has changed over the past 12 months? It has…,multiple_sole,1,… got a lot better
+[dem] change_economy_country_past12months,How do you think the general economic situation in the United Kingdom has changed over the past 12 months? It has…,multiple_sole,2,… got a little better
+[dem] change_economy_country_past12months,How do you think the general economic situation in the United Kingdom has changed over the past 12 months? It has…,multiple_sole,3,… stayed the same
+[dem] change_economy_country_past12months,How do you think the general economic situation in the United Kingdom has changed over the past 12 months? It has…,multiple_sole,4,… got a little worse
+[dem] change_economy_country_past12months,How do you think the general economic situation in the United Kingdom has changed over the past 12 months? It has…,multiple_sole,5,… got a lot worse
+[dem] change_economy_country_past12months,How do you think the general economic situation in the United Kingdom has changed over the past 12 months? It has…,multiple_sole,6,I don’t know
+[dem] economy_country_next12months,How do you expect the general economic situation in the United Kingdom to change over the next 12 months? It will ...,multiple_sole,1,… get a lot better
+[dem] economy_country_next12months,How do you expect the general economic situation in the United Kingdom to change over the next 12 months? It will ...,multiple_sole,2,… get a little better
+[dem] economy_country_next12months,How do you expect the general economic situation in the United Kingdom to change over the next 12 months? It will ...,multiple_sole,3,… stay the same
+[dem] economy_country_next12months,How do you expect the general economic situation in the United Kingdom to change over the next 12 months? It will ...,multiple_sole,4,… get a little worse
+[dem] economy_country_next12months,How do you expect the general economic situation in the United Kingdom to change over the next 12 months? It will ...,multiple_sole,5,… get a lot worse
+[dem] economy_country_next12months,How do you expect the general economic situation in the United Kingdom to change over the next 12 months? It will ...,multiple_sole,6,Don't know
+[dem] religion,What is your religion?,multiple_sole,1,Roman Catholic
+[dem] religion,What is your religion?,multiple_sole,2,Orthodox Catholic
+[dem] religion,What is your religion?,multiple_sole,3,Muslim
+[dem] religion,What is your religion?,multiple_sole,4,Protestant
+[dem] religion,What is your religion?,multiple_sole,5,Jewish
+[dem] religion,What is your religion?,multiple_sole,6,Buddhist
+[dem] religion,What is your religion?,multiple_sole,7,Other
+[dem] religion,What is your religion?,multiple_sole,8,None / not religious
+[dem] ethnic_background,Which of the following categories best describes your ethnic background?,multiple,1,White (Caucasian)
+[dem] ethnic_background,Which of the following categories best describes your ethnic background?,multiple,2,North African / Middle Eastern
+[dem] ethnic_background,Which of the following categories best describes your ethnic background?,multiple,3,Asian (includes Indian)
+[dem] ethnic_background,Which of the following categories best describes your ethnic background?,multiple,4,Hispanic or Latino
+[dem] ethnic_background,Which of the following categories best describes your ethnic background?,multiple,5,Black
+[dem] ethnic_background,Which of the following categories best describes your ethnic background?,multiple,6,Other
+[dem] ethnicity,What is your ethnicity / race?,multiple,1,White
+[dem] ethnicity,What is your ethnicity / race?,multiple,2,Hispanic or Latino
+[dem] ethnicity,What is your ethnicity / race?,multiple,3,Black or African American
+[dem] ethnicity,What is your ethnicity / race?,multiple,4,Middle Eastern or North African
+[dem] ethnicity,What is your ethnicity / race?,multiple,5,Native American or American Indian
+[dem] ethnicity,What is your ethnicity / race?,multiple,6,Asian / Pacific Islander
+[dem] ethnicity,What is your ethnicity / race?,multiple,7,Other
+[question] political_view,"If you had to choose one of the below, which option best describes your political views on a left-right scale?",multiple_sole,1,Extreme left
+[question] political_view,"If you had to choose one of the below, which option best describes your political views on a left-right scale?",multiple_sole,2,Left
+[question] political_view,"If you had to choose one of the below, which option best describes your political views on a left-right scale?",multiple_sole,3,Center left
+[question] political_view,"If you had to choose one of the below, which option best describes your political views on a left-right scale?",multiple_sole,4,Center right
+[question] political_view,"If you had to choose one of the below, which option best describes your political views on a left-right scale?",multiple_sole,5,Right
+[question] political_view,"If you had to choose one of the below, which option best describes your political views on a left-right scale?",multiple_sole,6,Extreme right
+[question] likelihood_to_demonstrate,How likely are you to join a protest or demonstration within the next 12 months?,multiple_sole,1,Very likely
+[question] likelihood_to_demonstrate,How likely are you to join a protest or demonstration within the next 12 months?,multiple_sole,2,Fairly likely
+[question] likelihood_to_demonstrate,How likely are you to join a protest or demonstration within the next 12 months?,multiple_sole,3,Not very likely
+[question] likelihood_to_demonstrate,How likely are you to join a protest or demonstration within the next 12 months?,multiple_sole,4,Not at all likely
+[question] likelihood_to_demonstrate,How likely are you to join a protest or demonstration within the next 12 months?,multiple_sole,5,Don't know
+[question] independence_or_respect,Which is more important for a child to have?,multiple_sole,1,Independence
+[question] independence_or_respect,Which is more important for a child to have?,multiple_sole,2,Respect for elders
+[question] independence_or_respect,Which is more important for a child to have?,multiple_sole,3,Don't have an opinion
+[question] obedience_or_selfreliance,Which is more important for a child to have?,multiple_sole,1,Obedience
+[question] obedience_or_selfreliance,Which is more important for a child to have?,multiple_sole,2,Self-reliance
+[question] obedience_or_selfreliance,Which is more important for a child to have?,multiple_sole,3,Don't have an opinion
+[question] consideration_or_good_behaviour,Which is more important for a child to have?,multiple_sole,1,Consideration for others
+[question] consideration_or_good_behaviour,Which is more important for a child to have?,multiple_sole,2,Good behaviour
+[question] consideration_or_good_behaviour,Which is more important for a child to have?,multiple_sole,3,Don't have an opinion
+[question] curiosity_or_good_manners,Which is more important for a child to have?,multiple_sole,1,Curiosity
+[question] curiosity_or_good_manners,Which is more important for a child to have?,multiple_sole,2,Good manners
+[question] curiosity_or_good_manners,Which is more important for a child to have?,multiple_sole,3,Don't have an opinion
+[question] democracy_own_country_satisfaction,How satisfied are you with the way democracy works in your country?,multiple_sole,1,Very satisfied
+[question] democracy_own_country_satisfaction,How satisfied are you with the way democracy works in your country?,multiple_sole,2,Somewhat satisfied
+[question] democracy_own_country_satisfaction,How satisfied are you with the way democracy works in your country?,multiple_sole,3,Somewhat not satisfied
+[question] democracy_own_country_satisfaction,How satisfied are you with the way democracy works in your country?,multiple_sole,4,Not at all satisfied
+[question] next_generation_opportunities,Will the next generation in the United Kingdom have better or worse opportunities than your generation?,multiple_sole,1,Much better
+[question] next_generation_opportunities,Will the next generation in the United Kingdom have better or worse opportunities than your generation?,multiple_sole,2,Somewhat better
+[question] next_generation_opportunities,Will the next generation in the United Kingdom have better or worse opportunities than your generation?,multiple_sole,3,The same
+[question] next_generation_opportunities,Will the next generation in the United Kingdom have better or worse opportunities than your generation?,multiple_sole,4,Somewhat worse
+[question] next_generation_opportunities,Will the next generation in the United Kingdom have better or worse opportunities than your generation?,multiple_sole,5,Much worse
+[question] currentplace_change_past5years,How has the place where you currently live changed over the past 5 years? It is now…,multiple_sole,1,Much better
+[question] currentplace_change_past5years,How has the place where you currently live changed over the past 5 years? It is now…,multiple_sole,2,Somewhat better
+[question] currentplace_change_past5years,How has the place where you currently live changed over the past 5 years? It is now…,multiple_sole,3,The same
+[question] currentplace_change_past5years,How has the place where you currently live changed over the past 5 years? It is now…,multiple_sole,4,Somewhat worse
+[question] currentplace_change_past5years,How has the place where you currently live changed over the past 5 years? It is now…,multiple_sole,5,Much worse
+[question] currentplace_change_past5years,How has the place where you currently live changed over the past 5 years? It is now…,multiple_sole,6,Don't know enough to say
+[question] hometown_change_past5years,How has the place where you grew up changed over the past 5 years? It is now…,multiple_sole,1,Much better
+[question] hometown_change_past5years,How has the place where you grew up changed over the past 5 years? It is now…,multiple_sole,2,Somewhat better
+[question] hometown_change_past5years,How has the place where you grew up changed over the past 5 years? It is now…,multiple_sole,3,The same
+[question] hometown_change_past5years,How has the place where you grew up changed over the past 5 years? It is now…,multiple_sole,4,Somewhat worse
+[question] hometown_change_past5years,How has the place where you grew up changed over the past 5 years? It is now…,multiple_sole,5,Much worse
+[question] hometown_change_past5years,How has the place where you grew up changed over the past 5 years? It is now…,multiple_sole,6,Don't know enough to say
+[question] country_direction_past5years,"Over the past 5 years, has the United Kingdom gone more in the right or wrong direction? The direction has been...",multiple_sole,1,… very wrong
+[question] country_direction_past5years,"Over the past 5 years, has the United Kingdom gone more in the right or wrong direction? The direction has been...",multiple_sole,2,… somewhat wrong
+[question] country_direction_past5years,"Over the past 5 years, has the United Kingdom gone more in the right or wrong direction? The direction has been...",multiple_sole,3,… neither wrong nor right
+[question] country_direction_past5years,"Over the past 5 years, has the United Kingdom gone more in the right or wrong direction? The direction has been...",multiple_sole,4,… somewhat right
+[question] country_direction_past5years,"Over the past 5 years, has the United Kingdom gone more in the right or wrong direction? The direction has been...",multiple_sole,5,… very right
+[question] financial_situation_change_past5years,How has your financial situation changed over the past 5 years? It ...,multiple_sole,1,… got much better
+[question] financial_situation_change_past5years,How has your financial situation changed over the past 5 years? It ...,multiple_sole,2,… got somewhat better
+[question] financial_situation_change_past5years,How has your financial situation changed over the past 5 years? It ...,multiple_sole,3,… stayed the same
+[question] financial_situation_change_past5years,How has your financial situation changed over the past 5 years? It ...,multiple_sole,4,… got somewhat worse
+[question] financial_situation_change_past5years,How has your financial situation changed over the past 5 years? It ...,multiple_sole,5,… got much worse
+[question] international_trade_gain_or_loss,"Overall, do you think the United Kingdom gains or loses from trade with other nations? It ...",multiple_sole,1,… gains a lot
+[question] international_trade_gain_or_loss,"Overall, do you think the United Kingdom gains or loses from trade with other nations? It ...",multiple_sole,2,… gains a little
+[question] international_trade_gain_or_loss,"Overall, do you think the United Kingdom gains or loses from trade with other nations? It ...",multiple_sole,3,… neither gains nor loses
+[question] international_trade_gain_or_loss,"Overall, do you think the United Kingdom gains or loses from trade with other nations? It ...",multiple_sole,4,… loses a little
+[question] international_trade_gain_or_loss,"Overall, do you think the United Kingdom gains or loses from trade with other nations? It ...",multiple_sole,5,… loses a lot
+[question] country_comes_first,"Overall, do you agree or disagree with the following statement: ""My country comes first.""",multiple_sole,1,Strongly agree
+[question] country_comes_first,"Overall, do you agree or disagree with the following statement: ""My country comes first.""",multiple_sole,2,Somewhat agree
+[question] country_comes_first,"Overall, do you agree or disagree with the following statement: ""My country comes first.""",multiple_sole,3,Neither agree nor disagree
+[question] country_comes_first,"Overall, do you agree or disagree with the following statement: ""My country comes first.""",multiple_sole,4,Somewhat disagree
+[question] country_comes_first,"Overall, do you agree or disagree with the following statement: ""My country comes first.""",multiple_sole,5,Strongly disagree
+[question] improving_life_by_hardwork,"Do you agree or disagree with with the following statement: ""If I work hard, I can improve my life.""",multiple_sole,1,Strongly agree
+[question] improving_life_by_hardwork,"Do you agree or disagree with with the following statement: ""If I work hard, I can improve my life.""",multiple_sole,2,Somewhat agree
+[question] improving_life_by_hardwork,"Do you agree or disagree with with the following statement: ""If I work hard, I can improve my life.""",multiple_sole,3,Neither agree nor disagree
+[question] improving_life_by_hardwork,"Do you agree or disagree with with the following statement: ""If I work hard, I can improve my life.""",multiple_sole,4,Somewhat disagree
+[question] improving_life_by_hardwork,"Do you agree or disagree with with the following statement: ""If I work hard, I can improve my life.""",multiple_sole,5,Strongly disagree
+[question] conspiracy,"Do you agree or disagree with the following statement: ""In the United Kingdom, the system is stacked against people like me.""",multiple_sole,1,Strongly agree
+[question] conspiracy,"Do you agree or disagree with the following statement: ""In the United Kingdom, the system is stacked against people like me.""",multiple_sole,2,Somewhat agree
+[question] conspiracy,"Do you agree or disagree with the following statement: ""In the United Kingdom, the system is stacked against people like me.""",multiple_sole,3,Neither agree nor disagree
+[question] conspiracy,"Do you agree or disagree with the following statement: ""In the United Kingdom, the system is stacked against people like me.""",multiple_sole,4,Somewhat disagree
+[question] conspiracy,"Do you agree or disagree with the following statement: ""In the United Kingdom, the system is stacked against people like me.""",multiple_sole,5,Strongly disagree
+[question] government_controlled_by_elite,"Do you agree or disagree with the following statement: ""Government is controlled by the rich elite.""",multiple_sole,1,Strongly agree
+[question] government_controlled_by_elite,"Do you agree or disagree with the following statement: ""Government is controlled by the rich elite.""",multiple_sole,2,Somewhat agree
+[question] government_controlled_by_elite,"Do you agree or disagree with the following statement: ""Government is controlled by the rich elite.""",multiple_sole,3,Neither agree nor disagree
+[question] government_controlled_by_elite,"Do you agree or disagree with the following statement: ""Government is controlled by the rich elite.""",multiple_sole,4,Somewhat disagree
+[question] government_controlled_by_elite,"Do you agree or disagree with the following statement: ""Government is controlled by the rich elite.""",multiple_sole,5,Strongly disagree
+[question] trust_in_own_judgment,"Do you agree or disagree with the following statement: ""I'd rather trust my own judgement than the opinion of experts.""",multiple_sole,1,Strongly agree
+[question] trust_in_own_judgment,"Do you agree or disagree with the following statement: ""I'd rather trust my own judgement than the opinion of experts.""",multiple_sole,2,Somewhat agree
+[question] trust_in_own_judgment,"Do you agree or disagree with the following statement: ""I'd rather trust my own judgement than the opinion of experts.""",multiple_sole,3,Neither agree nor disagree
+[question] trust_in_own_judgment,"Do you agree or disagree with the following statement: ""I'd rather trust my own judgement than the opinion of experts.""",multiple_sole,4,Somewhat disagree
+[question] trust_in_own_judgment,"Do you agree or disagree with the following statement: ""I'd rather trust my own judgement than the opinion of experts.""",multiple_sole,5,Strongly disagree
+[question] perceived_effect_of_diversity,"Overall, how do you think having people of diverse ethnic / religious / racial backgrounds affects the United Kingdom?",multiple_sole,1,Very positively
+[question] perceived_effect_of_diversity,"Overall, how do you think having people of diverse ethnic / religious / racial backgrounds affects the United Kingdom?",multiple_sole,2,Somewhat positively
+[question] perceived_effect_of_diversity,"Overall, how do you think having people of diverse ethnic / religious / racial backgrounds affects the United Kingdom?",multiple_sole,3,Neither positively nor negatively
+[question] perceived_effect_of_diversity,"Overall, how do you think having people of diverse ethnic / religious / racial backgrounds affects the United Kingdom?",multiple_sole,4,Somewhat negatively
+[question] perceived_effect_of_diversity,"Overall, how do you think having people of diverse ethnic / religious / racial backgrounds affects the United Kingdom?",multiple_sole,5,Very negatively
+[question] gender_discrimination_importance,"Do you think that discrimination against women, minorities and the lesbian, gay, bisexual, transgender and queer (LGBTQ) population is an important issue?",multiple_sole,1,"Yes, very"
+[question] gender_discrimination_importance,"Do you think that discrimination against women, minorities and the lesbian, gay, bisexual, transgender and queer (LGBTQ) population is an important issue?",multiple_sole,2,"Yes, somewhat"
+[question] gender_discrimination_importance,"Do you think that discrimination against women, minorities and the lesbian, gay, bisexual, transgender and queer (LGBTQ) population is an important issue?",multiple_sole,3,"No, not really"
+[question] gender_discrimination_importance,"Do you think that discrimination against women, minorities and the lesbian, gay, bisexual, transgender and queer (LGBTQ) population is an important issue?",multiple_sole,4,"No, not at all"
+[question] family_friends_highereducation,How many of your close friends and family have been or are in higher education (college / university)?,multiple_sole,1,All of them
+[question] family_friends_highereducation,How many of your close friends and family have been or are in higher education (college / university)?,multiple_sole,2,Most of them
+[question] family_friends_highereducation,How many of your close friends and family have been or are in higher education (college / university)?,multiple_sole,3,About half
+[question] family_friends_highereducation,How many of your close friends and family have been or are in higher education (college / university)?,multiple_sole,4,Less than half
+[question] family_friends_highereducation,How many of your close friends and family have been or are in higher education (college / university)?,multiple_sole,5,Only a few
+[question] family_friends_highereducation,How many of your close friends and family have been or are in higher education (college / university)?,multiple_sole,6,None
+[question] family_friends_highereducation,How many of your close friends and family have been or are in higher education (college / university)?,multiple_sole,7,Don't know
+[question] worldview,Which of the following statements do you agree with the most?,multiple_sole,1,"Our lives are threatened by terrorists, criminals, and immigrants and our priority should be to protect ourselves."
+[question] worldview,Which of the following statements do you agree with the most?,multiple_sole,2,"It's a big, beautiful world, mostly full of good people, and we must find a way to embrace each other and not allow ourselves to become isolated."
+[question] opinion_eu,What is your opinion of the European Union?,multiple_sole,1,Very positive
+[question] opinion_eu,What is your opinion of the European Union?,multiple_sole,2,Somewhat positive
+[question] opinion_eu,What is your opinion of the European Union?,multiple_sole,3,Neither positive nor negative
+[question] opinion_eu,What is your opinion of the European Union?,multiple_sole,4,Somewhat negative
+[question] opinion_eu,What is your opinion of the European Union?,multiple_sole,5,Very negative
+[question] vote_referendum,How did you vote in the referendum to stay in or leave the European Union?,multiple_sole,1,For the UK to leave the EU
+[question] vote_referendum,How did you vote in the referendum to stay in or leave the European Union?,multiple_sole,2,For the UK to stay in the EU
+[question] vote_referendum,How did you vote in the referendum to stay in or leave the European Union?,multiple_sole,3,I did not vote
+[question] vote_for_in_us_election,Whom did you vote for in the US general presidential election?,multiple_sole,1,Donald Trump
+[question] vote_for_in_us_election,Whom did you vote for in the US general presidential election?,multiple_sole,2,Hillary Clinton
+[question] vote_for_in_us_election,Whom did you vote for in the US general presidential election?,multiple_sole,3,Other candidate
+[question] vote_for_in_us_election,Whom did you vote for in the US general presidential election?,multiple_sole,4,I did not vote
+[question] opinion_government,What is your opinion of the government in the United Kingdom?,multiple_sole,1,Very positive
+[question] opinion_government,What is your opinion of the government in the United Kingdom?,multiple_sole,2,Somewhat positive
+[question] opinion_government,What is your opinion of the government in the United Kingdom?,multiple_sole,3,Neither positive nor negative
+[question] opinion_government,What is your opinion of the government in the United Kingdom?,multiple_sole,4,Somewhat negative
+[question] opinion_government,What is your opinion of the government in the United Kingdom?,multiple_sole,5,Very negative
+[question] ranking_party_de,How much do you agree or disagree with the following political parties?,ranking,1,CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union
+[question] ranking_party_de,How much do you agree or disagree with the following political parties?,ranking,2,SPD – Sozialdemokratische Partei Deutschlands
+[question] ranking_party_de,How much do you agree or disagree with the following political parties?,ranking,3,Die Linke
+[question] ranking_party_de,How much do you agree or disagree with the following political parties?,ranking,4,Bündnis 90 / Die Grünen
+[question] ranking_party_de,How much do you agree or disagree with the following political parties?,ranking,5,FDP - Freie Demokratische Partei
+[question] ranking_party_de,How much do you agree or disagree with the following political parties?,ranking,6,AfD – Alternative für Deutschland
+[question] voted_party_last_election_de,Did you vote in the last election?,multiple_sole,1,"Yes, I voted for CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union"
+[question] voted_party_last_election_de,Did you vote in the last election?,multiple_sole,2,"Yes, I voted for SPD – Sozialdemokratische Partei Deutschlands"
+[question] voted_party_last_election_de,Did you vote in the last election?,multiple_sole,3,"Yes, I voted for Die Linke"
+[question] voted_party_last_election_de,Did you vote in the last election?,multiple_sole,4,"Yes, I voted for Bündnis 90 / Die Grünen"
+[question] voted_party_last_election_de,Did you vote in the last election?,multiple_sole,5,"Yes, I voted for FDP - Freie Demokratische Partei"
+[question] voted_party_last_election_de,Did you vote in the last election?,multiple_sole,6,"Yes, I voted for AfD – Alternative für Deutschland"
+[question] voted_party_last_election_de,Did you vote in the last election?,multiple_sole,7,"Yes, but I voted for another party"
+[question] voted_party_last_election_de,Did you vote in the last election?,multiple_sole,8,I wanted to vote but I wasn't able to
+[question] voted_party_last_election_de,Did you vote in the last election?,multiple_sole,9,"No, I did not vote"
+[question] ranking_party_fr,How much do you agree or disagree with the following political parties?,ranking,1,PS - Parti socialiste
+[question] ranking_party_fr,How much do you agree or disagree with the following political parties?,ranking,2,LR - Les Républicains (UMP)
+[question] ranking_party_fr,How much do you agree or disagree with the following political parties?,ranking,3,PR - Parti de Gauche
+[question] ranking_party_fr,How much do you agree or disagree with the following political parties?,ranking,4,EELV - Europe Écologie – Les Verts
+[question] ranking_party_fr,How much do you agree or disagree with the following political parties?,ranking,5,FN – Front National
+[question] ranking_party_fr,How much do you agree or disagree with the following political parties?,ranking,6,MoDem - Mouvement Démocrate
+[question] ranking_party_fr,How much do you agree or disagree with the following political parties?,ranking,7,PCF - Parti communiste français
+[question] ranking_party_fr,How much do you agree or disagree with the following political parties?,ranking,8,EM – En Marche!
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,1,"Yes, I voted for PS - Parti socialiste"
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,2,"Yes, I voted for LR - Les Républicains (UMP)"
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,3,"Yes, I voted for PR - Parti de Gauche"
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,4,"Yes, I voted for EELV - Europe Écologie – Les Verts"
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,5,"Yes, I voted for FN – Front National"
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,6,"Yes, I voted for MoDem - Mouvement Démocrate"
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,7,"Yes, I voted for PCF - Parti communiste français"
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,8,"Yes, I voted for EM – En Marche!"
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,9,"Yes, but I voted for another party"
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,10,I wanted to vote but I wasn't able to
+[question] voted_party_last_election_fr,Did you vote in the last election?,multiple_sole,11,"No, I did not vote"
+[question] ranking_party_es,How much do you agree or disagree with the following political parties?,ranking,1,PP - Partido Popular
+[question] ranking_party_es,How much do you agree or disagree with the following political parties?,ranking,2,PSOE - Partido Socialista Obrero Español
+[question] ranking_party_es,How much do you agree or disagree with the following political parties?,ranking,3,Ciudadanos
+[question] ranking_party_es,How much do you agree or disagree with the following political parties?,ranking,4,UP - Unidos Podemos
+[question] ranking_party_es,How much do you agree or disagree with the following political parties?,ranking,5,ERC - Esquerra Republicana de Catalunya
+[question] ranking_party_es,How much do you agree or disagree with the following political parties?,ranking,6,PNV - Partido Nacionalista Vasco
+[question] ranking_party_es,How much do you agree or disagree with the following political parties?,ranking,7,CDC - Convergència Democràtica de Catalunya
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,1,"Yes, I voted for PP - Partido Popular"
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,2,"Yes, I voted for PSOE - Partido Socialista Obrero Español"
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,3,"Yes, I voted for Ciudadanos"
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,4,"Yes, I voted for UP - Unidos Podemos"
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,5,"Yes, I voted for ERC - Esquerra Republicana de Catalunya"
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,6,"Yes, I voted for PNV - Partido Nacionalista Vasco"
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,7,"Yes, I voted for CDC - Convergència Democràtica de Catalunya"
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,8,"Yes, but I voted for another party"
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,9,I wanted to vote but I wasn't able to
+[question] voted_party_last_election_es,Did you vote in the last election?,multiple_sole,10,"No, I did not vote"
+[question] ranking_party_pl,How much do you agree or disagree with the following political parties?,ranking,1,PiS - Prawo i Sprawiedliwość
+[question] ranking_party_pl,How much do you agree or disagree with the following political parties?,ranking,2,PO - Platforma Obywatelska
+[question] ranking_party_pl,How much do you agree or disagree with the following political parties?,ranking,3,PSL - Polskie Stronnictwo Ludowe
+[question] ranking_party_pl,How much do you agree or disagree with the following political parties?,ranking,4,PR - Polska Razem
+[question] ranking_party_pl,How much do you agree or disagree with the following political parties?,ranking,5,.N - .Nowoczesna
+[question] ranking_party_pl,How much do you agree or disagree with the following political parties?,ranking,6,SP - Solidarna Polska
+[question] ranking_party_pl,How much do you agree or disagree with the following political parties?,ranking,7,Kukiz'15
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,1,"Yes, I voted for PiS - Prawo i Sprawiedliwość"
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,2,"Yes, I voted for PO - Platforma Obywatelska"
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,3,"Yes, I voted for PSL - Polskie Stronnictwo Ludowe"
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,4,"Yes, I voted for PR - Polska Razem"
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,5,"Yes, I voted for .N - .Nowoczesna"
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,6,"Yes, I voted for SP - Solidarna Polska"
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,7,"Yes, I voted for Kukiz'15"
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,8,"Yes, but I voted for another party"
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,9,I wanted to vote but I wasn't able to
+[question] voted_party_last_election_pl,Did you vote in the last election?,multiple_sole,10,"No, I did not vote"
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,1,PD - Partito Democratico
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,2,Forza Italia
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,3,M5S - Movimento 5 Stelle
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,4,SC - Scelta Civica
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,5,NCD - Nuovo Centrodestra
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,6,SEL - Sinistra Ecologia Libertà
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,7,ALA - Alleanza Liberalpopolare – Autonomie
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,8,LN - Lega Nord
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,9,CR - Conservatori e Riformisti
+[question] ranking_party_it,How much do you agree or disagree with the following political parties?,ranking,10,FdI - AN - Fratelli d'Italia – Alleanza Nazionale
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,1,"Yes, I voted for PD - Partito Democratico"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,2,"Yes, I voted for Forza Italia"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,3,"Yes, I voted for M5S - Movimento 5 Stelle"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,4,"Yes, I voted for SC - Scelta Civica"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,5,"Yes, I voted for NCD - Nuovo Centrodestra"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,6,"Yes, I voted for SEL - Sinistra Ecologia Libertà"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,7,"Yes, I voted for ALA - Alleanza Liberalpopolare – Autonomie"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,8,"Yes, I voted for LN - Lega Nord"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,9,"Yes, I voted for CR - Conservatori e Riformisti"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,10,"Yes, I voted for FdI - AN - Fratelli d'Italia – Alleanza Nazionale"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,11,"Yes, but I voted for another party"
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,12,I wanted to vote but I wasn't able to
+[question] voted_party_last_election_it,Did you vote in the last election?,multiple_sole,13,"No, I did not vote"
+[question] ranking_party_gb,How much do you agree or disagree with the following political parties?,ranking,1,Conservative Party
+[question] ranking_party_gb,How much do you agree or disagree with the following political parties?,ranking,2,Labour Party
+[question] ranking_party_gb,How much do you agree or disagree with the following political parties?,ranking,3,SNP – Scottish National Party
+[question] ranking_party_gb,How much do you agree or disagree with the following political parties?,ranking,4,Liberal Democrats
+[question] ranking_party_gb,How much do you agree or disagree with the following political parties?,ranking,5,The Green Party
+[question] ranking_party_gb,How much do you agree or disagree with the following political parties?,ranking,6,UKIP – UK Independence Party
+[question] voted_party_last_election_gb,Did you vote in the last election?,multiple_sole,1,"Yes, I voted for the Conservative Party"
+[question] voted_party_last_election_gb,Did you vote in the last election?,multiple_sole,2,"Yes, I voted for the Labour Party"
+[question] voted_party_last_election_gb,Did you vote in the last election?,multiple_sole,3,"Yes, I voted for SNP – Scottish National Party"
+[question] voted_party_last_election_gb,Did you vote in the last election?,multiple_sole,4,"Yes, I voted for the Liberal Democrats"
+[question] voted_party_last_election_gb,Did you vote in the last election?,multiple_sole,5,"Yes, I voted for The Green Party"
+[question] voted_party_last_election_gb,Did you vote in the last election?,multiple_sole,6,"Yes, I voted for UKIP – UK Independence Party"
+[question] voted_party_last_election_gb,Did you vote in the last election?,multiple_sole,7,"Yes, but I voted for another party"
+[question] voted_party_last_election_gb,Did you vote in the last election?,multiple_sole,8,I wanted to vote but I wasn't able to
+[question] voted_party_last_election_gb,Did you vote in the last election?,multiple_sole,9,"No, I did not vote"
+[question] vote_nextelection_de,Whom would you vote for in the next election?,multiple_sole,1,CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union
+[question] vote_nextelection_de,Whom would you vote for in the next election?,multiple_sole,2,SPD – Sozialdemokratische Partei Deutschlands
+[question] vote_nextelection_de,Whom would you vote for in the next election?,multiple_sole,3,Die Linke
+[question] vote_nextelection_de,Whom would you vote for in the next election?,multiple_sole,4,Bündnis 90 / Die Grünen
+[question] vote_nextelection_de,Whom would you vote for in the next election?,multiple_sole,5,FDP - Freie Demokratische Partei
+[question] vote_nextelection_de,Whom would you vote for in the next election?,multiple_sole,6,AfD – Alternative für Deutschland
+[question] vote_nextelection_de,Whom would you vote for in the next election?,multiple_sole,7,Other
+[question] vote_nextelection_de,Whom would you vote for in the next election?,multiple_sole,8,I would not vote
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,1,PS - Parti socialiste
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,2,LR - Les Républicains (UMP)
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,3,PR - Parti de Gauche
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,4,EELV - Europe Écologie – Les Verts
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,5,FN – Front National
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,6,MoDem - Mouvement Démocrate
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,7,PCF - Parti communiste français
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,8,EM – En Marche!
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,9,Other
+[question] vote_nextelection_fr,Whom would you vote for in the next election?,multiple_sole,10,I would not vote
+[question] vote_nextelection_es,Whom would you vote for in the next election?,multiple_sole,1,PP - Partido Popular
+[question] vote_nextelection_es,Whom would you vote for in the next election?,multiple_sole,2,PSOE - Partido Socialista Obrero Español
+[question] vote_nextelection_es,Whom would you vote for in the next election?,multiple_sole,3,Ciudadanos
+[question] vote_nextelection_es,Whom would you vote for in the next election?,multiple_sole,4,UP - Unidos Podemos
+[question] vote_nextelection_es,Whom would you vote for in the next election?,multiple_sole,5,ERC - Esquerra Republicana de Catalunya
+[question] vote_nextelection_es,Whom would you vote for in the next election?,multiple_sole,6,PNV - Partido Nacionalista Vasco
+[question] vote_nextelection_es,Whom would you vote for in the next election?,multiple_sole,7,CDC - Convergència Democràtica de Catalunya
+[question] vote_nextelection_es,Whom would you vote for in the next election?,multiple_sole,8,Other
+[question] vote_nextelection_es,Whom would you vote for in the next election?,multiple_sole,9,I would not vote
+[question] vote_nextelection_pl,Whom would you vote for in the next election?,multiple_sole,1,PiS - Prawo i Sprawiedliwość
+[question] vote_nextelection_pl,Whom would you vote for in the next election?,multiple_sole,2,PO - Platforma Obywatelska
+[question] vote_nextelection_pl,Whom would you vote for in the next election?,multiple_sole,3,PSL - Polskie Stronnictwo Ludowe
+[question] vote_nextelection_pl,Whom would you vote for in the next election?,multiple_sole,4,PR - Polska Razem
+[question] vote_nextelection_pl,Whom would you vote for in the next election?,multiple_sole,5,.N - .Nowoczesna
+[question] vote_nextelection_pl,Whom would you vote for in the next election?,multiple_sole,6,SP - Solidarna Polska
+[question] vote_nextelection_pl,Whom would you vote for in the next election?,multiple_sole,7,Kukiz'15
+[question] vote_nextelection_pl,Whom would you vote for in the next election?,multiple_sole,8,Other
+[question] vote_nextelection_pl,Whom would you vote for in the next election?,multiple_sole,9,I would not vote
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,1,PD - Partito Democratico
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,2,Forza Italia
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,3,M5S - Movimento 5 Stelle
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,4,SC - Scelta Civica
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,5,NCD - Nuovo Centrodestra
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,6,SEL - Sinistra Ecologia Libertà
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,7,ALA - Alleanza Liberalpopolare – Autonomie
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,8,LN - Lega Nord
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,9,CR - Conservatori e Riformisti
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,10,FdI - AN - Fratelli d'Italia – Alleanza Nazionale
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,11,Other
+[question] vote_nextelection_it,Whom would you vote for in the next election?,multiple_sole,12,I would not vote
+[question] vote_nextelection_gb,Whom would you vote for in the next election?,multiple_sole,1,Conservative Party
+[question] vote_nextelection_gb,Whom would you vote for in the next election?,multiple_sole,2,Labour Party
+[question] vote_nextelection_gb,Whom would you vote for in the next election?,multiple_sole,3,SNP – Scottish National Party
+[question] vote_nextelection_gb,Whom would you vote for in the next election?,multiple_sole,4,Liberal Democrats
+[question] vote_nextelection_gb,Whom would you vote for in the next election?,multiple_sole,5,The Green Party
+[question] vote_nextelection_gb,Whom would you vote for in the next election?,multiple_sole,6,UKIP – UK Independence Party
+[question] vote_nextelection_gb,Whom would you vote for in the next election?,multiple_sole,7,Other
+[question] vote_nextelection_gb,Whom would you vote for in the next election?,multiple_sole,8,I would not vote
+[question] certainty_party_to_vote,How certain are you that you will vote for this party?,multiple_sole,1,Very certain
+[question] certainty_party_to_vote,How certain are you that you will vote for this party?,multiple_sole,2,Somewhat certain
+[question] certainty_party_to_vote,How certain are you that you will vote for this party?,multiple_sole,3,Not very certain
+[question] certainty_party_to_vote,How certain are you that you will vote for this party?,multiple_sole,4,Not at all certain
+[question] frequency_of_voting,How often have you voted in national elections / referendums?,multiple_sole,1,Always
+[question] frequency_of_voting,How often have you voted in national elections / referendums?,multiple_sole,2,Most of the time
+[question] frequency_of_voting,How often have you voted in national elections / referendums?,multiple_sole,3,Sometimes
+[question] frequency_of_voting,How often have you voted in national elections / referendums?,multiple_sole,4,Rarely
+[question] frequency_of_voting,How often have you voted in national elections / referendums?,multiple_sole,5,Never
+[question] frequency_of_voting,How often have you voted in national elections / referendums?,multiple_sole,6,I have never been eligible to vote
+[question] vote_next_national_election,Will you vote in the next national election in the United Kingdom?,multiple_sole,1,"Yes, I will definitely vote"
+[question] vote_next_national_election,Will you vote in the next national election in the United Kingdom?,multiple_sole,2,"Yes, I will probably vote"
+[question] vote_next_national_election,Will you vote in the next national election in the United Kingdom?,multiple_sole,3,"No, I will probably not vote"
+[question] vote_next_national_election,Will you vote in the next national election in the United Kingdom?,multiple_sole,4,"No, I will definitely not vote"
+[question] vote_next_national_election,Will you vote in the next national election in the United Kingdom?,multiple_sole,5,I'm not eligible to vote
+[question] when_vote_decision_was_made,"In the last election, when did you decide whom to vote for?",multiple_sole,1,During election day
+[question] when_vote_decision_was_made,"In the last election, when did you decide whom to vote for?",multiple_sole,2,At least a week before election day
+[question] when_vote_decision_was_made,"In the last election, when did you decide whom to vote for?",multiple_sole,3,At least a month before election day
+[question] when_vote_decision_was_made,"In the last election, when did you decide whom to vote for?",multiple_sole,4,A few months before election day
+[question] when_vote_decision_was_made,"In the last election, when did you decide whom to vote for?",multiple_sole,5,I always voted for the same party / party's candidate
+[question] friends_family_same_vote,How many of your close friends and family do you think usually vote for the same party / party's candidate as you do?,multiple_sole,1,All
+[question] friends_family_same_vote,How many of your close friends and family do you think usually vote for the same party / party's candidate as you do?,multiple_sole,2,Most
+[question] friends_family_same_vote,How many of your close friends and family do you think usually vote for the same party / party's candidate as you do?,multiple_sole,3,About half
+[question] friends_family_same_vote,How many of your close friends and family do you think usually vote for the same party / party's candidate as you do?,multiple_sole,4,Less than half
+[question] friends_family_same_vote,How many of your close friends and family do you think usually vote for the same party / party's candidate as you do?,multiple_sole,5,Only few
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,1,More environmental protection
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,2,More wealth redistribution
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,3,Lower taxes
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,4,More jobs
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,5,Less immigration
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,6,Better schools
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,7,Better healthcare
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,8,Higher wages
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,9,Higher pensions
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,10,Better enforcement of law and order
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,11,Equal rights for minority groups
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,12,"Lower costs of living (e.g. rent, water, energy)"
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,13,"Better public services (e.g. transportation, waste management)"
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,14,"Better infrastructure (e.g. roads, sidewalks)"
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,15,Other
+[question] important_issues_when_voting,Which of the following issues are most important to you when deciding whom to vote for?,multiple,16,None of these
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,1,More environmental protection
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,2,More wealth redistribution
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,3,Lower taxes
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,4,More jobs
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,5,Less immigration
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,6,Better schools
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,7,Better healthcare
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,8,Higher wages
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,9,Higher pensions
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,10,Better enforcement of law and order
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,11,Equal rights for minority groups
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,12,"Lower costs of living (e.g. rent, water, energy)"
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,13,"Better public services (e.g. transportation, waste management)"
+[question] ranking_importance_of_issues_when_voting,How important are those issues for you?,ranking,14,"Better infrastructure (e.g. roads, sidewalks)"
+[question] preferred_type_of_political_leader,What type of political leader would you vote for? Someone who ...?,ranking,1,… speaks his / her mind
+[question] preferred_type_of_political_leader,What type of political leader would you vote for? Someone who ...?,ranking,2,… has the right experience
+[question] preferred_type_of_political_leader,What type of political leader would you vote for? Someone who ...?,ranking,3,… can bring needed change
+[question] preferred_type_of_political_leader,What type of political leader would you vote for? Someone who ...?,ranking,4,… cares about people like me
+[question] preferred_type_of_political_leader,What type of political leader would you vote for? Someone who ...?,ranking,5,… focuses on practical solutions
+[question] preferred_type_of_political_leader,What type of political leader would you vote for? Someone who ...?,ranking,6,… is close to the people
+[question] frequent_sharing_of_politicalviews,"Do you agree or disagree: ""My friends and family would describe me as someone who shares political views frequently""",multiple_sole,1,Strongly agree
+[question] frequent_sharing_of_politicalviews,"Do you agree or disagree: ""My friends and family would describe me as someone who shares political views frequently""",multiple_sole,2,Somewhat agree
+[question] frequent_sharing_of_politicalviews,"Do you agree or disagree: ""My friends and family would describe me as someone who shares political views frequently""",multiple_sole,3,Neither agree nor disagree
+[question] frequent_sharing_of_politicalviews,"Do you agree or disagree: ""My friends and family would describe me as someone who shares political views frequently""",multiple_sole,4,Somewhat disagree
+[question] frequent_sharing_of_politicalviews,"Do you agree or disagree: ""My friends and family would describe me as someone who shares political views frequently""",multiple_sole,5,Strongly disagree
