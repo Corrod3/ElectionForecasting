@@ -16,6 +16,7 @@
 rm(list=ls())
 
 ## Setting Working directory
+try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/ElectionForecasting"), silent = TRUE)
 try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Master thesis/SecurityPolicyForecastingTournament"), silent = TRUE)
 
 # Collect packages/libraries we need:
