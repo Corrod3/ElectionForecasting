@@ -17,7 +17,7 @@ rm(list=ls())
 
 ## Setting Working directory
 try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/ElectionForecasting"), silent = TRUE)
-try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Master thesis/SecurityPolicyForecastingTournament"), silent = TRUE)
+try(setwd("C:\\Users\\Moritz\\Desktop\\ElectionForecasting"), silent = TRUE)
 
 # Collect packages/libraries we need:
 packages <- c("readxl", "dplyr", "ggplot2", "reshape2", "scales")
@@ -44,4 +44,4 @@ rm(p, packages)
 # 1. get data
 ###############################################################################
 
-
+dalia.eudata <- read.csv("C:\\Users\\Moritz\\Desktop\\ElectionForecasting\\Raw\\coded_csv\\data_coded_e28.csv - data_coded_e28.csv")
