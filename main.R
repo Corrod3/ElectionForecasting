@@ -6,15 +6,20 @@
 ###############################################################################
 # CONTENT
 # 0. Preparation
-# 1. get data
-# 2. data mining
+# 1. Get data
+# 2. Data mining
+# 3. Estimates
 ###############################################################################
 
 ###############################################################################
-# ToDo / discussion
-# 1. what to do with respondents who claim that they are not eligible to vote?
+# To-Do / Discussion
+# 1. What to do with respondents who claim that they are not eligible to vote?
 # 2. What to do with votes who claim that they definitely don't vote?
-#
+# 3. Ideas for estimation and actual forecast?
+# 4. Account for potential anti-incumbent bias, late swing, 
+#     differential turnout bias, "don't knowers" bias and vote intention misreporting
+# 5. How close is this survey to Forsa etc...? 
+# 6. Attach value labels to coded data
 ###############################################################################
 
 ###############################################################################
@@ -65,6 +70,8 @@ for(i in 5:ncol(Dalia)) {
 
 # rename columns to remove prefix
 names(Dalia)<-sub(".*\\.\\.(.+)", "\\1", names(Dalia))
+## Das erste Argument in der sub function leuchtet mir nicht ein. Ziel ist es 
+## das "X.question.." vor jedem variablen namen zu cutten oder?
 
 # types for excel import
 types<-replicate(90, "text")
@@ -94,15 +101,22 @@ DaliaDE <- filter(Dalia1, country_code == "DE")
 
 # vote participation intention (turnout prediction?)
 ggplot(DaliaDE, aes(x=vote_next_national_election)) +
-    geom_bar() # bar type
+    geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
+  scale_y_continuous(labels=percent) + 
+  ylab("Percentage of total respondents") +
+  xlab("Voting behavior")
 
 # filter people who are not eligble to vote (self reported)
 DaliaDE <- filter(DaliaDE, vote_next_national_election != "I'm not eligible to vote")
 
 # last election vote
 ggplot(DaliaDE, aes(x=voted_party_last_election_de)) +
-  geom_bar() + # bar type
-  coord_flip() # flip sides
+  geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
+  coord_flip() + # flip sides
+  scale_y_continuous(labels=scales::percent) + # percentages on y axis
+  ylab("Share of total voters") +
+  xlab("Parties")
+
 
 # vote intention next election (BT 2017)
 ggplot(DaliaDE, aes(x=vote_nextelection_de)) +
@@ -137,8 +151,9 @@ DaliaDE$ranking5 <- sapply(strsplit(as.character(DaliaDE$ranking_party_de),
 DaliaDE$ranking6 <- sapply(strsplit(as.character(DaliaDE$ranking_party_de), 
                                     split = " | ", fixed = TRUE),
                            function(x) x[[6]])
+# hier nochmal kurz gemeinsam ransetzen und den code verstehen; was genau macht "function(x)"?
 
-# vote intention next election (BT 2017)
+# most preferred party (consistency check with vote for next election/identify divergencies?)
 ggplot(DaliaDE, aes(x=ranking1)) +
   geom_bar() + # bar type
   coord_flip() # flip sides
@@ -152,9 +167,12 @@ SecPref <- as.data.frame(table(rank1 = DaliaDE$ranking1,
                                rank2 = DaliaDE$ranking2))
 SecPref <- spread(SecPref, rank2, Freq)
 
-# transition plot (see transistion plot scriot for example)
+# transition plot (see transistion plot script for example)
 transitionPlot(as.matrix(SecPref[,-1]),  
                box_txt = as.character(SecPref[,1]))
+
+# plot shows not really transitions but second preferences conditional on what the first preference was
+# Transition more interesting for the loyalty considerations
 
 # voter loyality ##############################################################
 # idea: compare past self-reported voting with intended voting?!
@@ -172,12 +190,35 @@ VoteLast <- VoteLast %>%
                      last.vote != "No, I did not vote")
 
 # move first column to row names
-rownames(VoteLast) <- sub(VoteLast[,1], pattern = "Yes, I voted for ", replacement = "")
+rownames(VoteLast) <- c("AfD", "Die Gr¸nen", "Union", "Die Linke", "FDP", "SPD")
+colnames(VoteLast) <- c("", "AfD", "Die Gr¸nen", "Union", "Die Linke", "FDP", "Will not vote", "Other", "SPD")
+# order rows
+PartyOrder <- c("Union", "SPD", "Die Gr¸nen", "Die Linke", "FDP", "AfD")
+VoteLast <- VoteLast[PartyOrder,]
 
 # order columns
-VoteLast <- VoteLast %>% select(contains("AfD"), contains("Gr√ºnen"), 
-                                contains("CDU"), contains("Linke"),
-                                contains("FDP"), contains("SPD"),
-                                contains("not vote"), contains("Other"))
+VoteLast <- VoteLast[,c(2:ncol(VoteLast))]
+VoteLast <- VoteLast[,c(PartyOrder, "Will not vote", "Other")]
+
+# Dein code hat aus irgendeinem Grund die AfD in den Spalte rausgekegelt. 
+# Habs nochmal neu gemacht, auch zur ‹bung.
+
 # loyality: last vote = next vote / total respondents per party (last election)
 VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
+
+# Table for 2013 -> 2017 voter transitions 
+# transition plot (see transistion plot script for example)
+transitionPlot(as.matrix(VoteLast[,c(1:6)]),  
+               box_txt = PartyOrder)
+
+###############################################################################
+# 3. Estimates
+###############################################################################
+
+# Potentially interesting
+# test impact of demographics; opinion; social status, education etc...
+# e.g
+# Model: vote_next_national_election = b1*demographics + b2*education
+# -> adjust weighting of vote intent/forecast according to demographic group 
+# probability to go to the polls
+
