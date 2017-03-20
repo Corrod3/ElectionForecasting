@@ -1,0 +1,96 @@
+---
+title: |
+  | Non-representative polling
+  | Mobile user polling data for the German Federal Election
+subtitle: "CSSR Final Project"
+author: "Moritz Hemmerlein & Alexander Sacharow"
+header-includes:
+    - \usepackage{fancyhdr}
+    - \pagestyle{fancy}
+    - \fancyhead[LO,LE]{Non-represenative polling}
+    - \fancyfoot[LO,LE]{Election Forecasting Project}
+    - \fancyfoot[RE,RO]{Moritz Hemmerlein and Alexander Sacharow}
+date: "April 12, 2017"
+output: 
+  pdf_document:
+    toc: true
+    number_sections: true
+bibliography:
+    -  literature.bib
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Clear Global environment
+rm(list=ls())
+
+# Setting Working directory
+try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/ElectionForecasting"), silent = TRUE)
+try(setwd("C:\\Users\\Moritz\\Desktop\\ElectionForecasting"), silent = TRUE)
+
+source("main.R")
+
+# Collect packages/libraries we need for paper:
+packages <- c("fontcm", "psych", "plotly")
+
+# install packages if not installed before
+for (p in packages) {
+  if (p %in% installed.packages()[,1]) {
+    require(p, character.only=T)
+  }
+  else {
+    install.packages(p, repos="http://cran.rstudio.com", dependencies = TRUE)
+    require(p, character.only=T)
+  }
+}
+rm(p, packages)
+```
+
+# Introduction
+
+Why
+
+How
+
+Results
+
+Structure
+
+# Related Literature
+
+Papers on polling
+
+Papers on non-representative polling
+
+Methods on correcting polls
+
+Typical biases in polling 
+
+# Data
+
+Dalia Data
+
+
+
+# Empirical Strategy
+
+How we plan to make poll representative
+
+# Data Overview
+
+how representative our data already is
+
+# Results
+
+What the result is of making it representative
+
+# Conclusion
+
+Summary of the core finding
+
+Further implications
+
+# References
+
+

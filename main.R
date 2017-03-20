@@ -114,18 +114,26 @@ ggplot(DaliaDE, aes(x=vote_next_national_election)) +
 DaliaDE <- filter(DaliaDE, vote_next_national_election != "I'm not eligible to vote")
 
 # last election vote
-ggplot(DaliaDE, aes(x=voted_party_last_election_de)) +
+ggplot(filter(DaliaDE,  
+              voted_party_last_election_de != "No, I did not vote" & 
+              voted_party_last_election_de != "I wanted to vote but I wasn't able to"), 
+       aes(x=voted_party_last_election_de)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), label = (..count..)/sum(..count..))) + # bar type
+  coord_flip() + # flip sides
+  scale_y_continuous(labels=scales::percent) + # percentages on y axis
+  ylab("Share of total voters") +
+  xlab("Parties") +
+  theme_bw()
+
+
+# vote intention next election (BT 2017)
+ggplot(filter(DaliaDE,vote_nextelection_de != "I would not vote" ),
+       aes(x=vote_nextelection_de)) +
   geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
   coord_flip() + # flip sides
   scale_y_continuous(labels=scales::percent) + # percentages on y axis
   ylab("Share of total voters") +
-  xlab("Parties")
-
-
-# vote intention next election (BT 2017)
-ggplot(DaliaDE, aes(x=vote_nextelection_de)) +
-  geom_bar() + # bar type
-  coord_flip() # flip sides
+  xlab("Parties") 
 
 # Party ranking ################################################################
 # comment to Dalia: Include in ranking: I prefer not to vote 
@@ -223,6 +231,12 @@ transitionPlot(as.matrix(VoteLast[,c(1:6)]),
 
 ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
        aes(x = vote_nextelection_de, fill = certainty_party_to_vote)) +
+  geom_bar() +
+  coord_flip() # flip sides
+
+# likelihood to vote
+ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
+       aes(x = vote_nextelection_de, fill = vote_next_national_election)) +
   geom_bar() +
   coord_flip() # flip sides
 
