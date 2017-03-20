@@ -72,6 +72,10 @@ for(i in 5:ncol(Dalia)) {
 names(Dalia)<-sub(".*\\.\\.(.+)", "\\1", names(Dalia))
 ## Das erste Argument in der sub function leuchtet mir nicht ein. Ziel ist es 
 ## das "X.question.." vor jedem variablen namen zu cutten oder?
+## Genau! der regex syntax ist etwas unintutive.
+## .* steht fuer beliebiges Zeichen beliebig oft
+## \\. f√ºr punkt 
+## () als platzhalter, der mit \\1 aufgerufen werden kann
 
 # types for excel import
 types<-replicate(90, "text")
@@ -190,10 +194,13 @@ VoteLast <- VoteLast %>%
                      last.vote != "No, I did not vote")
 
 # move first column to row names
-rownames(VoteLast) <- c("AfD", "Die Gr¸nen", "Union", "Die Linke", "FDP", "SPD")
-colnames(VoteLast) <- c("", "AfD", "Die Gr¸nen", "Union", "Die Linke", "FDP", "Will not vote", "Other", "SPD")
+# Gibt hier ein problem mit der Schriftcodierung (Sonderzeichen). 
+# Hat was mit der Standardeinstellung zu tun (Wei√ü aber auch gerade nich welche da optimal ist)
+rownames(VoteLast) <- c("AfD", "Die Gr?nen", "Union", "Die Linke", "FDP", "SPD")
+colnames(VoteLast) <- c("", "AfD", "Die Gr?nen", "Union", "Die Linke", "FDP",
+                        "Will not vote", "Other", "SPD")
 # order rows
-PartyOrder <- c("Union", "SPD", "Die Gr¸nen", "Die Linke", "FDP", "AfD")
+PartyOrder <- c("Union", "SPD", "Die Gr?nen", "Die Linke", "FDP", "AfD")
 VoteLast <- VoteLast[PartyOrder,]
 
 # order columns
@@ -201,15 +208,23 @@ VoteLast <- VoteLast[,c(2:ncol(VoteLast))]
 VoteLast <- VoteLast[,c(PartyOrder, "Will not vote", "Other")]
 
 # Dein code hat aus irgendeinem Grund die AfD in den Spalte rausgekegelt. 
-# Habs nochmal neu gemacht, auch zur ‹bung.
+# Habs nochmal neu gemacht, auch zur ?bung.
 
 # loyality: last vote = next vote / total respondents per party (last election)
 VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
 
 # Table for 2013 -> 2017 voter transitions 
 # transition plot (see transistion plot script for example)
+# Weil die Loyalit√§tsstroeme so fett sind lassen die anderen sich kaum unterscheiden :/
 transitionPlot(as.matrix(VoteLast[,c(1:6)]),  
                box_txt = PartyOrder)
+
+# alternative voter loyality: certainty_party_to_vote
+
+ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
+       aes(x = vote_nextelection_de, fill = certainty_party_to_vote)) +
+  geom_bar() +
+  coord_flip() # flip sides
 
 ###############################################################################
 # 3. Estimates
