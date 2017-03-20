@@ -70,11 +70,10 @@ for(i in 5:ncol(Dalia)) {
 
 # rename columns to remove prefix
 names(Dalia)<-sub(".*\\.\\.(.+)", "\\1", names(Dalia))
-## Das erste Argument in der sub function leuchtet mir nicht ein. Ziel ist es 
-## das "X.question.." vor jedem variablen namen zu cutten oder?
-## Genau! der regex syntax ist etwas unintutive.
+## Regex syntax
 ## .* steht fuer beliebiges Zeichen beliebig oft
 ## \\. für punkt 
+## .+ ?
 ## () als platzhalter, der mit \\1 aufgerufen werden kann
 
 # types for excel import
@@ -203,20 +202,17 @@ VoteLast <- VoteLast %>%
 
 # move first column to row names
 # Gibt hier ein problem mit der Schriftcodierung (Sonderzeichen). 
-# Hat was mit der Standardeinstellung zu tun (Weiß aber auch gerade nich welche da optimal ist)
-rownames(VoteLast) <- c("AfD", "Die Gr?nen", "Union", "Die Linke", "FDP", "SPD")
-colnames(VoteLast) <- c("", "AfD", "Die Gr?nen", "Union", "Die Linke", "FDP",
+# Hat was mit der Standardeinstellung zu tun (Wei aber auch gerade nich welche da optimal ist)
+rownames(VoteLast) <- c("AfD", "Die Gruenen", "Union", "Die Linke", "FDP", "SPD")
+colnames(VoteLast) <- c("", "AfD", "Die Gruenen", "Union", "Die Linke", "FDP",
                         "Will not vote", "Other", "SPD")
 # order rows
-PartyOrder <- c("Union", "SPD", "Die Gr?nen", "Die Linke", "FDP", "AfD")
+PartyOrder <- c("Union", "SPD", "Die Gruenen", "Die Linke", "FDP", "AfD")
 VoteLast <- VoteLast[PartyOrder,]
 
 # order columns
 VoteLast <- VoteLast[,c(2:ncol(VoteLast))]
 VoteLast <- VoteLast[,c(PartyOrder, "Will not vote", "Other")]
-
-# Dein code hat aus irgendeinem Grund die AfD in den Spalte rausgekegelt. 
-# Habs nochmal neu gemacht, auch zur ?bung.
 
 # loyality: last vote = next vote / total respondents per party (last election)
 VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
