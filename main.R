@@ -13,7 +13,11 @@
 
 ###############################################################################
 # To-Do / Discussion
-# 1. What to do with respondents who claim that they are not eligible to vote?
+# 1. Cleaning sample
+#      a. Non-voters
+#      b. non-citizen
+#      c. too young (17 or 18?)
+#      d. not able
 # 2. What to do with votes who claim that they definitely don't vote?
 # 3. Ideas for estimation and actual forecast?
 # 4. Account for potential anti-incumbent bias, late swing, 
@@ -96,11 +100,43 @@ for(i in 5:ncol(Dalia1)) {
 # change column names
 names(Dalia1)<-sub("\\[.+\\] (.+)", "\\1", names(Dalia1))
 
+# dataset with german users
+DaliaDE <- Dalia1 %>% filter(country_code == "DE")
+
+# change values
+DaliaDE$vote_nextelection_de <- plyr::mapvalues(DaliaDE$vote_nextelection_de, 
+          from = c("AfD – Alternative fur Deutschland", "Bündnis 90 / Die Grünen",
+                   "CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union",
+                   "Die Linke", "FDP - Freie Demokratische Partei", 
+                   "SPD – Sozialdemokratische Partei Deutschlands", "Other", 
+                   "I would not vote"),
+          to = c("AfD", "Gruenen", "Union", "Linke", "FDP", "SPD", 
+                 "Other", "No vote"))
+# for the ones where it dit not work
+levels(DaliaDE$vote_nextelection_de) <- sub("AfD.*", "AfD", levels(DaliaDE$vote_nextelection_de))
+levels(DaliaDE$vote_nextelection_de) <- sub("CDU.*", "CDU", levels(DaliaDE$vote_nextelection_de))
+levels(DaliaDE$vote_nextelection_de) <- sub("SPD.*", "SPD", levels(DaliaDE$vote_nextelection_de))
+
+DaliaDE$voted_party_last_election_de <- plyr::mapvalues(DaliaDE$voted_party_last_election_de, 
+     from = c("I wanted to vote but I wasn't able to", 
+              "No, I did not vote", 
+              "Yes, but I voted for another party",
+              "Yes, I voted for AfD – Alternative für Deutschland",
+              "Yes, I voted for Bündnis 90 / Die Grünen",
+              "Yes, I voted for CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union",
+              "Yes, I voted for Die Linke", "Yes, I voted for FDP - Freie Demokratische Partei", 
+              "Yes, I voted for SPD – Sozialdemokratische Partei Deutschlands"),
+     to = c("Not able", "No vote", "Other" ,"AfD", "Gruenen", "Union", 
+            "Linke", "FDP", "SPD"))
+# correct the errors
+levels(DaliaDE$voted_party_last_election_de) <- sub(".*AfD.*", "AfD", levels(DaliaDE$voted_party_last_election_de))
+levels(DaliaDE$voted_party_last_election_de) <- sub(".*CDU.*", "CDU", levels(DaliaDE$voted_party_last_election_de))
+levels(DaliaDE$voted_party_last_election_de) <- sub(".*SPD.*", "SPD", levels(DaliaDE$voted_party_last_election_de))
+
+
 ###############################################################################
 # 2. data mining
 ###############################################################################
-
-DaliaDE <- filter(Dalia1, country_code == "DE")
 
 # vote participation intention (turnout prediction?)
 ggplot(DaliaDE, aes(x=vote_next_national_election)) +
@@ -109,13 +145,18 @@ ggplot(DaliaDE, aes(x=vote_next_national_election)) +
   ylab("Percentage of total respondents") +
   xlab("Voting behavior")
 
-# filter people who are not eligble to vote (self reported)
-DaliaDE <- filter(DaliaDE, vote_next_national_election != "I'm not eligible to vote")
+plot(DaliaDE$residency)
 
+# filter people who are not eligble to vote
+# 17 year olds will likely turn 18 by the time of the election
+DaliaDE <- filter(DaliaDE, 
+                  vote_next_national_election != "I'm not eligible to vote" & 
+                  residency == "Yes, as a citizen" & 
+                  age > 16)
 # last election vote
 ggplot(filter(DaliaDE,  
-              voted_party_last_election_de != "No, I did not vote" & 
-              voted_party_last_election_de != "I wanted to vote but I wasn't able to"), 
+              voted_party_last_election_de != "No vote" & 
+              voted_party_last_election_de != "Not able"), 
        aes(x=voted_party_last_election_de)) +
   geom_bar(aes(y = (..count..)/sum(..count..), label = (..count..)/sum(..count..))) + # bar type
   coord_flip() + # flip sides
@@ -196,23 +237,19 @@ VoteLast <- spread(VoteLast, next.vote, Freq)
 
 # remove non-voters from last election (not relevant for loyality consideration)
 VoteLast <- VoteLast %>% 
-              filter(last.vote != "I wanted to vote but I wasn't able to" &
-                     last.vote != "Yes, but I voted for another party" & 
-                     last.vote != "No, I did not vote")
+              filter(last.vote != "Not able" &
+                     last.vote != "Other" & 
+                     last.vote != "No vote")
 
 # move first column to row names
 # Gibt hier ein problem mit der Schriftcodierung (Sonderzeichen). 
-# Hat was mit der Standardeinstellung zu tun (Wei aber auch gerade nich welche da optimal ist)
-rownames(VoteLast) <- c("AfD", "Die Gruenen", "Union", "Die Linke", "FDP", "SPD")
-colnames(VoteLast) <- c("", "AfD", "Die Gruenen", "Union", "Die Linke", "FDP",
+rownames(VoteLast) <- c("AfD", "Gruenen", "CDU", "Linke", "FDP", "SPD")
+colnames(VoteLast) <- c("", "AfD", "Gruenen", "CDU", "Linke", "FDP",
                         "Will not vote", "Other", "SPD")
 # order rows
-PartyOrder <- c("Union", "SPD", "Die Gruenen", "Die Linke", "FDP", "AfD")
+PartyOrder <- c("CDU", "SPD", "Gruenen", "Linke", "FDP", "AfD")
 VoteLast <- VoteLast[PartyOrder,]
-
-# order columns
-VoteLast <- VoteLast[,c(2:ncol(VoteLast))]
-VoteLast <- VoteLast[,c(PartyOrder, "Will not vote", "Other")]
+VoteLast <- VoteLast[,PartyOrder]
 
 # loyality: last vote = next vote / total respondents per party (last election)
 VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
@@ -248,6 +285,12 @@ ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
 # probability to go to the polls
 
 # weights #####################################################################
+# Careful: 4 years difference between Exit polls and Dalia!!!
 DaliaDE$age.gr <- c("<18", "18-29", "30-44", 
                     "45-59", "60+")[findInterval(DaliaDE$age , 
                                                  c(-Inf, 17.5, 29.5, 44.5,59.5, Inf))]
+
+# for clustering
+plyr::count(DaliaDE, c('gender','age.gr','voted_party_last_election_de'))
+
+DaliaDE %>% group_by(gender, age.gr, voted_party_last_election_de) %>% tally()
