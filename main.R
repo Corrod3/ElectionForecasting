@@ -247,3 +247,7 @@ ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
 # -> adjust weighting of vote intent/forecast according to demographic group 
 # probability to go to the polls
 
+# weights #####################################################################
+DaliaDE$age.gr <- c("<18", "18-29", "30-44", 
+                    "45-59", "60+")[findInterval(DaliaDE$age , 
+                                                 c(-Inf, 17.5, 29.5, 44.5,59.5, Inf))]
