@@ -63,76 +63,86 @@ rm(p, packages)
 # 1. get data
 ###############################################################################
 
-# load csv
-Dalia <- read.csv("Raw\\coded_csv\\data_coded_e28.csv - data_coded_e28.csv")
+# Import Dalia data coded
+DaliaC <- read.csv("Raw\\coded_csv\\data_coded_e28.csv - data_coded_e28.csv")
 
 # change data type to character and factor
-Dalia[1]<-as.character(unlist(Dalia[1]))
-for(i in 5:ncol(Dalia)) {
-  Dalia[i]<-as.factor(unlist(Dalia[i]))
+DaliaC[1] <- as.character(unlist(DaliaC[1]))
+for(i in 5:ncol(DaliaC)) {
+  DaliaC[i] <- as.factor(unlist(DaliaC[i]))
 }
 
-# rename columns to remove prefix
-names(Dalia)<-sub(".*\\.\\.(.+)", "\\1", names(Dalia))
-## Regex syntax
-## .* steht fuer beliebiges Zeichen beliebig oft
-## \\. für punkt 
-## .+ ?
-## () als platzhalter, der mit \\1 aufgerufen werden kann
+# rename columns to remove prefix (using regex)
+names(DaliaC) <- sub(".*\\.\\.(.+)", "\\1", names(DaliaC))
 
 # types for excel import
-types<-replicate(90, "text")
-types[2]<-"numeric"
-types[4]<-"numeric"
+types <- replicate(90, "text")
+types[2] <- "numeric"
+types[4] <- "numeric"
 
-# excel file import
-# note: it includes the level names, weil the csv is coded (and its a lot of 
-# work to include the levels)
-Dalia1<-read_excel("Raw/Dalia_research_challenge_europulse.xlsx",sheet=1, 
+#Import dalia data as strings
+DaliaS <- read_excel("Raw/Dalia_research_challenge_europulse.xlsx",sheet=1, 
                    col_types=types, na="NA")
 
 # change types
-Dalia1[3]<-as.factor(unlist(Dalia1[3]))
-for(i in 5:ncol(Dalia1)) {
-  Dalia1[i]<-as.factor(unlist(Dalia1[i]))
+DaliaS[3] <- as.factor(unlist(DaliaS[3]))
+for(i in 5:ncol(DaliaS)) {
+  DaliaS[i] <- as.factor(unlist(DaliaS[i]))
 }
 
 # change column names
-names(Dalia1)<-sub("\\[.+\\] (.+)", "\\1", names(Dalia1))
+names(DaliaS) <- sub("\\[.+\\] (.+)", "\\1", names(DaliaS))
 
-# dataset with german users
-DaliaDE <- Dalia1 %>% filter(country_code == "DE")
+# dataset with german users/sorting
+DaliaDE <- DaliaS %>% filter(country_code == "DE") %>% arrange(age,uuid)
 
-# change values
-DaliaDE$vote_nextelection_de <- plyr::mapvalues(DaliaDE$vote_nextelection_de, 
-          from = c("AfD – Alternative fur Deutschland", "Bündnis 90 / Die Grünen",
-                   "CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union",
-                   "Die Linke", "FDP - Freie Demokratische Partei", 
-                   "SPD – Sozialdemokratische Partei Deutschlands", "Other", 
-                   "I would not vote"),
-          to = c("AfD", "Gruenen", "Union", "Linke", "FDP", "SPD", 
-                 "Other", "No vote"))
-# for the ones where it dit not work
-levels(DaliaDE$vote_nextelection_de) <- sub("AfD.*", "AfD", levels(DaliaDE$vote_nextelection_de))
-levels(DaliaDE$vote_nextelection_de) <- sub("CDU.*", "CDU", levels(DaliaDE$vote_nextelection_de))
-levels(DaliaDE$vote_nextelection_de) <- sub("SPD.*", "SPD", levels(DaliaDE$vote_nextelection_de))
+# Factor variables can only be accessed through labels not underlying levels
+# Option: Package lfactors
 
-DaliaDE$voted_party_last_election_de <- plyr::mapvalues(DaliaDE$voted_party_last_election_de, 
-     from = c("I wanted to vote but I wasn't able to", 
-              "No, I did not vote", 
-              "Yes, but I voted for another party",
-              "Yes, I voted for AfD – Alternative für Deutschland",
-              "Yes, I voted for Bündnis 90 / Die Grünen",
-              "Yes, I voted for CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union",
-              "Yes, I voted for Die Linke", "Yes, I voted for FDP - Freie Demokratische Partei", 
-              "Yes, I voted for SPD – Sozialdemokratische Partei Deutschlands"),
-     to = c("Not able", "No vote", "Other" ,"AfD", "Gruenen", "Union", 
-            "Linke", "FDP", "SPD"))
-# correct the errors
-levels(DaliaDE$voted_party_last_election_de) <- sub(".*AfD.*", "AfD", levels(DaliaDE$voted_party_last_election_de))
-levels(DaliaDE$voted_party_last_election_de) <- sub(".*CDU.*", "CDU", levels(DaliaDE$voted_party_last_election_de))
-levels(DaliaDE$voted_party_last_election_de) <- sub(".*SPD.*", "SPD", levels(DaliaDE$voted_party_last_election_de))
+# Create easy identifier
+DaliaDE$Identifier <- c(1:nrow(DaliaDE)) 
+DaliaDE <- DaliaDE %>% select(Identifier, everything()) %>%
+  select(c(1,3:ncol(DaliaDE))) # Drops uuid
 
+# Rename label
+parties <- c("AfD", "Gruenen", "Union", "Linke", "FDP", "No vote", "Other", "SPD")
+levels(DaliaDE$vote_nextelection_de) <- parties
+
+#change values
+# DaliaDE$vote_nextelection_de <- plyr::mapvalues(DaliaDE$vote_nextelection_de,
+#           from = c("AfD – Alternative fur Deutschland", "Bündnis 90 / Die Grünen",
+#                    "CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union",
+#                    "Die Linke", "FDP - Freie Demokratische Partei",
+#                    "SPD – Sozialdemokratische Partei Deutschlands", "Other",
+#                    "I would not vote"),
+#           to = c("AfD", "Gruenen", "Union", "Linke", "FDP", "SPD",
+#                  "Other", "No vote"))
+# #for the ones where it dit not work
+# levels(DaliaDE$vote_nextelection_de) <- sub("AfD.*", "AfD", levels(DaliaDE$vote_nextelection_de))
+# levels(DaliaDE$vote_nextelection_de) <- sub("CDU.*", "CDU", levels(DaliaDE$vote_nextelection_de))
+# levels(DaliaDE$vote_nextelection_de) <- sub("SPD.*", "SPD", levels(DaliaDE$vote_nextelection_de))
+# Gr�nen noch umbenennen
+
+label_temp <- c("Not able", "No vote", "Other" ,"AfD", "Gruenen", "Union", 
+                "Linke", "FDP", "SPD")
+levels(DaliaDE$voted_party_last_election_de) <- label_temp
+rm(label_temp)
+
+# DaliaDE$voted_party_last_election_de <- plyr::mapvalues(DaliaDE$voted_party_last_election_de, 
+#      from = c("I wanted to vote but I wasn't able to", 
+#               "No, I did not vote", 
+#               "Yes, but I voted for another party",
+#               "Yes, I voted for AfD – Alternative für Deutschland",
+#               "Yes, I voted for Bündnis 90 / Die Grünen",
+#               "Yes, I voted for CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union",
+#               "Yes, I voted for Die Linke", "Yes, I voted for FDP - Freie Demokratische Partei", 
+#               "Yes, I voted for SPD – Sozialdemokratische Partei Deutschlands"),
+#      to = c("Not able", "No vote", "Other" ,"AfD", "Gruenen", "Union", 
+#             "Linke", "FDP", "SPD"))
+# # correct the errors
+# levels(DaliaDE$voted_party_last_election_de) <- sub(".*AfD.*", "AfD", levels(DaliaDE$voted_party_last_election_de))
+# levels(DaliaDE$voted_party_last_election_de) <- sub(".*CDU.*", "CDU", levels(DaliaDE$voted_party_last_election_de))
+# levels(DaliaDE$voted_party_last_election_de) <- sub(".*SPD.*", "SPD", levels(DaliaDE$voted_party_last_election_de))
 
 ###############################################################################
 # 2. data mining
@@ -153,18 +163,18 @@ DaliaDE <- filter(DaliaDE,
                   vote_next_national_election != "I'm not eligible to vote" & 
                   residency == "Yes, as a citizen" & 
                   age > 16)
+
 # last election vote
 ggplot(filter(DaliaDE,  
               voted_party_last_election_de != "No vote" & 
               voted_party_last_election_de != "Not able"), 
        aes(x=voted_party_last_election_de)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), label = (..count..)/sum(..count..))) + # bar type
+  geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
   coord_flip() + # flip sides
   scale_y_continuous(labels=scales::percent) + # percentages on y axis
   ylab("Share of total voters") +
   xlab("Parties") +
   theme_bw()
-
 
 # vote intention next election (BT 2017)
 ggplot(filter(DaliaDE,vote_nextelection_de != "I would not vote" ),
@@ -203,7 +213,6 @@ DaliaDE$ranking5 <- sapply(strsplit(as.character(DaliaDE$ranking_party_de),
 DaliaDE$ranking6 <- sapply(strsplit(as.character(DaliaDE$ranking_party_de), 
                                     split = " | ", fixed = TRUE),
                            function(x) x[[6]])
-# hier nochmal kurz gemeinsam ransetzen und den code verstehen; was genau macht "function(x)"?
 
 # most preferred party (consistency check with vote for next election/identify divergencies?)
 ggplot(DaliaDE, aes(x=ranking1)) +
@@ -223,9 +232,6 @@ SecPref <- spread(SecPref, rank2, Freq)
 transitionPlot(as.matrix(SecPref[,-1]),  
                box_txt = as.character(SecPref[,1]))
 
-# plot shows not really transitions but second preferences conditional on what the first preference was
-# Transition more interesting for the loyalty considerations
-
 # voter loyality ##############################################################
 # idea: compare past self-reported voting with intended voting?!
 # (how about non-voters / too young voters)
@@ -241,15 +247,13 @@ VoteLast <- VoteLast %>%
                      last.vote != "Other" & 
                      last.vote != "No vote")
 
-# move first column to row names
-# Gibt hier ein problem mit der Schriftcodierung (Sonderzeichen). 
-rownames(VoteLast) <- c("AfD", "Gruenen", "CDU", "Linke", "FDP", "SPD")
-colnames(VoteLast) <- c("", "AfD", "Gruenen", "CDU", "Linke", "FDP",
-                        "Will not vote", "Other", "SPD")
-# order rows
-PartyOrder <- c("CDU", "SPD", "Gruenen", "Linke", "FDP", "AfD")
-VoteLast <- VoteLast[PartyOrder,]
-VoteLast <- VoteLast[,PartyOrder]
+# clean table
+rownames(VoteLast) <- VoteLast$last.vote 
+VoteLast <- select(VoteLast, c(2:ncol(VoteLast)))
+
+# order rows and columns
+VoteLast <- VoteLast[c("Union", "SPD", "Gruenen", "Linke", "FDP", "AfD"),]
+VoteLast <- VoteLast[,c("Union", "SPD", "Gruenen", "Linke", "FDP", "AfD", "No vote", "Other")]
 
 # loyality: last vote = next vote / total respondents per party (last election)
 VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
@@ -258,10 +262,9 @@ VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
 # transition plot (see transistion plot script for example)
 # Weil die Loyalitätsstroeme so fett sind lassen die anderen sich kaum unterscheiden :/
 transitionPlot(as.matrix(VoteLast[,c(1:6)]),  
-               box_txt = PartyOrder)
+               box_txt = c("Union", "SPD", "Gruenen", "Linke", "FDP", "AfD"))
 
 # alternative voter loyality: certainty_party_to_vote
-
 ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
        aes(x = vote_nextelection_de, fill = certainty_party_to_vote)) +
   geom_bar() +
