@@ -56,6 +56,7 @@ boundsFun(resp_rate = .10, p_obs = .5)
 # recall stratified sampling:
   # divide population into exhaustive groups
   # draw SRS within each group
+    # Alex: What is SRS?
   # estimate of population totals is improved by removing variability between groups, as the contribution of each group is fixed by design
 # poststratification
   # now imagine that the group sizes are known but the sample was not stratified
