@@ -49,7 +49,11 @@ rm(p, packages)
 
 # Introduction
 
-Why
+1. Surveys are in hardly any case representative; weighting is part of every survey practice;populations consist of different strata; those can be chosen beforehand (stratification) or afterwards (post-stratification)
+
+2. Dalia data, forecoast on 2017 election; needs to be weightened; we will do that using exit polls (alternatively census data?)
+
+3. Chapter 2 surveys the literature and discusses alternative approaches
 
 How
 
@@ -65,11 +69,13 @@ Papers on non-representative polling
 
 Methods on correcting polls
 
-Typical biases in polling 
+Typical biases in polling (most important: non-response bias; sample-selection bias)
 
 # Data
 
 Dalia Data
+
+Exit Poll (or Zensus?)
 
 
 

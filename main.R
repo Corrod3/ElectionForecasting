@@ -38,7 +38,7 @@ try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/
 try(setwd("C:\\Users\\Moritz\\Desktop\\ElectionForecasting"), silent = TRUE)
 
 # Collect packages/libraries we need:
-packages <- c("readxl", "dplyr", "ggplot2", "tidyr" ,"reshape2", "scales")
+packages <- c("readxl", "dplyr", "ggplot2", "tidyr" ,"reshape2", "scales", "survey", "sjplot")
 # package and why it is needed
 # readxl: import excel files
 # dyplyr: data manipulation
@@ -46,6 +46,8 @@ packages <- c("readxl", "dplyr", "ggplot2", "tidyr" ,"reshape2", "scales")
 # tidyr: spread function
 # reshape2: melt function
 # scales: label transformation in ggplot
+# survey: tools for survey weighting and post-stratification
+# nice alternative plots
 
 # install packages if not installed before
 for (p in packages) {
@@ -104,7 +106,7 @@ DaliaDE$Identifier <- c(1:nrow(DaliaDE))
 DaliaDE <- DaliaDE %>% select(Identifier, everything()) %>%
   select(c(1,3:ncol(DaliaDE))) # Drops uuid
 
-# Rename label
+# Rename label (order matters in parties vector)
 parties <- c("AfD", "Gruenen", "Union", "Linke", "FDP", "No vote", "Other", "SPD")
 levels(DaliaDE$vote_nextelection_de) <- parties
 
@@ -153,7 +155,8 @@ ggplot(DaliaDE, aes(x=vote_next_national_election)) +
     geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
   scale_y_continuous(labels=percent) + 
   ylab("Percentage of total respondents") +
-  xlab("Voting behavior")
+  xlab("Voting behavior") +
+  
 
 plot(DaliaDE$residency)
 
