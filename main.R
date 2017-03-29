@@ -23,7 +23,10 @@
 # 4. Account for potential anti-incumbent bias, late swing, 
 #     differential turnout bias, "don't knowers" bias and vote intention misreporting
 # 5. How close is this survey to Forsa etc...? 
-# 6. Attach value labels to coded data
+
+# 6. Zensus/Bundeswahldatenstatistik/Forschungsgruppe Table zu kumulativen H�ufigkeiten
+# -> In excel und dann in R
+# 7. 
 ###############################################################################
 
 ###############################################################################
@@ -38,7 +41,7 @@ try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/
 try(setwd("C:\\Users\\Moritz\\Desktop\\ElectionForecasting"), silent = TRUE)
 
 # Collect packages/libraries we need:
-packages <- c("readxl", "dplyr", "ggplot2", "tidyr" ,"reshape2", "scales", "survey", "sjplot")
+packages <- c("readxl", "dplyr", "ggplot2", "tidyr" ,"reshape2", "scales", "survey", "sjPlot", "sjmisc")
 # package and why it is needed
 # readxl: import excel files
 # dyplyr: data manipulation
@@ -47,7 +50,7 @@ packages <- c("readxl", "dplyr", "ggplot2", "tidyr" ,"reshape2", "scales", "surv
 # reshape2: melt function
 # scales: label transformation in ggplot
 # survey: tools for survey weighting and post-stratification
-# nice alternative plots
+# sjPlot: nice alternative plots
 
 # install packages if not installed before
 for (p in packages) {
@@ -62,7 +65,7 @@ for (p in packages) {
 rm(p, packages)
 
 ###############################################################################
-# 1. get data
+# 1. get data + cleaning
 ###############################################################################
 
 # Import Dalia data coded
@@ -96,97 +99,186 @@ for(i in 5:ncol(DaliaS)) {
 names(DaliaS) <- sub("\\[.+\\] (.+)", "\\1", names(DaliaS))
 
 # dataset with german users/sorting
-DaliaDE <- DaliaS %>% filter(country_code == "DE") %>% arrange(age,uuid)
-
-# Factor variables can only be accessed through labels not underlying levels
-# Option: Package lfactors
+DaliaDE <- DaliaS %>% filter(country_code == "DE") %>% arrange(age, gender, degree_of_urbanisation, education_level)
 
 # Create easy identifier
-DaliaDE$Identifier <- c(1:nrow(DaliaDE)) 
-DaliaDE <- DaliaDE %>% select(Identifier, everything()) %>%
-  select(c(1,3:ncol(DaliaDE))) # Drops uuid
+DaliaDE$identifier <- c(1:nrow(DaliaDE))
+DaliaDE$uuid <- NULL    # Drops uuid
+DaliaDE <- select(DaliaDE, identifier, weight, country_code, age, gender, degree_of_urbanisation, education_level, everything())
+# weights vary across four demographic variables  
 
-# Rename label (order matters in parties vector)
+# Rename label (order in parties vector must equal order in vote_nextelection_de)
 parties <- c("AfD", "Gruenen", "Union", "Linke", "FDP", "No vote", "Other", "SPD")
 levels(DaliaDE$vote_nextelection_de) <- parties
 
-#change values
-# DaliaDE$vote_nextelection_de <- plyr::mapvalues(DaliaDE$vote_nextelection_de,
-#           from = c("AfD – Alternative fur Deutschland", "Bündnis 90 / Die Grünen",
-#                    "CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union",
-#                    "Die Linke", "FDP - Freie Demokratische Partei",
-#                    "SPD – Sozialdemokratische Partei Deutschlands", "Other",
-#                    "I would not vote"),
-#           to = c("AfD", "Gruenen", "Union", "Linke", "FDP", "SPD",
-#                  "Other", "No vote"))
-# #for the ones where it dit not work
-# levels(DaliaDE$vote_nextelection_de) <- sub("AfD.*", "AfD", levels(DaliaDE$vote_nextelection_de))
-# levels(DaliaDE$vote_nextelection_de) <- sub("CDU.*", "CDU", levels(DaliaDE$vote_nextelection_de))
-# levels(DaliaDE$vote_nextelection_de) <- sub("SPD.*", "SPD", levels(DaliaDE$vote_nextelection_de))
-# Gr�nen noch umbenennen
-
-label_temp <- c("Not able", "No vote", "Other" ,"AfD", "Gruenen", "Union", 
-                "Linke", "FDP", "SPD")
+label_temp <- c("Not able", "No vote", "Other" ,"AfD", "Gruenen", "Union", "Linke", "FDP", "SPD")
 levels(DaliaDE$voted_party_last_election_de) <- label_temp
 rm(label_temp)
 
-# DaliaDE$voted_party_last_election_de <- plyr::mapvalues(DaliaDE$voted_party_last_election_de, 
-#      from = c("I wanted to vote but I wasn't able to", 
-#               "No, I did not vote", 
-#               "Yes, but I voted for another party",
-#               "Yes, I voted for AfD – Alternative für Deutschland",
-#               "Yes, I voted for Bündnis 90 / Die Grünen",
-#               "Yes, I voted for CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union",
-#               "Yes, I voted for Die Linke", "Yes, I voted for FDP - Freie Demokratische Partei", 
-#               "Yes, I voted for SPD – Sozialdemokratische Partei Deutschlands"),
-#      to = c("Not able", "No vote", "Other" ,"AfD", "Gruenen", "Union", 
-#             "Linke", "FDP", "SPD"))
-# # correct the errors
-# levels(DaliaDE$voted_party_last_election_de) <- sub(".*AfD.*", "AfD", levels(DaliaDE$voted_party_last_election_de))
-# levels(DaliaDE$voted_party_last_election_de) <- sub(".*CDU.*", "CDU", levels(DaliaDE$voted_party_last_election_de))
-# levels(DaliaDE$voted_party_last_election_de) <- sub(".*SPD.*", "SPD", levels(DaliaDE$voted_party_last_election_de))
+levels(DaliaDE$education_level) <- c("High school or equivalent", 
+                                     "No formal education", 
+                                     "University or equivalent",
+                                     "Some high school or secondary school",
+                                     "Other/Rather not answer")
+
+DaliaDE$education_cat <- ifelse(
+        DaliaDE$education_level == "University or equivalent", 
+        "Higher education", 
+        DaliaDE$education_level) 
+DaliaDE$education_cat <- ifelse(
+        DaliaDE$education_level == "No formal education",
+        "Lower education",
+        DaliaDE$education_cat)
+DaliaDE$education_cat <- ifelse(
+      DaliaDE$education_level == "Other/Rather not answer",
+      "Lower education",
+      DaliaDE$education_cat)
+DaliaDE$education_cat <- ifelse(
+      DaliaDE$education_level == "High school or equivalent",
+      "Medium education",
+      DaliaDE$education_cat)
+DaliaDE$education_cat <- ifelse(
+      DaliaDE$education_level == "Some high school or secondary school",
+      "Medium education",
+      DaliaDE$education_cat)
+DaliaDE$education_cat <- factor(DaliaDE$education_cat, levels = c("Lower education",
+                                                                  "Medium education",
+                                                                  "Higher education"))
+
+
+# Filter: not eligible to vote, not german resident, below 18 at the time of election
+DaliaDE <- filter(DaliaDE, 
+                  vote_next_national_election != "I'm not eligible to vote" & 
+                    residency == "Yes, as a citizen" & 
+                    age > 16)
+# 255 observations drop out
 
 ###############################################################################
 # 2. data mining
 ###############################################################################
 
-# vote participation intention (turnout prediction?)
-ggplot(DaliaDE, aes(x=vote_next_national_election)) +
-    geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
-  scale_y_continuous(labels=percent) + 
-  ylab("Percentage of total respondents") +
-  xlab("Voting behavior") +
-  
-
+# residency
 plot(DaliaDE$residency)
 
-# filter people who are not eligble to vote
-# 17 year olds will likely turn 18 by the time of the election
-DaliaDE <- filter(DaliaDE, 
-                  vote_next_national_election != "I'm not eligible to vote" & 
-                  residency == "Yes, as a citizen" & 
-                  age > 16)
+# vote participation intention (turnout prediction?)
+#ggplot(DaliaDE, aes(x=vote_next_national_election)) +
+#    geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
+#    scale_y_continuous(labels=percent) + 
+#    ylab("Percentage of total respondents") +
+#    xlab("Voting behavior") 
+
+# create binary turnout variable
+DaliaDE$turnout_exp <- DaliaDE$vote_next_national_election
+DaliaDE$turnout_exp <- plyr::mapvalues(DaliaDE$turnout_exp, from = c("I'm not eligible to vote","No, I will definitely not vote", 
+                                                                   "No, I will probably not vote",
+                                                                   "Yes, I will definitely vote",
+                                                                   "Yes, I will probably vote") , 
+                                                             to = c(0,0,0,1,1))
+
+### Tables ###
+# Set general table setting
+sjp.setTheme(geom.label.size = 3,
+             axis.textsize = 0.9)
+
+# Self-reported turnout
+sjp.xtab(DaliaDE$turnout_exp, DaliaDE$gender,
+         title = "Expected weighted turnout by gender", 
+         axis.titles = c("Vote intent by gender","Expected federal election turnout"),
+         axis.labels = c("No, I will (probably) not vote","Yes, I will (probably) vote"),
+         geom.size = 0.5, legend.title = "Gender", legend.labels = c("Male", "Female"), 
+         coord.flip=TRUE, hjust = "top", show.n = FALSE)
+        
+# with Dalia weights
+sjp.xtab(DaliaDE$turnout_exp, DaliaDE$gender, weight.by=DaliaDE$weight,
+         title = "Expected turnout by gender (unweighted)", 
+         axis.titles = c("Vote intent by gender","Expected federal election turnout"),
+         axis.labels = c("No, I will (probably) not vote","Yes, I will (probably) vote"),
+         geom.size = 0.5, legend.title = "Gender", legend.labels = c("Male", "Female"), 
+         coord.flip=TRUE, hjust = "top",show.n = FALSE)
+
+# include confidence intervals?
+# why are the turnouts so high? What can we do about that?
+# probably (self-)selection bias within demographic groups 
+
+# suggestion: weighting the answers with demographic likelihood of voting -> Exit Polls
+# if someone of a demographic group which goes very often to election says "Yes, I will vote"
+# his answer should be weighted higher than answer of other demographic groups whos turnout is lower
 
 # last election vote
-ggplot(filter(DaliaDE,  
-              voted_party_last_election_de != "No vote" & 
-              voted_party_last_election_de != "Not able"), 
-       aes(x=voted_party_last_election_de)) +
-  geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
-  coord_flip() + # flip sides
-  scale_y_continuous(labels=scales::percent) + # percentages on y axis
-  ylab("Share of total voters") +
-  xlab("Parties") +
-  theme_bw()
+
+#ggplot(filter(DaliaDE,  
+#              voted_party_last_election_de != "No vote" & 
+#              voted_party_last_election_de != "Not able"), 
+#       aes(x=voted_party_last_election_de)) +
+#  geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
+#  coord_flip() + # flip sides
+#  scale_y_continuous(labels=scales::percent) + # percentages on y axis
+#  ylab("Share of total voters") +
+#  xlab("Parties") +
+#  theme_bw()
+
+# filter not vote and not able
+DaliaDE_temp <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" | voted_party_last_election_de == "Not able"))
+DaliaDE_temp$voted_party_last_election_de <- factor(DaliaDE_temp$voted_party_last_election_de)
+
+# last election vote without weights
+sjp.frq(DaliaDE_temp$voted_party_last_election_de,
+        title = "Party vote share last federal election (unweighted)", 
+        axis.title = c("Party vote share","Parties"),
+        sort.frq = c("asc"),
+        geom.size = 0.5,
+  #      show.ci = TRUE, # confidence intervals?? how calculated?
+        coord.flip=TRUE,
+        show.axis.values = FALSE)
+
+# weighted
+sjp.frq(DaliaDE_temp$voted_party_last_election_de, 
+        title = "Party vote share last federal election (weighted)", 
+        axis.title = c("Party vote share","Parties"),
+        sort.frq = c("asc"),
+        geom.size = 0.5,
+  #      show.ci = TRUE, # confidence intervals?? how calculated?
+        coord.flip=TRUE,
+        show.axis.values = FALSE,
+        weight.by = DaliaDE_temp$weight)
+
+# FAILURE: labels are completely mixed up after weighting
+
 
 # vote intention next election (BT 2017)
-ggplot(filter(DaliaDE,vote_nextelection_de != "I would not vote" ),
-       aes(x=vote_nextelection_de)) +
-  geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
-  coord_flip() + # flip sides
-  scale_y_continuous(labels=scales::percent) + # percentages on y axis
-  ylab("Share of total voters") +
-  xlab("Parties") 
+# ggplot(filter(DaliaDE,vote_nextelection_de != "I would not vote" ),
+#        aes(x=vote_nextelection_de)) +
+#   geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
+#   coord_flip() + # flip sides
+#   scale_y_continuous(labels=scales::percent) + # percentages on y axis
+#   ylab("Share of total voters") +
+#   xlab("Parties") 
+
+DaliaDE_temp <- filter(DaliaDE, vote_nextelection_de != "No vote")
+DaliaDE_temp$vote_nextelection_de <- factor(DaliaDE_temp$vote_nextelection_de)
+
+sjp.frq(DaliaDE_temp$vote_nextelection_de,
+        title = "Vote at next federal election (unweighted)", 
+        axis.title = c("Party vote share","Parties"),
+        sort.frq = c("asc"),
+        geom.size = 0.6,
+ #      show.ci = TRUE, # confidence intervals?? how calculated?
+        coord.flip=TRUE,
+        show.axis.values = FALSE)
+
+sjp.frq(DaliaDE_temp$vote_nextelection_de,
+        title = "Vote at next federal election", 
+        axis.title = c("Party vote share","Parties"),
+        sort.frq = c("asc"),
+        geom.size = 0.6,
+        #      show.ci = TRUE, # confidence intervals?? how calculated?
+        coord.flip=TRUE,
+        show.axis.values = FALSE,
+        weight.by = DaliaDE_temp$weight,
+        title.wtd.suffix = " (weighted)")
+# mit weights verschieben sich wieder die label -> schei�e
+
+rm(DaliaDE_temp)
 
 # Party ranking ################################################################
 # comment to Dalia: Include in ranking: I prefer not to vote 
@@ -262,7 +354,6 @@ VoteLast <- VoteLast[,c("Union", "SPD", "Gruenen", "Linke", "FDP", "AfD", "No vo
 VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
 
 # Table for 2013 -> 2017 voter transitions 
-# transition plot (see transistion plot script for example)
 # Weil die Loyalitätsstroeme so fett sind lassen die anderen sich kaum unterscheiden :/
 transitionPlot(as.matrix(VoteLast[,c(1:6)]),  
                box_txt = c("Union", "SPD", "Gruenen", "Linke", "FDP", "AfD"))
@@ -290,13 +381,27 @@ ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
 # -> adjust weighting of vote intent/forecast according to demographic group 
 # probability to go to the polls
 
+
 # weights #####################################################################
 # Careful: 4 years difference between Exit polls and Dalia!!!
-DaliaDE$age.gr <- c("<18", "18-29", "30-44", 
-                    "45-59", "60+")[findInterval(DaliaDE$age , 
+
+DaliaDE_temp <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" | voted_party_last_election_de == "Not able"))
+DaliaDE_temp$voted_party_last_election_de <- factor(DaliaDE_temp$voted_party_last_election_de)
+
+# create age.gr
+DaliaDE_temp$age.gr <- c("<18", "18-29", "30-44", 
+                    "45-59", "60+")[findInterval(DaliaDE_temp$age , 
                                                  c(-Inf, 17.5, 29.5, 44.5,59.5, Inf))]
 
-# for clustering
-plyr::count(DaliaDE, c('gender','age.gr','voted_party_last_election_de'))
 
-DaliaDE %>% group_by(gender, age.gr, voted_party_last_election_de) %>% tally()
+
+# cluster gender-age
+plyr::count(DaliaDE_temp, c('gender','age.gr','voted_party_last_election_de'))
+
+DaliaDE_temp %>% group_by(gender, age.gr, voted_party_last_election_de) %>% tally()
+
+# cluster: gender-age-educational level
+
+plyr::count(DaliaDE_temp, c('gender','age.gr', 'education_cat', 'voted_party_last_election_de'))
+
+# discuss with Simon about the small group size and groups with zero observations

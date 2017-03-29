@@ -49,6 +49,8 @@ rm(p, packages)
 
 # Introduction
 
+Polling
+
 1. Surveys are in hardly any case representative; weighting is part of every survey practice;populations consist of different strata; those can be chosen beforehand (stratification) or afterwards (post-stratification)
 
 2. Dalia data, forecoast on 2017 election; needs to be weightened; we will do that using exit polls (alternatively census data?)
