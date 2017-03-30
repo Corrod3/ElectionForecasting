@@ -2,7 +2,7 @@
 title: |
   | Non-representative polling
   | Mobile user polling data for the German Federal Election
-subtitle: "CSSR Final Project"
+subtitle: "Election Forecasting Project"
 author: "Moritz Hemmerlein & Alexander Sacharow"
 header-includes:
     - \usepackage{fancyhdr}
@@ -10,6 +10,8 @@ header-includes:
     - \fancyhead[LO,LE]{Non-represenative polling}
     - \fancyfoot[LO,LE]{Election Forecasting Project}
     - \fancyfoot[RE,RO]{Moritz Hemmerlein and Alexander Sacharow}
+    - \usepackage{setspace}
+    - \onehalfspacing
 date: "April 12, 2017"
 output: 
   pdf_document:
@@ -49,6 +51,10 @@ rm(p, packages)
 
 # Introduction
 
+The digitialization is challenging the way polling was done for many decades. Calling people on their landline phones has become difficult as response rates drop and households equiped with such phones are getting less and less (CITE). In response polling institutions have started to use other methods for polling ranging from face-to-face interviews to mobile phone calling. But they proven difficult to ensure representativeness or are expensive. To tackle this problem, pollsters began to experiment with non-representative polling methods (Wang).
+
+In our forecasting project we want to use non-representative polling data from mobile-phone app users. 
+
 1. Surveys are in hardly any case representative; weighting is part of every survey practice;populations consist of different strata; those can be chosen beforehand (stratification) or afterwards (post-stratification)
 
 2. Dalia data, forecoast on 2017 election; needs to be weightened; we will do that using exit polls (alternatively census data?)
@@ -72,6 +78,8 @@ Methods on correcting polls
 Typical biases in polling (most important: non-response bias; sample-selection bias)
 
 # Data
+
+The forecasting project utilizes data from the Pulse of Europe Survey which was conducted by Dalia Research in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of 11000 individuals 
 
 Dalia Data
 
