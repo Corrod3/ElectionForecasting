@@ -51,9 +51,13 @@ rm(p, packages)
 
 # Introduction
 
+<<<<<<< HEAD
 The digitialization is challenging the way polling was done for many decades. Calling people on their landline phones has become difficult as response rates drop and households equiped with such phones are getting less and less (CITE). In response polling institutions have started to use other methods for polling ranging from face-to-face interviews to mobile phone calling. But they proven difficult to ensure representativeness or are expensive. To tackle this problem, pollsters began to experiment with non-representative polling methods (Wang).
 
 In our forecasting project we want to use non-representative polling data from mobile-phone app users. 
+=======
+Polling
+>>>>>>> origin/master
 
 1. Surveys are in hardly any case representative; weighting is part of every survey practice;populations consist of different strata; those can be chosen beforehand (stratification) or afterwards (post-stratification)
 
