@@ -1,0 +1,45 @@
+# (c) Statistisches Bundesamt, Wiesbaden 2014
+# 
+# Ergebnisse der repräsentativen Wahlstatistik zur Bundestagswahl 2013
+# Totalergebnisse im Vergleich mit den Ergebnissen der repräsentativen Wahlstatistik 2013
+# 
+Land;1;Wähler auf 1000 Wahlberechtigte1;Von 1000 gültigen Zweitstimmen entfielen auf;;;;;;;;;
+;;;CDU;SPD;FDP;DIE LINKE;GRÜNE;CSU;Sonstige;dar. PIRATEN;dar. NPD;dar. AfD
+;;;;;;;;;;;;
+Schleswig-Holstein;Totalergebnis;731;392;315;56;52;94;0;90;20;7;46
+;Stichprobe;738;392;315;56;52;94;0;90;20;7;46
+Mecklenburg-Vorpommern;Totalergebnis;653;425;178;22;215;43;0;116;19;27;56
+;Stichprobe;657;425;178;22;215;43;0;116;19;27;56
+Hamburg;Totalergebnis;703;321;324;48;88;127;0;92;28;6;42
+;Stichprobe;721;321;324;48;88;127;0;92;26;5;47
+Niedersachsen;Totalergebnis;734;411;331;42;50;88;0;78;17;8;37
+;Stichprobe;740;411;331;42;50;88;0;78;17;.;37
+Bremen;Totalergebnis;688;293;356;34;101;121;0;95;26;11;37
+;Stichprobe;695;293;356;34;101;121;0;95;26;11;37
+Brandenburg;Totalergebnis;684;348;231;25;224;47;0;124;22;26;60
+;Stichprobe;689;348;231;25;224;47;0;124;22;26;60
+Sachsen-Anhalt;Totalergebnis;621;412;182;26;239;40;0;100;19;22;42
+;Stichprobe;625;412;182;26;239;40;0;100;19;22;42
+Berlin;Totalergebnis;725;285;246;36;185;123;0;126;36;15;49
+;Stichprobe;736;285;246;36;185;123;0;126;36;15;49
+Nordrhein-Westfalen;Totalergebnis;725;398;319;52;61;80;0;90;22;10;39
+;Stichprobe;733;398;319;52;61;80;0;90;22;.;39
+Sachsen;Totalergebnis;695;426;146;31;200;49;0;148;25;33;68
+;Stichprobe;700;426;146;31;200;49;0;148;25;33;68
+Hessen;Totalergebnis;732;392;288;56;60;99;0;105;21;11;56
+;Stichprobe;739;392;288;56;60;99;0;105;21;11;56
+Thüringen;Totalergebnis;682;388;161;26;234;49;0;142;24;32;62
+;Stichprobe;687;388;161;26;234;49;0;142;24;32;62
+Rheinland-Pfalz;Totalergebnis;728;433;275;55;54;76;0;106;22;11;48
+;Stichprobe;736;433;275;55;54;76;0;106;22;11;48
+Bayern;Totalergebnis;700;0;200;51;38;84;493;135;19;9;43
+;Stichprobe;714;0;200;51;38;84;493;135;19;.;43
+Baden-Württemberg;Totalergebnis;743;457;206;62;48;110;0;117;23;10;52
+;Stichprobe;751;457;206;62;48;110;0;117;23;10;52
+Saarland;Totalergebnis;725;378;310;38;100;57;0;117;26;17;52
+;Stichprobe;731;378;310;38;100;57;0;117;26;.;52
+Deutschland;Totalergebnis;715;341;257;48;86;84;74;109;22;13;47
+;Stichprobe;724;341;257;48;86;84;74;109;22;X;47
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+1 Bei Stichprobe: Anteil der Summe aus Wählern mit Stimmvermerk und Wahlberechtigten mit Wahlscheinvermerk im Wählerverzeichnis an den Wahlberechtigten insgesamt (nur Urnenwahlbezirke).;;;;;;;;;;;;

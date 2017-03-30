@@ -27,6 +27,8 @@
 # 6. Zensus/Bundeswahldatenstatistik/Forschungsgruppe Table zu kumulativen Häufigkeiten
 # -> In excel und dann in R
 # 7. 
+# 8. Exit polls schön und gut. Aber was ist mit Briefwählern? Deutlich andere demgraphische
+# Struktur? Wie hoch ist ihr Anteil?
 ###############################################################################
 
 ###############################################################################
