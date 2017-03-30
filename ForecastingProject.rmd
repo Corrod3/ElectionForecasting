@@ -17,6 +17,9 @@ output:
   pdf_document:
     toc: true
     number_sections: true
+fontfamily: mathpazo
+fontsize: 11pt
+urlcolor: blue
 bibliography:
     -  literature.bib
 ---
@@ -51,25 +54,23 @@ rm(p, packages)
 
 # Introduction
 
-<<<<<<< HEAD
+
 The digitialization is challenging the way polling was done for many decades. Calling people on their landline phones has become difficult as response rates drop and households equiped with such phones are getting less and less (CITE). In response polling institutions have started to use other methods for polling ranging from face-to-face interviews to mobile phone calling. But they proven difficult to ensure representativeness or are expensive. To tackle this problem, pollsters began to experiment with non-representative polling methods (Wang).
 
 In our forecasting project we want to use non-representative polling data from mobile-phone app users. 
-=======
-Polling
->>>>>>> origin/master
 
 1. Surveys are in hardly any case representative; weighting is part of every survey practice;populations consist of different strata; those can be chosen beforehand (stratification) or afterwards (post-stratification)
 
 2. Dalia data, forecoast on 2017 election; needs to be weightened; we will do that using exit polls (alternatively census data?)
 
-3. Chapter 2 surveys the literature and discusses alternative approaches
 
 How
 
 Results
 
 Structure
+3. Chapter 2 surveys the literature and discusses alternative approaches
+
 
 # Related Literature
 
@@ -80,28 +81,50 @@ Papers on non-representative polling
 Methods on correcting polls
 
 Typical biases in polling (most important: non-response bias; sample-selection bias)
+    Which biases do we expect in the data
 
 # Data
 
-The forecasting project utilizes data from the Pulse of Europe Survey which was conducted by Dalia Research in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of 11000 individuals 
+The forecasting project utilizes data from the Europulse Survey which is conducted quarterly by Dalia Research in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of about 11000 individuals, of which roughly 1900 were from Germany. The data is already pre-stratified by Dalia Research based on micro zensus data for age and gender. 
 
-Dalia Data
+In order to post-stratify the data, we want to use different sources and compare their effect on the forecast: (1) exit poll data from Forschungsgruppe Wahlen or intratest dimap Institute (what), (2) representative election statistics and (3) microzensus data. 
 
-Exit Poll (or Zensus?)
-
-
+(how did we get the data...)
 
 # Empirical Strategy
 
+For stratifying the data we orient ourself at the work of XXX. The basic idea is to compute clusters of voters along several demographic categories and use their past votes to compute weights.
+
 How we plan to make poll representative
+
+Compare different stratification approaches
+
+Likely problems we will encounter: 1. empthy clusters or clusters with low number of observations. Implications: If empthy, there is a real problem. If the number of observation is low, e.g. below 20, the weigths will will amplify the impact of this small group in the total forecasting result.
+
+Benchmark -> other publically available polls. This is straight-forward, but also problematic as it might induce a herding effect. The final evaluation is only possibe after the election
+
 
 # Data Overview
 
 how representative our data already is
 
+1. raw data forecast. Compared to other forecastes the data under represents the CDU as well as the SPD. (Verify) 
+
+2. Show distribution of respondents on different demographic clusters and compare to zensus / exit polls / election statistics
+
+3. Raw (voted last election)
+
 # Results
 
 What the result is of making it representative
+
+1. Election forecast Weighted with exit polls
+
+2. Election forecast weighted with election statics 
+
+3. Election forecast weighted with zensus
+
+Compare the three different weighten approaches
 
 # Conclusion
 
