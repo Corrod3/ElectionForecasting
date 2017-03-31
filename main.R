@@ -24,10 +24,10 @@
 #     differential turnout bias, "don't knowers" bias and vote intention misreporting
 # 5. How close is this survey to Forsa etc...? 
 
-# 6. Zensus/Bundeswahldatenstatistik/Forschungsgruppe Table zu kumulativen Häufigkeiten
+# 6. Zensus/Bundeswahldatenstatistik/Forschungsgruppe Table zu kumulativen H?ufigkeiten
 # -> In excel und dann in R
 # 7. 
-# 8. Exit polls schön und gut. Aber was ist mit Briefwählern? Deutlich andere demgraphische
+# 8. Exit polls sch?n und gut. Aber was ist mit Briefw?hlern? Deutlich andere demgraphische
 # Struktur? Wie hoch ist ihr Anteil?
 ###############################################################################
 
@@ -123,27 +123,27 @@ levels(DaliaDE$education_level) <- c("High school or equivalent",
                                      "Some high school or secondary school",
                                      "Other/Rather not answer")
 
-DaliaDE$education_cat <- ifelse(
+DaliaDE$edu.cat <- ifelse(
         DaliaDE$education_level == "University or equivalent", 
         "Higher education", 
         DaliaDE$education_level) 
-DaliaDE$education_cat <- ifelse(
+DaliaDE$edu.cat <- ifelse(
         DaliaDE$education_level == "No formal education",
         "Lower education",
-        DaliaDE$education_cat)
-DaliaDE$education_cat <- ifelse(
+        DaliaDE$edu.cat)
+DaliaDE$edu.cat <- ifelse(
       DaliaDE$education_level == "Other/Rather not answer",
       "Lower education",
-      DaliaDE$education_cat)
-DaliaDE$education_cat <- ifelse(
+      DaliaDE$edu.cat)
+DaliaDE$edu.cat <- ifelse(
       DaliaDE$education_level == "High school or equivalent",
       "Medium education",
-      DaliaDE$education_cat)
-DaliaDE$education_cat <- ifelse(
+      DaliaDE$edu.cat)
+DaliaDE$edu.cat <- ifelse(
       DaliaDE$education_level == "Some high school or secondary school",
       "Medium education",
-      DaliaDE$education_cat)
-DaliaDE$education_cat <- factor(DaliaDE$education_cat, levels = c("Lower education",
+      DaliaDE$edu.cat)
+DaliaDE$edu.cat <- factor(DaliaDE$edu.cat, levels = c("Lower education",
                                                                   "Medium education",
                                                                   "Higher education"))
 
@@ -278,7 +278,7 @@ sjp.frq(DaliaDE_temp$vote_nextelection_de,
         show.axis.values = FALSE,
         weight.by = DaliaDE_temp$weight,
         title.wtd.suffix = " (weighted)")
-# mit weights verschieben sich wieder die label -> scheiße
+# mit weights verschieben sich wieder die label -> schei?e
 
 rm(DaliaDE_temp)
 
@@ -391,19 +391,23 @@ DaliaDE_temp <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" | vo
 DaliaDE_temp$voted_party_last_election_de <- factor(DaliaDE_temp$voted_party_last_election_de)
 
 # create age.gr
-DaliaDE_temp$age.gr <- c("<18", "18-29", "30-44", 
+DaliaDE_temp$age.gr <- c("18-29", "30-44", 
                     "45-59", "60+")[findInterval(DaliaDE_temp$age , 
-                                                 c(-Inf, 17.5, 29.5, 44.5,59.5, Inf))]
+                                                 c(-Inf, 29.5, 44.5,59.5, Inf))]
 
 
 
 # cluster gender-age
 plyr::count(DaliaDE_temp, c('gender','age.gr','voted_party_last_election_de'))
 
-DaliaDE_temp %>% group_by(gender, age.gr, voted_party_last_election_de) %>% tally()
 
 # cluster: gender-age-educational level
 
-plyr::count(DaliaDE_temp, c('gender','age.gr', 'education_cat', 'voted_party_last_election_de'))
+Strata <- DaliaDE_temp %>% group_by(gender, age.gr, voted_party_last_election_de) %>%
+  tally()  %>% complete(gender, age.gr, voted_party_last_election_de)
+
+Strata$n[is.na(Strata$n)] <- 0
+
+# plyr::count(DaliaDE_temp, c('gender','age.gr', 'edu.cat', 'voted_party_last_election_de'))
 
 # discuss with Simon about the small group size and groups with zero observations

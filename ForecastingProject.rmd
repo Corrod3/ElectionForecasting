@@ -82,6 +82,26 @@ Methods on correcting polls
 
 Typical biases in polling (most important: non-response bias; sample-selection bias)
     Which biases do we expect in the data
+    
+<!-- from Lumpley slides
+Nonresponse introduces statistical inefficiency
+•Nonresponse will also lead to biased estimates if the propensity to respond to the survey(or an item) is related to the attribute of interest
+•Ex ante attempts to reduce unit and item nonreponse seldom are fully successful (e.g. increase and dispersion of contact attempts, incentives, conversion by specially trained interviewers, reduction of respondent burden/ interview length via matrix sampling etc.)
+•Non response rate and non response bias seem hardly related
+•Importance ofex post strategies for missing data
+•Different strategies are based on different assumptions about missingness and different kinds of information available on those missing
+
+Poststratification
+•Ex poststratification of the sample along one or several categorical variables x…
+-… which are suspected to co-determine missingness and the attribute of interest y („commoncauses“ according to Groves, 2006)
+-… whose (joint) population distribution is known
+•Conceive of the categories/ cross-classifications of x as groups or strata h, use the stratified estimator
+•Corrects for disproportionalities between NhN and nh′N that may be either due to sampling or due to non response
+•Assumes MAR
+
+Raking
+-> if only marginal distributions are known (as for example with the forschungsgruppe wahlen)
+-->    
 
 # Data
 
@@ -94,6 +114,8 @@ In order to post-stratify the data, we want to use different sources and compare
 # Empirical Strategy
 
 For stratifying the data we orient ourself at the work of XXX. The basic idea is to compute clusters of voters along several demographic categories and use their past votes to compute weights.
+
+First, if possible we use post-stratification (see Lumpley, ch. 7?) to compute weights for subgroups in the sample. Post-stratification tries to make a sample representative of the actual population by ensuring the relative size of subgroup resembles the relative size of the same subgroup in the 'true' population. For forecasting the 'true' population is not known, as it is a question of who will actually turn out to vote. 
 
 How we plan to make poll representative
 
