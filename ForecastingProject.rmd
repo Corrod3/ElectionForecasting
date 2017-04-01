@@ -54,43 +54,74 @@ rm(p, packages)
 
 # Introduction
 
+<!--The problem -->
+The digitialization is challenging the way polling was done for many decades. Calling people on their landline phones has become difficult as response rates drop and households equiped with such phones are getting less and less [@Skibba.2016]. In response, polling institutions have resorted to other methods for polling ranging from face-to-face interviews to mobile phone calling. However, these methods either face similar difficulties to ensure representativeness or are too expensive for regular polling. In order to tackle the obstacles, pollsters have began to experiment with non-representative polling methods [@Wang.2015].
 
-The digitialization is challenging the way polling was done for many decades. Calling people on their landline phones has become difficult as response rates drop and households equiped with such phones are getting less and less (CITE). In response, polling institutions have started to use other methods for polling ranging from face-to-face interviews to mobile phone calling. But they proven difficult to ensure representativeness or are expensive. To tackle this problem, pollsters began to experiment with non-representative polling methods (Wang).
+<!-- The problem[cont.]
+A: above we talk about non-representative polling, now it was online polling. I streamlined the narrative. -->
+The major aim of pollsters in using non-representative surveys is not genuinely different from traditional goals of polls. The task is to gather responses which are representative for the population with regards to demographic and other criteria. The major difference is that representative cannot be ensured before the actual poll takes place, but is introduced ex-post. For example, in the case of online surveys, respondents are more likely to be from certain age groups or with a particular political background depending on the website where the survey is conducted. The non-representative poll can, however, be post-stratified in order to reflect the replies from the true population.
 
-The major issue at stake for pollsters in using online surveys is not genuinely different from traditional obstacles to polling. The task is to draw a sample of observations that is representative for the population of actual voters with regards to demographic and other criteria. The major difference is that respondents are anonymous and, depending on the website/source where the data is collected, potentially significantly skewed towards a certain political preference.
+<!-- A: maybe we should also address the likely voter problem / turnout here so we can justify to discuss two problems in the design paper, in the end of the discussion we can just say that for practical reasons we just used the self-reported intended vote participation for pracitcal reasons.
 
-Akku leer deswegen jetzt Stichpunkte.
-The general solution to non-representativeness is weighting. With online surveys you need to do a little more, instead of doing a stratification-design to draw from certain strata you need to define the strata afterwards and weight your responses accordingly (post-stratification). This can be done with Zensus data that gives you the frequencies of the strata in the population. Then, when you made your survey representative of the population, in a second step you do what all polls have to do. Account for self-selection and non-response bias and actual-voter bias: -> Therefore, weight according to likelihood of actual voting and party affiliation of certain strata. (Here I want to point out the two steps!)
+What make election forecasting distinct from other polling efforts is the problem of turnout. Hence, the 'true' population is not the actual electorate but the actual voters. Often elections are not necessarily decided by changes in voter's intention, but by who is going to the polls. For election forecasting we therefore need a coherent idea of likely voters.
+-->
 
-Now: Our actual project. In our forecasting project we want to use non-representative polling data from mobile-phone app users. (Obtained from Dalia research, citation blabla) So we have a raw survey and we want to weight it. We want to dicuss severall weighting methods. And we want to make a forecast of the Bundestagswahl. blalablablubb
+<!-- aim / question -->
+In our paper we want to explore and analyse different approaches to post-stratification for non-representative election polls of the German federal election 2017. We work with individual level data from mobile-phone app users. This raw data will then be post-stratified with different statistics about voters in Germany. Ultimately, we want to identify the most promising approach in order to generate an election forecast. As the ultimate election will only be after the end of the research, we can compare our post-stratified election forecast only with other forecasts of the 2017 federal election.
 
+<!-- LATER: here results of our paper -->
 
+<!-- Structure  -->
 The paper is structured as follows: Chapter two will survey the literature on online polls, their representativeness and approaches to employ such data to forecast elections. Proceedingly, we present our data and discuss several issues of representativeness and measurement error that need to be accounted for. In chapter four we present two (or three) methods want to apply to weight our data at hand. Chapter five is presenting and dicussing our preliminary results. Chapter six concludes and gives an outlook on practical obstacles and methodological issues that our approach suffers from.
-
-Notes:
-1. Surveys are in hardly any case representative; weighting is part of every survey practice;populations consist of different strata; those can be chosen beforehand (stratification) or afterwards (post-stratification)
-
-2. Dalia data, forecoast on 2017 election; needs to be weightened; we will do that using exit polls (alternatively census data?)
-
-Using non-representative polls requires a two 
-
-How
-
-Results
-
-Structure
 
 # Related Literature
 
-Papers on polling
+<!-- problems of traditional polling -->
+Traditional polling and in particular election polling has relied heavily on telephone surveys for the last decades. To ensure representativeness the standard was randomized digit dialing (RDD). The selection of random respondents was intended to eliminate the sample bias of the survey. However, for several reasons this approach has become unreliables. First, response rates have declined heavily [@Keeter.2006; @Holbrook.2007]. XXX reported that the response rate is down to X% in XXXX, compared to X% in XXXX or even X% in XXXX. <!-- add reasons here --> This induces a non-response bias to polls which cannot be handled with classical approaches anymore. Second, more and more people don't get landlines telephones after moving to new places or just give them up as mobile phone and other means of communication have increasingly become popular.<!-- source --> This induces a sample bias which the RDD approach intended to eliminate. How problematic this can be was famously illustrated by the Literature Digest poll in 1936, which failed to realized its biased sample [@Squire.1988]. But the problem still exists, as non-representatives was for example a major problem when forecast the UK Gereral elections in 2015 [@Mellon.2015].
 
-Papers on non-representative polling
+<!-- Papers on non-representative polling -->
+Can non-representative polls fix this? A study by @Yeager.2011 is rather pessimistic. They have compared telephone and online polls and argued that despite the problems of phone surveys they are still more accurate then online polls. However, they used only simple post-stratification methods. <!-- a few more words on the study here-->
 
-Methods on correcting polls
+@Wang.2015 in contrast are much more optimist about the possiblities of non-representative polling. They used polling results from XBox users which were highly unrepresentative of the population to forecast the 2012 U.S. presidential elections. By employing a sophisticated multi-stage approach to stratify and calibrate the data they were able to generate accurate forecasts of the elections. 
+
+The difference between the two studies illustrates that the methods for stratifying and calibrating the forecasts are the key to meaningful forecasts based on non-representative polling. 
+
+<!-- Methods on correcting polls
+A: or we move this to the methological section -->
+1. post stratification 
+2. raking
+3. multiple level regression + post stratification
+4. random sampling?
+
+<!-- papers on likely voter estimation (if we include it) -->
 
 Typical biases in polling (most important: non-response bias; sample-selection bias)
     Which biases do we expect in the data
     
+   
+
+# Data and Potential Biases
+
+<!-- raw data for vote intentions -->
+The forecasting project utilizes data from the Europulse Survey which is conducted quarterly by [Dalia Research](https://daliaresearch.com/) in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of about 11000 individuals, of which roughly 1900 were from Germany. The data is already pre-stratified by Dalia Research based on micro zensus data for age and gender. 
+
+<!-- data for post-stratification -->
+In order to post-stratify the data, we want to use different sources and compare their effect on the forecast: (1) exit poll data from Forschungsgruppe Wahlen or intratest dimap Institute (what), (2) representative election statistics and (3) microzensus data. 
+
+<!-- data for likely-voter debate -->
+
+General: include how did we get the data...
+
+(dicuss biases along the framework of potential sources of bias measurement and representativeness)
+
+
+
+# Weighting Approach
+<!-- too detailed for the introduction -->
+The general solution to non-representativeness is weighting. With online surveys you need to do a little more, instead of doing a stratification-design to draw from certain strata you need to define the strata afterwards and weight your responses accordingly (post-stratification). This can be done with Zensus data that gives you the frequencies of the strata in the population. Then, when you made your survey representative of the population, in a second step you do what all polls have to do. Account for self-selection and non-response bias and actual-voter bias: -> Therefore, weight according to likelihood of actual voting and party affiliation of certain strata. (Here I want to point out the two steps!)
+
+Now: Our actual project. In our forecasting project we want to use non-representative polling data from mobile-phone app users. (Obtained from Dalia research, citation blabla) So we have a raw survey and we want to weight it. We want to dicuss severall weighting methods. And we want to make a forecast of the Bundestagswahl. blalablablubb
+
 <!-- from Lumpley slides
 Nonresponse introduces statistical inefficiency
 •Nonresponse will also lead to biased estimates if the propensity to respond to the survey(or an item) is related to the attribute of interest
@@ -109,20 +140,7 @@ Poststratification
 
 Raking
 -> if only marginal distributions are known (as for example with the forschungsgruppe wahlen)
--->    
-
-# Data and Potential Biases
-
-The forecasting project utilizes data from the Europulse Survey which is conducted quarterly by Dalia Research in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of about 11000 individuals, of which roughly 1900 were from Germany. The data is already pre-stratified by Dalia Research based on micro zensus data for age and gender. 
-
-In order to post-stratify the data, we want to use different sources and compare their effect on the forecast: (1) exit poll data from Forschungsgruppe Wahlen or intratest dimap Institute (what), (2) representative election statistics and (3) microzensus data. 
-
-(how did we get the data...)
-
-(dicuss biases along the framework of potential sources of bias measurement and representativeness)
-
-# Weighting Approach
-
+--> 
 
 ## Approach number one
 
@@ -170,5 +188,103 @@ Summary of the core finding
 Further implications
 
 # References
+
+<!-- to be copied in the .bib file
+
+@article{Skibba.2016,
+ author = {Skibba, Ramin},
+ year = {2016},
+ title = {The polling crisis: How to tell what people really think},
+ keywords = {Bias (Epidemiology);Canada;Cell Phones/economics/utilization;Continental Population Groups/statistics {\&} numerical data;Data Collection/methods/standards;Datasets as Topic;Demography/statistics {\&} numerical data;Educational Status;Female;Humans;Internet/economics/utilization;Male;Politics;Public Opinion;Surveys and Questionnaires/economics/standards;Uncertainty;United Kingdom;United States},
+ urldate = {01.04.2017},
+ pages = {304--306},
+ volume = {538},
+ number = {7625},
+ journal = {Nature},
+ doi = {10.1038/538304a}
+}
+
+@article{Wang.2015,
+ abstract = {International Journal of Forecasting, Corrected proof. doi:10.1016/j.ijforecast.2014.06.001},
+ author = {Wang, Wei and Rothschild, David and Goel, Sharad and Gelman, Andrew},
+ year = {2015},
+ title = {Forecasting elections with non-representative polls},
+ keywords = {Election forecasting;Multilevel regression and poststratification;Non-representative polling},
+ urldate = {01.04.2017},
+ pages = {980--991},
+ volume = {31},
+ number = {3},
+ issn = {01692070},
+ journal = {International Journal of Forecasting},
+ doi = {10.1016/j.ijforecast.2014.06.001}
+}
+
+@article{Mellon.2015,
+ author = {Mellon, Jonathan and Prosser, Chris},
+ year = {2015},
+ title = {Investigating the Great British Polling Miss: Evidence from the British Election Study},
+ issn = {1556-5068},
+ journal = {SSRN Electronic Journal},
+ doi = {10.2139/ssrn.2631165}
+}
+
+@article{Keeter.2006,
+ abstract = {Declining contact and cooperation rates in random digit dial (RDD) national telephone surveys raise serious concerns about the validity of estimates drawn from such research. While research in the 1990s indicated that nonresponse bias was relatively small, response rates have continued to fall since then. The current study replicates a 1997 methodological experiment that compared results from a {\dq}Standard{\dq} 5-day survey employing the Pew Research Center's usual methodology with results from a {\dq}Rigorous{\dq} survey conducted over a much longer field period and achieving a significantly higher response rate. As with the 1997 study, there is little to suggest that unit nonresponse within the range of response rates obtained seriously threatens the quality of survey estimates. In 77 out of 84 comparable items, the two surveys yielded results that were statistically indistinguishable. While the {\dq}Rigorous{\dq} study respondents tended to be somewhat less politically engaged, they did not report consistently different behaviors or attitudes on other kinds of questions. With respect to sample composition, the Standard survey was closely aligned with estimates from the U.S. Census and other large government surveys on most variables. We extend our analysis of nonresponse to include comparisons with the hardest-to-reach respondents and with respondents who terminated the interview prior to completion.},
+ author = {Keeter, Scott and Kennedy, Courtney and Dimock, Michael and Best, Jonathan and Craighill, Peyton},
+ year = {2006},
+ title = {Gauging the Impact of Growing Nonresponse on Estimates from a National RDD Telephone Survey},
+ url = {http://www.jstor.org/stable/4124225},
+ pages = {759--779},
+ volume = {70},
+ number = {5},
+ issn = {15375331},
+ journal = {The Public Opinion Quarterly}
+}
+
+% This file was created with Citavi 5.5.0.1
+
+@article{Yeager.2011,
+ author = {Yeager, D. S. and Krosnick, J. A. and Chang, L. and Javitz, H. S. and Levendusky, M. S. and Simpser, A. and Wang, R.},
+ year = {2011},
+ title = {Comparing the Accuracy of RDD Telephone Surveys and Internet Surveys Conducted with Probability and Non-Probability Samples},
+ pages = {709--747},
+ volume = {75},
+ number = {4},
+ journal = {Public Opinion Quarterly},
+ doi = {10.1093/poq/nfr020}
+}
+
+@incollection{Holbrook.2007,
+ author = {Holbrook, Allyson L. and Krosnick, Jon A. and Pfent, Alison},
+ title = {The Causes and Consequences of Response Rates in Surveys by the News Media and Government Contractor Survey Research Firms},
+ pages = {499--528},
+ publisher = {{John Wiley {\&} Sons, Inc}},
+ isbn = {9780470173404},
+ editor = {Lepkowski, James M. and Tucker, Clyde and Brick, J. Michael and Leeuw, Edith D. de and Japec, Lilli and Lavrakas, Paul J. and Link, Michael W. and Sangster, Roberta L.},
+ booktitle = {Advances in Telephone Survey Methodology},
+ year = {2007},
+ address = {Hoboken, NJ, USA},
+ doi = {10.1002/9780470173404.ch23}
+}
+
+
+@article{Squire.1988,
+ author = {Squire, Peverill},
+ year = {1988},
+ title = {Why the 1936 Literary Digest Poll Failed},
+ url = {http://www.jstor.org/stable/2749114},
+ urldate = {01.04.2017},
+ pages = {125--133},
+ volume = {52},
+ number = {1},
+ issn = {15375331},
+ journal = {The Public Opinion Quarterly}
+}
+
+-->
+
+
+
+
 
 
