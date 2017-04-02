@@ -1,9 +1,10 @@
 ---
 title: |
-  | Non-representative polling
-  | Mobile user polling data for the German Federal Election
+  | Non-Representative Polling
+  | Mobile User Polling Data for the German Federal Election
 subtitle: "Election Forecasting Project"
 author: "Moritz Hemmerlein & Alexander Sacharow"
+abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representativ samples and likely-voter bias skew gathered information and require adequate weighting. This paper sets out to discuss approaches of weighting-design to adjust a non-representative online poll at hand on the upcoming german federal election."
 header-includes:
     - \usepackage{fancyhdr}
     - \pagestyle{fancy}
@@ -12,7 +13,7 @@ header-includes:
     - \fancyfoot[RE,RO]{Moritz Hemmerlein and Alexander Sacharow}
     - \usepackage{setspace}
     - \onehalfspacing
-date: "April 12, 2017"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   pdf_document:
     toc: true
@@ -66,7 +67,7 @@ The major aim of pollsters in using non-representative surveys is not genuinely 
 What make election forecasting distinct from other polling efforts is the problem of turnout. Hence, the 'true' population is not the actual electorate but the actual voters. Often elections are not necessarily decided by changes in voter's intention, but by who is going to the polls. For election forecasting we therefore need a coherent idea of likely voters.
 -->
 
-<!-- aim / question -->
+<!-- aim / question-->
 In our paper we want to explore and analyse different approaches to post-stratification for non-representative election polls of the German federal election 2017. We work with individual level data from mobile-phone app users. This raw data will then be post-stratified with different statistics about voters in Germany. Ultimately, we want to identify the most promising approach in order to generate an election forecast. As the ultimate election will only be after the end of the research, we can compare our post-stratified election forecast only with other forecasts of the 2017 federal election.
 
 <!-- LATER: here results of our paper -->
