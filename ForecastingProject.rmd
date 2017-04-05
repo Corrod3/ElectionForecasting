@@ -52,6 +52,7 @@ for (p in packages) {
 }
 rm(p, packages)
 ```
+\newpage
 
 # Introduction
 
@@ -181,6 +182,15 @@ What the result is of making it representative
 3. Election forecast weighted with zensus
 
 Compare the three different weighten approaches
+
+Comment Moritz: I think we have to weight the data with Zensus data in any case at least for gender and age as long we don't want to use the Dalia weights; then we can either use election statistics or exit poll data (that we don't have)
+
+My approach would be:
+
+1. Weighting with Zensus (accounts for self-selection of the survey)
+2. Different mixes of weighting with election statistics with education
+(accounts for likely voter bias)
+
 
 # Conclusion
 
