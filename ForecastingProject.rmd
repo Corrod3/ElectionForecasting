@@ -1,7 +1,7 @@
 ---
 title: |
   | Non-Representative Polling
-  | Mobile User Polling Data for the German Federal Election
+  | Mobile User Polling Data for the German Federal Election 2017
 subtitle: "Election Forecasting Project"
 author: "Moritz Hemmerlein & Alexander Sacharow"
 abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representativ samples and likely-voter bias skew gathered information and require adequate weighting. This paper sets out to discuss approaches of weighting-design to adjust a non-representative online poll at hand on the upcoming german federal election."
@@ -10,7 +10,7 @@ header-includes:
     - \pagestyle{fancy}
     - \fancyhead[LO,LE]{Non-represenative polling}
     - \fancyfoot[LO,LE]{Election Forecasting Project}
-    - \fancyfoot[RE,RO]{Moritz Hemmerlein and Alexander Sacharow}
+    - \fancyfoot[RE,RO]{Moritz Hemmerlein \\ Alexander Sacharow}
     - \usepackage{setspace}
     - \onehalfspacing
 date: "`r format(Sys.time(), '%d %B, %Y')`"
@@ -57,24 +57,32 @@ rm(p, packages)
 # Introduction
 
 <!--The problem -->
-The digitialization is challenging the way polling was done for many decades. Calling people on their landline phones has become difficult as response rates drop and households equiped with such phones are getting less and less [@Skibba.2016]. In response, polling institutions have resorted to other methods for polling ranging from face-to-face interviews to mobile phone calling. However, these methods either face similar difficulties to ensure representativeness or are too expensive for regular polling. In order to tackle the obstacles, pollsters have began to experiment with non-representative polling methods [@Wang.2015].
+The digitialization is challenging the way polling was done for many decades. Calling people on their landline phones has become difficult as response rates drop and households equiped with such phones are getting less and less [@Skibba.2016]. In response, polling institutions have resorted to other methods for polling ranging from face-to-face interviews to mobile phone calling. However, these methods either face similar difficulties to ensure representativeness or are too expensive for regular polling. In order to tackle these obstacles, pollsters have began to experiment with non-representative polling methods [@Wang.2015].
 
 <!-- The problem[cont.]
-A: above we talk about non-representative polling, now it was online polling. I streamlined the narrative. -->
-The major aim of pollsters in using non-representative surveys is not genuinely different from traditional goals of polls. The task is to gather responses which are representative for the population with regards to demographic and other criteria. The major difference is that representative cannot be ensured before the actual poll takes place, but is introduced ex-post. For example, in the case of online surveys, respondents are more likely to be from certain age groups or with a particular political background depending on the website where the survey is conducted. The non-representative poll can, however, be post-stratified in order to reflect the replies from the true population.
+A: above we talk about non-representative polling, now it was online polling. I streamlined the narrative.
+M: I tried to make the text more concise and shorter. 
+First, I talk about demographic representativeness for the whole population. 
+Then, second, I talk about representativeness for the population of actual voters. 
+I think intuitively this two-step approach is good because you first have to "sort out" a demographic group that is overrepresented and then you have to weigh those higher that are more likely to cast their vote. -->
+The eventual aim of pollsters in non-representative as well as with traditional polling is to collect sample data that reflects the view of a population of interest. The major difference between both methods is that with non-representative polls representativeness cannot be ensured before the actual poll takes place. For example, in the case of online surveys, respondents are more likely to be from certain age groups or with a particular political background depending on the website where the survey is conducted. The non-representative poll can, however, be statistically adjusted (post-stratification) to match the demographic composition of the population.
+
+Additionaly, non-representative polls carry another risk for forecasters. Pollsters are naturally not only interested in the population as such but in the population of actual voters. By the time a poll is made representative in demographic terms it is still in question whether it reflects the group of people who cast their ballots. This, however, is significant in order to avoid substantial bias in making a prediction. Traditional polling tries to account for this using so called likely voter models and could perform fairly well. [Reference: Gallup paper, likely voter method, post-stratification using exit polls] The evidence how non-representative surveys perform using such techniques is so far rather weak.
 
 <!-- A: maybe we should also address the likely voter problem / turnout here so we can justify to discuss two problems in the design paper, in the end of the discussion we can just say that for practical reasons we just used the self-reported intended vote participation for pracitcal reasons.
 
 What make election forecasting distinct from other polling efforts is the problem of turnout. Hence, the 'true' population is not the actual electorate but the actual voters. Often elections are not necessarily decided by changes in voter's intention, but by who is going to the polls. For election forecasting we therefore need a coherent idea of likely voters.
 -->
 
-<!-- aim / question-->
-In our paper we want to explore and analyse different approaches to post-stratification for non-representative election polls of the German federal election 2017. We work with individual level data from mobile-phone app users. This raw data will then be post-stratified with different statistics about voters in Germany. Ultimately, we want to identify the most promising approach in order to generate an election forecast. As the ultimate election will only be after the end of the research, we can compare our post-stratified election forecast only with other forecasts of the 2017 federal election.
+<!-- aim / question -->
+In the paper at hand we want to explore and analyse how techniques of post-stratification for non-representative polls perform. We work with individual level data from mobile-phone app users who were surveyed on their vote intention in the German federal election 2017. Applying post-stratification using data from the official German election statistics [And other data???] we account for both problems of demographic representativeness and likely voter bias. Comparing different combinations of strata (age, gender, education etc.) we aim to identify the most promising approach in order to generate an election forecast on the basis of non-representative raw data. As the ultimate election will only be after the end of research, we can compare our post-stratified election forecast only with other forecasts of the 2017 federal election.
 
 <!-- LATER: here results of our paper -->
 
 <!-- Structure  -->
-The paper is structured as follows: Chapter two will survey the literature on online polls, their representativeness and approaches to employ such data to forecast elections. Proceedingly, we present our data and discuss several issues of representativeness and measurement error that need to be accounted for. In chapter four we present two (or three) methods want to apply to weight our data at hand. Chapter five is presenting and dicussing our preliminary results. Chapter six concludes and gives an outlook on practical obstacles and methodological issues that our approach suffers from.
+The structure of the paper is as follows: Chapter two will survey the literature on online polls, their representativeness and approaches to employ such data to forecast elections. Proceedingly, we present our data and discuss several issues of representativeness and measurement error that need to be accounted for. In chapter four we present two (or three) methods we want to apply to weight our data at hand. Chapter five is presenting and dicussing our preliminary results. Chapter six concludes and gives an outlook on practical obstacles and methodological issues that our approach suffers from.
+
+<!-- At the moment the Introduction might be a little bit too long especially when results are included. But we can cut at the end. -->
 
 # Related Literature
 
