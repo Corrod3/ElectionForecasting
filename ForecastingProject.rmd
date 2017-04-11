@@ -11,6 +11,7 @@ header-includes:
     - \fancyhead[LO,LE]{Non-represenative polling}
     - \fancyfoot[LO,LE]{Election Forecasting Project}
     - \fancyfoot[RE,RO]{Moritz Hemmerlein \\ Alexander Sacharow}
+    - \usepackage{graphicx}
     - \usepackage{setspace}
     - \onehalfspacing
 date: "`r format(Sys.time(), '%d %B, %Y')`"
@@ -112,10 +113,33 @@ Typical biases in polling (most important: non-response bias; sample-selection b
 
 # Data and Potential Biases
 
-<!-- raw data for vote intentions -->
-The forecasting project utilizes data from the Europulse Survey which is conducted quarterly by [Dalia Research](https://daliaresearch.com/) in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of about 11000 individuals, of which roughly 1900 were from Germany. The data is already pre-stratified by Dalia Research based on micro zensus data for age and gender. 
+## Europuls Survey
 
+In this paper we are using data from [Dalia Research](https://daliaresearch.com/), an online polling firm who is conducting market and opinion research through smartphones exclusively. To ensure to collect data from a broad variety of target populations Dalia is using a diverse set of app and website categories such as sports, news, entertainment or games. To control how serious participants answer the survey an algorithms analyses the consistency and the response behaviour and computes a "trust score" to every respondent. Dalia praises its methodology as distinctively accounting for potential biases such as interviewer effect, social desirability bias or interviewer data entry errors. [Source Dalia Methodology PDF] 
 
+Our forecasting project utilizes data of Dalia Research's Europulse Survey which is conducted quarterly in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of about 11000 individuals, of which roughly 1900 were from Germany. The data is already pre-stratified by Dalia Research based on micro zensus data for age and gender. 
+
+The Europuls data is not particularly collected for election forecasting purposes but contains data on a variety of questions such as online behaviour, media consumption and personal views on political and societal development in the European Union and the country of origin. Moreover, the survey contains information on the respondents personal background, demographic data and his or her financial situation. These data can be utilized in order to improve the representativeness of the survey through weighting. This will be explained more detailed in Chapter four.
+
+The important variables collected in Europuls in order to utilize the data for election forecasting are likewise to traditional polling questions. First of all respondents are asked if and for which party they will vote in the upcoming election and for which party they voted in the previous election. Moreover, they are asked on the level of agreement with several political parties and the degree of certainty to cast a ballot, overall and for a particular party.
+
+## Potential Sources of Bias
+
+As with all surveys there are several sources of potential bias included in the methodology used by Dalia Research. Several of such issues that come from flawed measurement or representation of the surveyed population are listed in the figure below.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=5in]{SourcesOfSurveyError.png}
+  \caption{Potential sources of survey error [@Groves.2009]}
+\end{figure}
+
+With regard to measuring voters intention to vote for a particular party Europuls uses a similar approach as traditional surveys. As such it asks directly which party a respondent intents to vote for at the upcoming election. Whether such questions measure correctly the actual voting behaviour at the election day is questionable but does not differ from other polling methods of validity. Moreover, online surveys such as Europuls can reasonably claim to avoid other sources of measurement error such as social desirability bias or interviewer bias. Since such surveys are anonymous social pressure on the respondent is smaller and interaction with the interviewer can not bias the respond.
+
+Regarding representativeness online surveys such as Europuls are likely to have more 
+
+need to count NAs for relevant variables?
+
+## Data for Post-stratification and Weighting
 
 <!-- data for post-stratification -->
 In order to post-stratify the data, we want to use different sources and compare their effect on the forecast: (1) exit poll data from Forschungsgruppe Wahlen or intratest dimap Institute (what), (2) representative election statistics and (3) microzensus data. 
@@ -305,6 +329,18 @@ Further implications
  issn = {15375331},
  journal = {The Public Opinion Quarterly}
 }
+
+@book{Groves.2009,
+author = "Groves, Robert M. and Floyd J. Fowler Jr. and Mick P. Couper and James M.
+Lepkowski and Eleanor Singer and Roger Tourangeau",
+title = "Survey Methodology",
+publisher  = "John Wiley & Sons Inc",
+year = "2009",
+address = "New Jersey",
+edition = 2
+}
+
+
 
 -->
 
