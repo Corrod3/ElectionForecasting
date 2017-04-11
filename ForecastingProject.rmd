@@ -13,6 +13,7 @@ header-includes:
     - \fancyfoot[RE,RO]{Moritz Hemmerlein \\ Alexander Sacharow}
     - \usepackage{graphicx}
     - \usepackage{setspace}
+    - \usepackage{subfig}
     - \onehalfspacing
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
@@ -96,7 +97,7 @@ A: or we move this to the methological section -->
 
 But even if the problems of non-representative
 
-“‘Likely voter’ modelling is notoriously the secret-sauce aspect of polling,” says Kennedy Courtney Kennedy, director of survey research at the Pew Research Center in Washington DC (from @Skibba.2016)
+Likely voter modelling is notoriously the secret-sauce aspect of polling, says Kennedy Courtney Kennedy, director of survey research at the Pew Research Center in Washington DC (from @Skibba.2016)
 
 Typical biases in polling (most important: non-response bias; sample-selection bias)
     Which biases do we expect in the data
@@ -105,15 +106,15 @@ Typical biases in polling (most important: non-response bias; sample-selection b
 
 # Data and Potential Biases
 
-## Europuls Survey
+## Europulse Survey
 
-In this paper we are using data from [Dalia Research](https://daliaresearch.com/), an online polling firm who is conducting market and opinion research through smartphones exclusively. To ensure to collect data from a broad variety of target populations Dalia is using a diverse set of app and website categories such as sports, news, entertainment or games. To control how serious participants answer the survey an algorithms analyses the consistency and the response behaviour and computes a "trust score" to every respondent. Dalia praises its methodology as distinctively accounting for potential biases such as interviewer effect, social desirability bias or interviewer data entry errors. [Source Dalia Methodology PDF] 
+In this paper we are using data from [Dalia Research](https://daliaresearch.com/), an online polling firm who is conducting market and opinion research through smartphones exclusively. To ensure to collect data from a broad variety of target populations Dalia is using a diverse set of app and website categories such as sports, news, entertainment or games. To control how serious participants answer the survey an algorithms analyses the consistency and the response behaviour and computes a "trust score" to every respondent. Dalia praises its methodology as distinctively accounting for potential biases such as interviewer effect, social desirability bias or interviewer data entry errors. [@Dalia.2016] 
 
-Our forecasting project utilizes data of Dalia Research's Europulse Survey which is conducted quarterly in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of about 11000 individuals, of which roughly 1900 were from Germany. The data is already pre-stratified by Dalia Research based on micro zensus data for age and gender. 
+Our forecasting project utilizes data of Dalia Research's Europulse Survey which is conducted quarterly in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of about 11000 individuals, of which roughly 1900 were from Germany which is the fraction of respondents we will focus on in the following analysis. The data is already pre-stratified by Dalia Research based on micro zensus data for age and gender. 
 
-The Europuls data is not particularly collected for election forecasting purposes but contains data on a variety of questions such as online behaviour, media consumption and personal views on political and societal development in the European Union and the country of origin. Moreover, the survey contains information on the respondents personal background, demographic data and his or her financial situation. These data can be utilized in order to improve the representativeness of the survey through weighting. This will be explained more detailed in Chapter four.
+The Europulse data is not particularly collected for election forecasting purposes but contains data on a variety of questions such as online behaviour, media consumption and personal views on political and societal development in the European Union and the country of origin. Moreover, the survey contains information on the respondents personal background, demographic data and his or her financial situation. These data can be utilized in order to improve the representativeness of the survey through weighting. This will be explained more detailed in Chapter four.
 
-The important variables collected in Europuls in order to utilize the data for election forecasting are likewise to traditional polling questions. First of all respondents are asked if and for which party they will vote in the upcoming election and for which party they voted in the previous election. Moreover, they are asked on the level of agreement with several political parties and the degree of certainty to cast a ballot, overall and for a particular party.
+The variables collected in Europulse to use the data for election forecasting are similar to traditional polling questions. First of all respondents are asked if and for which party they will vote in the upcoming election and for which party they voted in the previous election. Moreover, they are asked on the level of agreement with several political parties and the degree of certainty to cast a ballot, overall and for a particular party.
 
 ## Potential Sources of Bias
 
@@ -121,16 +122,29 @@ As with all surveys there are several sources of potential bias included in the 
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=5in]{SourcesOfSurveyError.png}
+  \includegraphics[width=5in]{./Grafiken/SourcesOfSurveyError}
   \caption{Potential sources of survey error} 
 \end{figure}
 
-With regard to measuring voters intention to vote for a particular party Europuls uses a similar approach as traditional surveys. As such it asks directly which party a respondent intents to vote for at the upcoming election. Whether such questions measure correctly the actual voting behaviour at the election day is questionable but does not differ from other polling methods of validity. Moreover, online surveys such as Europuls can reasonably claim to avoid other sources of measurement error such as social desirability bias or interviewer bias. Since such surveys are anonymous social pressure on the respondent is smaller and interaction with the interviewer can not bias the respond.
+With regard to measuring voters intention to vote for a particular party, Europulse uses a similar approach as traditional surveys. As such it asks directly which party a respondent intents to vote for at the upcoming election. Whether such questions measure correctly the actual voting behaviour at the election day is questionable but the approach does not differ from other polling methods to ensure validity. Moreover, online surveys such as Europulse can reasonably claim to avoid other sources of measurement error such as social desirability bias or interviewer bias. Since such surveys are often anonymous social pressure on the respondent is smaller and interaction with the interviewer can not bias the respond.
 
-Regarding representativeness online surveys such as Europuls are likely to have more 
+Regarding representativeness the Europulse survey is exposed to issues that face-to-face or RDD interviews do not have. First of all, Europulse' framework does not select participants completely random but offers visitors of certain websites or app-users the opportunity to participate the survey. This approach carries various risk to representativeness. With regards to population-coverage the entire group of users across all survey plattforms should be representative to the German population. However, this ist likely not to be the case for Europulse. Since online users in general tend to be younger than the German average while the voting population is older than average the Europulse sample is likely to be strongly biased with regards to the voting population. 
 
-need to count NAs for relevant variables?
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Internet usage by   age]{\includegraphics[width=0.4\textwidth]{./Grafiken/InternetnutzerAlter.png}}
+\hspace{0.05\textwidth}
+  \subfloat[Voter turnout by age]{\includegraphics[width=0.4\textwidth]{./Grafiken/WahlbeteiligungAlter.png}}
+\end{figure}
 
+In addition, through self-selection the sample will be most likely be biased towards the sub-sample of the plattform users that is more prone to surveys in general, e.g. people with higher education or scientific interest. []
+
+
+
+Dalia Research tries to account for such problems using a two-step approach. Using the self-reported demographic information they stratify their sample for different age groups and gender in order to render it representative for the German population. In a second step they use data from the German Census an compute weights for combined cluster of age, gender, education and whether the respondent lives in an urban or rural area. These weights can finally be used to post-stratify the sample to match the demographic composition of the population.
+
+Despite these efforts it is questionable if the data can match scientific standards of representativeness. Most important, since it is not conducted particularly as an election poll, it is likely to come with several other biases such as likely voter bias or late swing. [@Mellon.2015] Hence, in order to utilize the data to election forecasting further weighting and post-stratification will be conducted. Different methods to do so and their technical details will be explained in the following.
+ 
 ## Data for Post-stratification and Weighting
 
 <!-- data for post-stratification -->
@@ -145,6 +159,8 @@ General: include how did we get the data...
 
 
 # Methodology
+
+<!-- Thought: Non-representative sampling is possible but requires large samle sizes. E.g. X-Box paper. Out sample has 1500 observations: therefore methods such as post-stratification with many post-stratifying variables not possible -->
 
 
 1. Weighting
