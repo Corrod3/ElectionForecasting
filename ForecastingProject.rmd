@@ -169,23 +169,15 @@ DIESE GRAFIKEN NOCH TEXTLICH EINBAUEN
 
 # Methodology
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 We want to employ two approaches generate election forecasts from the data we have. In the first approach the survey data is adjusted in a two step procedure: First, the representativeness of survey data is increased by finding appropiate weights. Then a likely voting model is used to get to the election forecast. Our second approach does this in one step: The survey data will be directly adjusted to the likely voter population based on exit poll data from the last German federal election. 
 
 In order to follow both procedures, we need methods to compute weights for sub-groups of the survey sample aiming at increased representativeness. A classical way to get these weights is *raking*. With raking weights are assigned to each respondent in order to match the marginal distribution of characteristics in the 'true' population. For example, if we know the distribution of education level and employment status in the population, for each we can compute a weight so that the weighted survey sample has the same distribution of these characteristics as the 'true' population. Basically, raking computes a joint distributions for each combination of characteristics. 
 
-<<<<<<< HEAD
 In formal terms, we can describe each combination of an individual and a characteristic with $x_{i,j} \in \{0,1\}$ where $i$ stands for the individual and $j$ for the characteristic. To illustrate, if $x_{i,j} = 1$ an individual may be female and if $x_{i,j} = 0$ an individual is not female. Hence, each characteristic is modeled with a binary variable. $c_j$ expresses the prevailance of a characteristic in the population and raking estimates the weights $w_i$ such that:
 
 \begin{equation}
 c_j = \frac{\sum_{i = 1}^{n}w_i x_{i,j}}{\sum_{i = 1}^{n}w_i} \forall j
 \end{equation}
-=======
-
->>>>>>> origin/master
 
 The weights can than be used to compute the raking estimates for each observation in the survey $y$:
 
