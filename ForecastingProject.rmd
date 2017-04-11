@@ -4,7 +4,7 @@ title: |
   | Mobile User Polling Data for the German Federal Election 2017
 subtitle: "Election Forecasting Project"
 author: "Moritz Hemmerlein & Alexander Sacharow"
-abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representativ samples and likely-voter bias skew gathered information and require adequate weighting. This paper sets out to discuss approaches of weighting-design to adjust a non-representative online poll at hand on the upcoming german federal election."
+abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representativ samples and likely-voter bias skew gathered information and require adequate adjustment. This paper sets out to discuss different approaches to adjust a non-representative online polls on the upcoming german federal election and how they can be applied to a poll conducted with mobile phone app users."
 header-includes:
     - \usepackage{fancyhdr}
     - \pagestyle{fancy}
@@ -57,53 +57,43 @@ rm(p, packages)
 # Introduction
 
 <!--The problem -->
-The digitialization is challenging the way polling was done for many decades. Calling people on their landline phones has become difficult as response rates drop and households equiped with such phones are getting less and less [@Skibba.2016]. In response, polling institutions have resorted to other methods for polling ranging from face-to-face interviews to mobile phone calling. However, these methods either face similar difficulties to ensure representativeness or are too expensive for regular polling. In order to tackle these obstacles, pollsters have began to experiment with non-representative polling methods [@Wang.2015].
+The digitialization is challenging the way polling was done for many decades. Calling people on their landline phones has become difficult as response rates dropped and households equiped with landline phones are getting less and less [@Skibba.2016]. In response, polling institutions have resorted to other methods for polling ranging from face-to-face interviews to mobile phone calling. However, these methods either face similar difficulties to ensure representativeness or are too expensive for regular polling. In order to tackle these obstacles, pollsters have began to experiment with non-representative polling methods [@Wang.2015].
 
-<!-- The problem[cont.]
-A: above we talk about non-representative polling, now it was online polling. I streamlined the narrative.
-M: I tried to make the text more concise and shorter. 
-First, I talk about demographic representativeness for the whole population. 
-Then, second, I talk about representativeness for the population of actual voters. 
-I think intuitively this two-step approach is good because you first have to "sort out" a demographic group that is overrepresented and then you have to weigh those higher that are more likely to cast their vote. -->
-The eventual aim of pollsters in non-representative as well as with traditional polling is to collect sample data that reflects the view of a population of interest. The major difference between both methods is that with non-representative polls representativeness cannot be ensured before the actual poll takes place. For example, in the case of online surveys, respondents are more likely to be from certain age groups or with a particular political background depending on the website where the survey is conducted. The non-representative poll can, however, be statistically adjusted (post-stratification) to match the demographic composition of the population.
+<!-- The problem [cont.] -->
+The eventual aim of pollsters in non-representative as well as traditional polling is to collect sample data that reflects the view of a population of interest. The major difference between both methods is that with non-representative polls representativeness cannot be ensured before the actual poll takes place. For example, in the case of online surveys, respondents are more likely to be from certain age groups or with a particular political background depending on the website where the survey is conducted. The non-representative poll can, however, be statistically adjusted (post-stratification) to match the demographic composition of the population.
 
-Additionaly, non-representative polls carry another risk for forecasters. Pollsters are naturally not only interested in the population as such but in the population of actual voters. By the time a poll is made representative in demographic terms it is still in question whether it reflects the group of people who cast their ballots. This, however, is significant in order to avoid substantial bias in making a prediction. Traditional polling tries to account for this using so called likely voter models and could perform fairly well. [Reference: Gallup paper, likely voter method, post-stratification using exit polls] The evidence how non-representative surveys perform using such techniques is so far rather weak.
-
-<!-- A: maybe we should also address the likely voter problem / turnout here so we can justify to discuss two problems in the design paper, in the end of the discussion we can just say that for practical reasons we just used the self-reported intended vote participation for pracitcal reasons.
-
-What make election forecasting distinct from other polling efforts is the problem of turnout. Hence, the 'true' population is not the actual electorate but the actual voters. Often elections are not necessarily decided by changes in voter's intention, but by who is going to the polls. For election forecasting we therefore need a coherent idea of likely voters.
--->
+Additionaly, non-representative, like traditional election polls, face a another problem. Pollsters are naturally not only interested in the population as such but in the population of actual voters. By the time a poll is made representative in demographic terms it is still in question whether it reflects the group of people who cast their ballots. This is, however, crucial in order to make an accurate prediction. Traditional polling tries to account for this using likely voter models and could perform fairly well. [Reference: Gallup paper, likely voter method, post-stratification using exit polls] Non-representative surveys will also have to be adjusted to actual voting population in order to provide accurate predictions.
 
 <!-- aim / question -->
-In the paper at hand we want to explore and analyse how techniques of post-stratification for non-representative polls perform. We work with individual level data from mobile-phone app users who were surveyed on their vote intention in the German federal election 2017. Applying post-stratification using data from the official German election statistics [And other data???] we account for both problems of demographic representativeness and likely voter bias. Comparing different combinations of strata (age, gender, education etc.) we aim to identify the most promising approach in order to generate an election forecast on the basis of non-representative raw data. As the ultimate election will only be after the end of research, we can compare our post-stratified election forecast only with other forecasts of the 2017 federal election.
+In the paper at hand we want to explore and analyse how different approaches to adjust non-representative polls perform. Our first approach will be a two step procedure where the polling data is first made representative of the population and then likely voter methods are used to resemble the probable voters population. Our second approach attempts to combine both steps into one by post-stratifying the non-representative poll with exit polls and voting statistics from previous elections. For this we work with individual level data from mobile-phone app users who were surveyed on their vote intention in the German federal election 2017. As the ultimate election will only be after the end of research, we use other forecasts of the 2017 federal election as a benchmark.
 
 <!-- LATER: here results of our paper -->
 
 <!-- Structure  -->
-The structure of the paper is as follows: Chapter two will survey the literature on online polls, their representativeness and approaches to employ such data to forecast elections. Proceedingly, we present our data and discuss several issues of representativeness and measurement error that need to be accounted for. In chapter four we present two (or three) methods we want to apply to weight our data at hand. Chapter five is presenting and dicussing our preliminary results. Chapter six concludes and gives an outlook on practical obstacles and methodological issues that our approach suffers from.
-
-<!-- At the moment the Introduction might be a little bit too long especially when results are included. But we can cut at the end. -->
+The structure of the paper is as follows: Chapter two will survey the literature on non-reprentative polls and approaches to employ such data to forecast elections. Subsequently, we present our data and discuss possible problems with this data set. In chapter four we present two approaches we want to apply to adjust our data at hand. 
+<!-- To be included later: Chapter five is presenting and dicussing our preliminary results. Chapter six concludes and gives an outlook on practical obstacles and methodological issues that our approach suffers from. -->
 
 # Related Literature
 
 <!-- problems of traditional polling -->
-Traditional polling and in particular election polling has relied heavily on telephone surveys for the last decades. To ensure representativeness the standard was randomized digit dialing (RDD). The selection of random respondents was intended to eliminate the sample bias of the survey. However, for several reasons this approach has become unreliables. First, response rates have declined heavily [@Keeter.2006; @Holbrook.2007]. XXX reported that the response rate is down to X% in XXXX, compared to X% in XXXX or even X% in XXXX. <!-- add reasons here --> This induces a non-response bias to polls which cannot be handled with classical approaches anymore. Second, more and more people don't get landlines telephones after moving to new places or just give them up as mobile phone and other means of communication have increasingly become popular.<!-- source --> This induces a sample bias which the RDD approach intended to eliminate. How problematic this can be was famously illustrated by the Literature Digest poll in 1936, which failed to realized its biased sample [@Squire.1988]. But the problem still exists, as non-representatives was for example a major problem when forecast the UK Gereral elections in 2015 [@Mellon.2015].
+Traditional polling and in particular election polling has relied heavily on telephone surveys for the last decades. To ensure representativeness the standard was randomized digit dialing (RDD). The selection of random respondents was intended to eliminate the sample bias of the survey. However, for several reasons this approach has become unreliables. First, response rates have declined heavily [@Keeter.2006; @Holbrook.2007]. @PewResearchCenter.2012  reported that in the U.S. the response rate was down to 9% in 2012, compared to 36% in 1997. This is mainly a result of technical changes like the possible identification of caller. This induces a non-response bias to polls which cannot be handled with classical approaches anymore. Second, more and more people don't get landlines telephones after moving to new places or just give them up as mobile phone and other means of communication have increasingly become popular. This induces a sample bias which the RDD approach intended to eliminate. How problematic this can be was famously illustrated by the Literature Digest poll in 1936, which failed to realized its biased sample [@Squire.1988]. But the problem still exists, as non-representatives was for example a major problem when forecast the UK General elections in 2015 [@Mellon.2015].
 
 <!-- Papers on non-representative polling -->
-Can non-representative polls fix this? A study by @Yeager.2011 is rather pessimistic. They have compared telephone and online polls and argued that despite the problems of phone surveys they are still more accurate then online polls. However, they used only simple post-stratification methods. <!-- a few more words on the study here-->
+Can non-representative polls fix this? A study by @Yeager.2011 is rather pessimistic. They have compared telephone and online polls and argued that despite the problems of phone surveys they are still more accurate then online polls. However, their criticism mainly highlights the implication of non-probabilities samples which is a problem for many online survey. If the problem non-probability samples is addressed in online survey, they can perform as accurate as phone surveys.
 
-@Wang.2015 in contrast are much more optimist about the possiblities of non-representative polling. They used polling results from XBox users which were highly unrepresentative of the population to forecast the 2012 U.S. presidential elections. By employing a sophisticated multi-stage approach to stratify and calibrate the data they were able to generate accurate forecasts of the elections. 
-
-The difference between the two studies illustrates that the methods for stratifying and calibrating the forecasts are the key to meaningful forecasts based on non-representative polling. 
+@Wang.2015 in contrast are much more optimist about the possiblities of non-representative polling. They used polling results from XBox users which were highly unrepresentative of the population to forecast the 2012 U.S. presidential elections. By employing a sophisticated multi-stage approach to stratify and calibrate the data they were able to generate accurate forecasts of the elections. Hence, methods for stratifying and calibrating the forecasts are the key to meaningful forecasts based on non-representative polling. 
 
 <!-- Methods on correcting polls
 A: or we move this to the methological section -->
+
 1. post stratification 
 2. raking
 3. multiple level regression + post stratification
 4. random sampling?
 
 <!-- papers on likely voter estimation (if we include it) -->
+
+“‘Likely voter’ modelling is notoriously the secret-sauce aspect of polling,” says Kennedy Courtney Kennedy, director of survey research at the Pew Research Center in Washington DC (from @Skibba.2016)
 
 Typical biases in polling (most important: non-response bias; sample-selection bias)
     Which biases do we expect in the data
@@ -215,6 +205,18 @@ Further implications
 # References
 
 <!-- to be copied in the .bib file
+% This file was created with Citavi 5.5.0.1
+
+@misc{PewResearchCenter.2012,
+ date = {2012},
+ title = {Assessing the Representativeness of Public Opinion Surveys},
+ url = {http://www.people-press.org/files/legacy-pdf/Assessing%20the%20Representativeness%20of%20Public%20Opinion%20Surveys.pdf},
+ institution = {{Pew Research Center}}
+}
+
+
+
+
 
 @article{Skibba.2016,
  author = {Skibba, Ramin},
