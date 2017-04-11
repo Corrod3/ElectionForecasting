@@ -162,13 +162,6 @@ DaliaDE <- filter(DaliaDE,
 # residency
 plot(DaliaDE$residency)
 
-# vote participation intention (turnout prediction?)
-#ggplot(DaliaDE, aes(x=vote_next_national_election)) +
-#    geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
-#    scale_y_continuous(labels=percent) + 
-#    ylab("Percentage of total respondents") +
-#    xlab("Voting behavior") 
-
 # create binary turnout variable
 DaliaDE$turnout_exp <- DaliaDE$vote_next_national_election
 DaliaDE$turnout_exp <- plyr::mapvalues(DaliaDE$turnout_exp, from = c("I'm not eligible to vote","No, I will definitely not vote", 
@@ -179,34 +172,42 @@ DaliaDE$turnout_exp <- plyr::mapvalues(DaliaDE$turnout_exp, from = c("I'm not el
 
 ### Tables ###
 # Set general table setting
-sjp.setTheme(geom.label.size = 3,
-             axis.textsize = 0.9)
+
+sjp.setTheme(geom.outline.color = "cadetblue",
+             geom.label.size = 3.3,
+             geom.label.color = "black",
+             title.color = "black", 
+             title.size = 1.3, 
+             axis.angle.x = 45, 
+             axis.textcolor = "black",
+             base = theme_classic())
 
 # Self-reported turnout
 sjp.xtab(DaliaDE$turnout_exp, DaliaDE$gender,
-         title = "Expected weighted turnout by gender", 
-         axis.titles = c("Vote intent by gender","Expected federal election turnout"),
-         axis.labels = c("No, I will (probably) not vote","Yes, I will (probably) vote"),
-         geom.size = 0.5, legend.title = "Gender", legend.labels = c("Male", "Female"), 
-         coord.flip=TRUE, hjust = "top", show.n = FALSE)
+         title = "Expected turnout by gender", 
+         axis.titles = c("Self-reported turnout by gender", "Expected federal election turnout"),
+         axis.labels = c("No, I will (probably) not vote", "Yes, I will (probably) vote"),
+         geom.size = 0.5, 
+         geom.colors = c("cadetblue","cadetblue3") ,
+         legend.title = "Gender", 
+         legend.labels = c("Male", "Female"), 
+         coord.flip=TRUE, 
+         hjust = "top", 
+         show.total = FALSE,
+         show.n = FALSE)
         
 # with Dalia weights
 sjp.xtab(DaliaDE$turnout_exp, DaliaDE$gender, weight.by=DaliaDE$weight,
          title = "Expected turnout by gender (unweighted)", 
          axis.titles = c("Vote intent by gender","Expected federal election turnout"),
-         axis.labels = c("No, I will (probably) not vote","Yes, I will (probably) vote"),
+         axis.labels = c("No, I will (probably) not vote", "Yes, I will (probably) vote"),
          geom.size = 0.5, legend.title = "Gender", legend.labels = c("Male", "Female"), 
          coord.flip=TRUE, hjust = "top",show.n = FALSE)
 
-# include confidence intervals?
 # why are the turnouts so high? What can we do about that?
 # probably (self-)selection bias within demographic groups 
 
-# suggestion: weighting the answers with demographic likelihood of voting -> Exit Polls
-# if someone of a demographic group which goes very often to election says "Yes, I will vote"
-# his answer should be weighted higher than answer of other demographic groups whos turnout is lower
-
-# last election vote
+#last election vote
 
 #ggplot(filter(DaliaDE,  
 #              voted_party_last_election_de != "No vote" & 
@@ -226,10 +227,9 @@ DaliaDE_temp$voted_party_last_election_de <- factor(DaliaDE_temp$voted_party_las
 # last election vote without weights
 sjp.frq(DaliaDE_temp$voted_party_last_election_de,
         title = "Party vote share last federal election (unweighted)", 
-        axis.title = c("Party vote share","Parties"),
+        axis.title = c("Party vote share", "Parties"),
         sort.frq = c("asc"),
         geom.size = 0.5,
-  #      show.ci = TRUE, # confidence intervals?? how calculated?
         coord.flip=TRUE,
         show.axis.values = FALSE)
 
@@ -246,26 +246,16 @@ sjp.frq(DaliaDE_temp$voted_party_last_election_de,
 
 # FAILURE: labels are completely mixed up after weighting
 
-
-# vote intention next election (BT 2017)
-# ggplot(filter(DaliaDE,vote_nextelection_de != "I would not vote" ),
-#        aes(x=vote_nextelection_de)) +
-#   geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
-#   coord_flip() + # flip sides
-#   scale_y_continuous(labels=scales::percent) + # percentages on y axis
-#   ylab("Share of total voters") +
-#   xlab("Parties") 
-
 DaliaDE_temp <- filter(DaliaDE, vote_nextelection_de != "No vote")
 DaliaDE_temp$vote_nextelection_de <- factor(DaliaDE_temp$vote_nextelection_de)
 
 sjp.frq(DaliaDE_temp$vote_nextelection_de,
-        title = "Vote at next federal election (unweighted)", 
-        axis.title = c("Party vote share","Parties"),
+        title = "Vote next federal election (unweighted)", 
+        axis.title = c("Parties", "Party vote share"),
         sort.frq = c("asc"),
-        geom.size = 0.6,
- #      show.ci = TRUE, # confidence intervals?? how calculated?
-        coord.flip=TRUE,
+        geom.size = 0.5,
+        geom.colors = "cadetblue",
+        coord.flip = TRUE,
         show.axis.values = FALSE)
 
 sjp.frq(DaliaDE_temp$vote_nextelection_de,
@@ -273,14 +263,14 @@ sjp.frq(DaliaDE_temp$vote_nextelection_de,
         axis.title = c("Party vote share","Parties"),
         sort.frq = c("asc"),
         geom.size = 0.6,
-        #      show.ci = TRUE, # confidence intervals?? how calculated?
         coord.flip=TRUE,
         show.axis.values = FALSE,
         weight.by = DaliaDE_temp$weight,
         title.wtd.suffix = " (weighted)")
-# mit weights verschieben sich wieder die label -> schei?e
+# mit weights verschieben sich wieder die label -> scheisse
 
 rm(DaliaDE_temp)
+
 
 # Party ranking ################################################################
 # comment to Dalia: Include in ranking: I prefer not to vote 
