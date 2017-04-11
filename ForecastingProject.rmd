@@ -147,9 +147,13 @@ General: include how did we get the data...
 
 # Methodology
 
-We want to employ two approaches to correct for the non-representatives of our election forecasting data. In the first approach the survey data is first corrected to be representative of the population and then the likelihood of voting is considered to arrive at an election forecast. The second approach the survey data is directly adjusted to the likely voter population based on exit poll data from the last German federal election. Both procedures we need methods to assign weights to sub-groups in the survey sample.
+We want to employ two approaches generate election forecasts from the data we have. In the first approach the survey data is adjusted in a two step procedure: First, the representativeness of survey data is increased by finding appropiate weights. Then a likely voting model is used to get to the election forecast. Our second approach does this in one step: The survey data will be directly adjusted to the likely voter population based on exit poll data from the last German federal election. 
 
-A classical way to correct non-representativeness is *raking*. With raking weights are assigned to each respondent in order to match the marginal distribution of characteristics in the 'true' population. For example, if we know the distribution of education level and employment status in the population, for each we can compute a weight so that the weighted survey sample has the same distribution of these characteristics as the 'true' population. Raking assumes that the joint distributions of the characteristics are not known. They are computed iterat
+In order to follow both procedures, we need methods to compute weights for sub-groups of the survey sample aiming at increased representativeness. A classical way to get these weights is *raking*. With raking weights are assigned to each respondent in order to match the marginal distribution of characteristics in the 'true' population. For example, if we know the distribution of education level and employment status in the population, for each we can compute a weight so that the weighted survey sample has the same distribution of these characteristics as the 'true' population. Basically, raking computes a joint distributions for each combination of characteristics. Formally we can express raking weights with:
+
+<!-- \begin{} -->
+
+
 
 attempts to weight a survey to match the marginal distributions of characteristics in the population. 
 assumes the marginal distribution of characteristics is known for the population. This is often the case with agehe age distribution and gender distribution in the population, but not the distribution of the combination of both features,  
