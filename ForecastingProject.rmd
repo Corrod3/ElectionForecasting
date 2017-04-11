@@ -115,6 +115,8 @@ Typical biases in polling (most important: non-response bias; sample-selection b
 <!-- raw data for vote intentions -->
 The forecasting project utilizes data from the Europulse Survey which is conducted quarterly by [Dalia Research](https://daliaresearch.com/) in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research. Each wave consists of about 11000 individuals, of which roughly 1900 were from Germany. The data is already pre-stratified by Dalia Research based on micro zensus data for age and gender. 
 
+
+
 <!-- data for post-stratification -->
 In order to post-stratify the data, we want to use different sources and compare their effect on the forecast: (1) exit poll data from Forschungsgruppe Wahlen or intratest dimap Institute (what), (2) representative election statistics and (3) microzensus data. 
 
