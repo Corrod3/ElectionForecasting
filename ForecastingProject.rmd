@@ -138,9 +138,7 @@ Regarding representativeness the Europulse survey is exposed to issues that face
   \subfloat[Voter turnout by age]{\includegraphics[width=0.4\textwidth]{./Grafiken/WahlbeteiligungAlter.png}}
 \end{figure}
 
-In addition, through self-selection the sample will be most likely be biased towards the sub-sample of the plattform users that is more prone to surveys in general, e.g. people with higher education or scientific interest. []
-
-
+In addition, through self-selection the sample will be most likely be biased towards the sub-sample of the plattform users that is more prone to surveys in general, e.g. people with higher education or scientific interest. [Source?]
 
 Dalia Research tries to account for such problems using a two-step approach. Using the self-reported demographic information they stratify their sample for different age groups and gender in order to render it representative for the German population. In a second step they use data from the German Census an compute weights for combined cluster of age, gender, education and whether the respondent lives in an urban or rural area. These weights can finally be used to post-stratify the sample to match the demographic composition of the population.
 
@@ -148,28 +146,46 @@ Despite these efforts it is questionable if the data can match scientific standa
  
 ## Data for Post-stratification and Weighting
 
-<!-- data for post-stratification -->
-In order to post-stratify the data, we want to use different sources and compare their effect on the forecast: (1) exit poll data from Forschungsgruppe Wahlen or intratest dimap Institute (what), (2) representative election statistics and (3) microzensus data. 
+The data used for post-stratification and weighting come from several sources. To adjust our sample to demographic composition of the German population we use data of the German [Zensus 2011](https://www.zensus2011.de/DE/Home/home_node.html). The data is freely available and we obtained combined frequencies for characteristics such as age, gender, education, employment status and confession. The Census claims to reflect the actual demgraphic distibution of the German population and hence is suitable in order to post-stratify our sample to demographic criteria.
 
-<!-- data for likely-voter debate -->
+Furthermore, we collected data from election polls conducted by Forschungsgruppe Wahlen e.V., Infratest dimap and from the official German election statistics [@KAS.2013]. While the latter contains only information on turnout and the demographic dimensions age and gender, Forschungsgruppe Wahlen e.V. has also issued election results and turnout along groups with different education, different employment status and confession. Such data the closes estimate of the actual voting population and their voting behaviour across demographic groups and across the spectrum of political parties. We will employ such data to account for likely voter bias in the Europulse data at hand.
 
-General: include how did we get the data...
+<!-- more data could be obtained form ALLBUS social survey? -->
 
-(dicuss biases along the framework of potential sources of bias measurement and representativeness)
+DIESE GRAFIKEN NOCH TEXTLICH EINBAUEN
 
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\textwidth]{./Grafiken/VoteNextElection}
+  \caption{Federal election 2017 vote intent (Unweighted Europulse)}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\textwidth]{./Grafiken/TurnoutByGender}
+  \caption{Self-reported turnout (Unweighted Europulse)}
+\end{figure}
 
 
 # Methodology
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 We want to employ two approaches generate election forecasts from the data we have. In the first approach the survey data is adjusted in a two step procedure: First, the representativeness of survey data is increased by finding appropiate weights. Then a likely voting model is used to get to the election forecast. Our second approach does this in one step: The survey data will be directly adjusted to the likely voter population based on exit poll data from the last German federal election. 
 
 In order to follow both procedures, we need methods to compute weights for sub-groups of the survey sample aiming at increased representativeness. A classical way to get these weights is *raking*. With raking weights are assigned to each respondent in order to match the marginal distribution of characteristics in the 'true' population. For example, if we know the distribution of education level and employment status in the population, for each we can compute a weight so that the weighted survey sample has the same distribution of these characteristics as the 'true' population. Basically, raking computes a joint distributions for each combination of characteristics. 
 
+<<<<<<< HEAD
 In formal terms, we can describe each combination of an individual and a characteristic with $x_{i,j} \in \{0,1\}$ where $i$ stands for the individual and $j$ for the characteristic. To illustrate, if $x_{i,j} = 1$ an individual may be female and if $x_{i,j} = 0$ an individual is not female. Hence, each characteristic is modeled with a binary variable. $c_j$ expresses the prevailance of a characteristic in the population and raking estimates the weights $w_i$ such that:
 
 \begin{equation}
 c_j = \frac{\sum_{i = 1}^{n}w_i x_{i,j}}{\sum_{i = 1}^{n}w_i} \forall j
 \end{equation}
+=======
+
+>>>>>>> origin/master
 
 The weights can than be used to compute the raking estimates for each observation in the survey $y$:
 
