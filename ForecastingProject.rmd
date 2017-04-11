@@ -94,6 +94,8 @@ A: or we move this to the methological section -->
 
 <!-- papers on likely voter estimation (if we include it) -->
 
+But even if the problems of non-representative
+
 “‘Likely voter’ modelling is notoriously the secret-sauce aspect of polling,” says Kennedy Courtney Kennedy, director of survey research at the Pew Research Center in Washington DC (from @Skibba.2016)
 
 Typical biases in polling (most important: non-response bias; sample-selection bias)
@@ -142,7 +144,8 @@ General: include how did we get the data...
 
 
 
-# Weighting Approach
+# Methodology
+
 
 1. Weighting
 2. Simple use of self-reported turnout? (Gallup paper: distinguish deterministic and probabilistic methods)
