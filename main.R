@@ -43,7 +43,7 @@ try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/
 try(setwd("C:\\Users\\Moritz\\Desktop\\ElectionForecasting"), silent = TRUE)
 
 # Collect packages/libraries we need:
-packages <- c("readxl", "dplyr", "ggplot2", "tidyr" ,"reshape2", "scales", "survey", "sjPlot", "sjmisc")
+packages <- c("readxl", "dplyr", "ggplot2", "tidyr", "reshape2", "scales", "survey", "sjPlot", "sjmisc")
 # package and why it is needed
 # readxl: import excel files
 # dyplyr: data manipulation

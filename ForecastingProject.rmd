@@ -127,8 +127,12 @@ General: include how did we get the data...
 
 
 # Weighting Approach
+
+1. Weighting
+2. Simple use of self-reported turnout? (Gallup paper: distinguish deterministic and probabilistic methods)
+
 <!-- too detailed for the introduction -->
-The general solution to non-representativeness is weighting. With online surveys you need to do a little more, instead of doing a stratification-design to draw from certain strata you need to define the strata afterwards and weight your responses accordingly (post-stratification). This can be done with Zensus data that gives you the frequencies of the strata in the population. Then, when you made your survey representative of the population, in a second step you do what all polls have to do. Account for self-selection and non-response bias and actual-voter bias: -> Therefore, weight according to likelihood of actual voting and party affiliation of certain strata. (Here I want to point out the two steps!)
+The general solution to non-representativeness is weighting. With online surveys you need to do a little more, instead of doing a stratification-design to draw from certain strata you need to define the strata afterwards and weight your responses accordingly (post-stratification). This can be done with Census data that gives you the frequencies of the strata in the population. Then, when you made your survey representative of the population, in a second step you do what all polls have to do. Account for self-selection and non-response bias and actual-voter bias: -> Therefore, weight according to likelihood of actual voting and party affiliation of certain strata. (Here I want to point out the two steps!)
 
 Now: Our actual project. In our forecasting project we want to use non-representative polling data from mobile-phone app users. (Obtained from Dalia research, citation blabla) So we have a raw survey and we want to weight it. We want to dicuss severall weighting methods. And we want to make a forecast of the Bundestagswahl. blalablablubb
 
