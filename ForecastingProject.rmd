@@ -117,12 +117,12 @@ The important variables collected in Europuls in order to utilize the data for e
 
 ## Potential Sources of Bias
 
-As with all surveys there are several sources of potential bias included in the methodology used by Dalia Research. Several of such issues that come from flawed measurement or representation of the surveyed population are listed in the figure below.
+As with all surveys there are several sources of potential bias included in the methodology used by Dalia Research. Several of such issues that come from flawed measurement or representation of the surveyed population are listed in the figure below [@Groves.2009].
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=5in]{SourcesOfSurveyError.png}
-  \caption{Potential sources of survey error [@Groves.2009]}
+  \caption{Potential sources of survey error} 
 \end{figure}
 
 With regard to measuring voters intention to vote for a particular party Europuls uses a similar approach as traditional surveys. As such it asks directly which party a respondent intents to vote for at the upcoming election. Whether such questions measure correctly the actual voting behaviour at the election day is questionable but does not differ from other polling methods of validity. Moreover, online surveys such as Europuls can reasonably claim to avoid other sources of measurement error such as social desirability bias or interviewer bias. Since such surveys are anonymous social pressure on the respondent is smaller and interaction with the interviewer can not bias the respond.
