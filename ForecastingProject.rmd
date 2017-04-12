@@ -139,13 +139,13 @@ Dalia Research tries to account for these problems. First, they try to increase 
 
 <!-- The Dalia Research methodology tries to ensure this by using various online apps and plattforms to draw their respondents from different stratas of the population. --> 
 
-Despite these efforts it is questionable whether the data can be called representative. First of all, even if the sample represents the German population in terms of age groups and gender, it can be question whether the old female or male users are truely representative of their age group. And not revealing the survey content might sort out political motivated respondents, but interest in political matters is likely correlated to general willingness to respond to surveys. <!-- Most important, since it is not conducted particularly as an election poll, it is likely to come with several other biases such as likely voter bias or late swing. [@Mellon.2015] A: this is not logical--> Hence, in order to utilize the data to election forecasting further weighting and post-stratification will be conducted. Different methods to do so and their technical details will be explained in the following.
+Despite these efforts it is questionable whether the data can be called representative. First of all, even if the sample represents the German population in terms of age groups and gender, it can be question whether the old female or male users are truely representative of their age group. And not revealing the survey content might sort out political motivated respondents, but interest in political matters is likely correlated to general willingness to respond to surveys. <!-- Most important, since it is not conducted particularly as an election poll, it is likely to come with several other biases such as likely voter bias or late swing. [@Mellon.2015] A: this is not logical--> Hence, in order to utilize the data to election forecasting further weighting and post-stratification will be conducted.
  
 ## Data for Post-stratification and Weighting
 
 The data used for post-stratification and weighting come from several sources. To adjust our sample to demographic composition of the German population we use data of the German [Zensus 2011](https://www.zensus2011.de/DE/Home/home_node.html). The data is freely available and we obtained combined frequencies for characteristics such as age, gender, education, employment status and confession. The Census claims to reflect the actual demgraphic distibution of the German population and hence is suitable in order to post-stratify our sample to demographic criteria.
 
-Furthermore, we collected data from election polls conducted by Forschungsgruppe Wahlen e.V., Infratest dimap and from the official German election statistics [@KAS.2013]. While the latter contains only information on turnout and the demographic dimensions age and gender, Forschungsgruppe Wahlen e.V. has also issued election results and turnout along groups with different education, different employment status and confession. Such data the closes estimate of the actual voting population and their voting behaviour across demographic groups and across the spectrum of political parties. We will employ such data to account for likely voter bias in the Europulse data at hand.
+Furthermore, we collected data from election polls conducted by Forschungsgruppe Wahlen e.V., Infratest dimap and from the official German election statistics [@KAS.2013]<!-- add further links / sources -->. While the latter contains only information on turnout and the demographic dimensions age and gender, Forschungsgruppe Wahlen e.V. has also issued election results and turnout along groups with different education, different employment status and confession. Such data the closes estimate of the actual voting population and their voting behaviour across demographic groups and across the spectrum of political parties. <!-- We will employ such data to account for likely voter bias in the Europulse data at hand.  A: not here -->
 
 <!-- more data could be obtained form ALLBUS social survey? -->
 
@@ -163,7 +163,8 @@ DIESE GRAFIKEN NOCH TEXTLICH EINBAUEN
   \caption{Self-reported turnout (Unweighted Europulse)}
 \end{figure}
 
-<!-- noch kurs: Als vergleichs daten nehmen wir daten von wahlrecht.de-->
+<!-- noch kurz: Als vergleichs daten nehmen wir daten von wahlrecht.de-->
+Finally, in order to set our forecasts into context we will use polling data from other institutes. For this we plan to webscrapp the respective informations from [wahlrecht.de](wahlrecht.de). 
 
 # Methodology
 
