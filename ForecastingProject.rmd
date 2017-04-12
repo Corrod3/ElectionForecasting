@@ -191,9 +191,12 @@ However, raking is not ideal. It is often used if only marginal probabilities ar
 
 where $\hat y^{post}$ is the estimator of $y$ in the strata $j$, $N_J$ the size of the j-th strata in the population and $n_J$ the size of the j-th strata in the sample. From the equation it is obvious that post-stratification is only feasible if we have at least one observation for each strata ($n_J > 0$). But even for small stratas sizes in the same ($n_J < 30$) the standard errors will be large. This is a serious issue as the number of strata's grows exponentially with each characteristic included. If we use for instance two gender categories and four age groups we have eight stratas, if we add past vote (7 categories) we have immediately 54. As a result we might only have a few individuals for each strata or even none. Hence, a few respondents in the strata female, old (60+) and FDP voter in 2013 will have an overproproportional influence on the strata estimate. 
 
-And there is a second likely problem for post-stratification: Publically available data often only includes the distribution of pairs of characteristics or in rare cases triples (e.g. age, gender and past vote). Ideally, we would like to know the distribution of the population for each strata (combination of the characteristics).^[Formally speaking, we need to know all $N_j$]. 
+And there is a second likely problem for post-stratification: Publically available data often only includes the distribution of pairs of characteristics or in rare cases triples (e.g. age, gender and past vote). Ideally, we would like to know the distribution of the population for each strata (combination of the characteristics).^[Formally speaking, we need to know all $N_j$].
 
-If possible, we might use *model-based post-stratification* to counter this effect. In this approach the estimates for each strata are not based on the average in the strata, but the result of a multinomial logistic regression. In order to arrive at this regression results, demographic variables in the sample can be used. In order to execute this we will orient ourself at the work of @Goel.2017.^[They are developing an r package for this (postr) and might be willing to share their r script (as they already anounced to make ot public).] The larger question here is, whether it makes any sense at all to use model-based post-stratification if we only have the strata size for triples at best.
+The first problem of empthy or low numbers in stratas can be countered with *model-based post-stratification*. In this approach the estimates for each strata are not based on the average in the strata as in the equation above, but the result of a multinomial logistic regression. In order to arrive at this regression results, demographic variables in the sample can be used. In order to implement this, we will orient ourself at the work of @Goel.2017.^[They are developing an r package for this (postr) and might be willing to share their r script (as they already anounced to make ot public).] 
+
+
+<!-- The larger question here is, whether it makes any sense at all to use model-based post-stratification if we only have the strata size for triples at best. -->
 
 <!-- too detailed for the introduction 
 The general solution to non-representativeness is weighting. With online surveys you need to do a little more, instead of doing a stratification-design to draw from certain strata you need to define the strata afterwards and weight your responses accordingly (post-stratification). This can be done with Census data that gives you the frequencies of the strata in the population. Then, when you made your survey representative of the population, in a second step you do what all polls have to do. Account for self-selection and non-response bias and actual-voter bias: -> Therefore, weight according to likelihood of actual voting and party affiliation of certain strata. (Here I want to point out the two steps!)
@@ -216,27 +219,16 @@ Poststratification
 •Corrects for disproportionalities between NhN and nh′N that may be either due to sampling or due to non response
 •Assumes MAR
 
-Raking
--> if only marginal distributions are known (as for example with the forschungsgruppe wahlen)
---> 
-
-## Approach number one
-
-For stratifying the data we orient ourself at the work of XXX. The basic idea is to compute clusters of voters along several demographic categories and use their past votes to compute weights.
-
-First, if possible we use post-stratification (see Lumpley, ch. 7?) to compute weights for subgroups in the sample. Post-stratification tries to make a sample representative of the actual population by ensuring the relative size of subgroup resembles the relative size of the same subgroup in the 'true' population. For forecasting the 'true' population is not known, as it is a question of who will actually turn out to vote. 
-
-How we plan to make poll representative
 
 Compare different stratification approaches
 
 Likely problems we will encounter: 1. empthy clusters or clusters with low number of observations. Implications: If empthy, there is a real problem. If the number of observation is low, e.g. below 20, the weigths will will amplify the impact of this small group in the total forecasting result.
 
 Benchmark -> other publically available polls. This is straight-forward, but also problematic as it might induce a herding effect. The final evaluation is only possibe after the election
+--> 
 
-## Approach number two
 
-
+<!-- THIS WILL BE PART OF THE FINAL PAPER
 # Data Overview
 
 how representative our data already is
@@ -273,129 +265,6 @@ My approach would be:
 Summary of the core finding
 
 Further implications
-
-# References
-
-<!-- to be copied in the .bib file
-% This file was created with Citavi 5.5.0.1
-
-@misc{PewResearchCenter.2012,
- date = {2012},
- title = {Assessing the Representativeness of Public Opinion Surveys},
- url = {http://www.people-press.org/files/legacy-pdf/Assessing%20the%20Representativeness%20of%20Public%20Opinion%20Surveys.pdf},
- institution = {{Pew Research Center}}
-}
-
-
-
-
-
-@article{Skibba.2016,
- author = {Skibba, Ramin},
- year = {2016},
- title = {The polling crisis: How to tell what people really think},
- keywords = {Bias (Epidemiology);Canada;Cell Phones/economics/utilization;Continental Population Groups/statistics {\&} numerical data;Data Collection/methods/standards;Datasets as Topic;Demography/statistics {\&} numerical data;Educational Status;Female;Humans;Internet/economics/utilization;Male;Politics;Public Opinion;Surveys and Questionnaires/economics/standards;Uncertainty;United Kingdom;United States},
- urldate = {01.04.2017},
- pages = {304--306},
- volume = {538},
- number = {7625},
- journal = {Nature},
- doi = {10.1038/538304a}
-}
-
-@article{Wang.2015,
- abstract = {International Journal of Forecasting, Corrected proof. doi:10.1016/j.ijforecast.2014.06.001},
- author = {Wang, Wei and Rothschild, David and Goel, Sharad and Gelman, Andrew},
- year = {2015},
- title = {Forecasting elections with non-representative polls},
- keywords = {Election forecasting;Multilevel regression and poststratification;Non-representative polling},
- urldate = {01.04.2017},
- pages = {980--991},
- volume = {31},
- number = {3},
- issn = {01692070},
- journal = {International Journal of Forecasting},
- doi = {10.1016/j.ijforecast.2014.06.001}
-}
-
-@article{Mellon.2015,
- author = {Mellon, Jonathan and Prosser, Chris},
- year = {2015},
- title = {Investigating the Great British Polling Miss: Evidence from the British Election Study},
- issn = {1556-5068},
- journal = {SSRN Electronic Journal},
- doi = {10.2139/ssrn.2631165}
-}
-
-@article{Keeter.2006,
- abstract = {Declining contact and cooperation rates in random digit dial (RDD) national telephone surveys raise serious concerns about the validity of estimates drawn from such research. While research in the 1990s indicated that nonresponse bias was relatively small, response rates have continued to fall since then. The current study replicates a 1997 methodological experiment that compared results from a {\dq}Standard{\dq} 5-day survey employing the Pew Research Center's usual methodology with results from a {\dq}Rigorous{\dq} survey conducted over a much longer field period and achieving a significantly higher response rate. As with the 1997 study, there is little to suggest that unit nonresponse within the range of response rates obtained seriously threatens the quality of survey estimates. In 77 out of 84 comparable items, the two surveys yielded results that were statistically indistinguishable. While the {\dq}Rigorous{\dq} study respondents tended to be somewhat less politically engaged, they did not report consistently different behaviors or attitudes on other kinds of questions. With respect to sample composition, the Standard survey was closely aligned with estimates from the U.S. Census and other large government surveys on most variables. We extend our analysis of nonresponse to include comparisons with the hardest-to-reach respondents and with respondents who terminated the interview prior to completion.},
- author = {Keeter, Scott and Kennedy, Courtney and Dimock, Michael and Best, Jonathan and Craighill, Peyton},
- year = {2006},
- title = {Gauging the Impact of Growing Nonresponse on Estimates from a National RDD Telephone Survey},
- url = {http://www.jstor.org/stable/4124225},
- pages = {759--779},
- volume = {70},
- number = {5},
- issn = {15375331},
- journal = {The Public Opinion Quarterly}
-}
-
-% This file was created with Citavi 5.5.0.1
-
-@article{Yeager.2011,
- author = {Yeager, D. S. and Krosnick, J. A. and Chang, L. and Javitz, H. S. and Levendusky, M. S. and Simpser, A. and Wang, R.},
- year = {2011},
- title = {Comparing the Accuracy of RDD Telephone Surveys and Internet Surveys Conducted with Probability and Non-Probability Samples},
- pages = {709--747},
- volume = {75},
- number = {4},
- journal = {Public Opinion Quarterly},
- doi = {10.1093/poq/nfr020}
-}
-
-@incollection{Holbrook.2007,
- author = {Holbrook, Allyson L. and Krosnick, Jon A. and Pfent, Alison},
- title = {The Causes and Consequences of Response Rates in Surveys by the News Media and Government Contractor Survey Research Firms},
- pages = {499--528},
- publisher = {{John Wiley {\&} Sons, Inc}},
- isbn = {9780470173404},
- editor = {Lepkowski, James M. and Tucker, Clyde and Brick, J. Michael and Leeuw, Edith D. de and Japec, Lilli and Lavrakas, Paul J. and Link, Michael W. and Sangster, Roberta L.},
- booktitle = {Advances in Telephone Survey Methodology},
- year = {2007},
- address = {Hoboken, NJ, USA},
- doi = {10.1002/9780470173404.ch23}
-}
-
-
-@article{Squire.1988,
- author = {Squire, Peverill},
- year = {1988},
- title = {Why the 1936 Literary Digest Poll Failed},
- url = {http://www.jstor.org/stable/2749114},
- urldate = {01.04.2017},
- pages = {125--133},
- volume = {52},
- number = {1},
- issn = {15375331},
- journal = {The Public Opinion Quarterly}
-}
-
-@book{Groves.2009,
-author = "Groves, Robert M. and Floyd J. Fowler Jr. and Mick P. Couper and James M.
-Lepkowski and Eleanor Singer and Roger Tourangeau",
-title = "Survey Methodology",
-publisher  = "John Wiley & Sons Inc",
-year = "2009",
-address = "New Jersey",
-edition = 2
-}
-
-
-
 -->
-
-
-
-
-
+# References
 
