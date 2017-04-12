@@ -168,33 +168,33 @@ Finally, in order to set our forecasts into context we will use polling data fro
 
 # Methodology
 
-We want to employ two approaches generate election forecasts from the data we have. In the first approach the survey data is adjusted in a two step procedure: First, the representativeness of survey data is increased by finding appropiate weights. Then a likely voting model is used to get to the election forecast. Our second approach does this in one step: The survey data will be directly adjusted to the likely voter population based on exit poll data from the last German federal election. 
+We want to employ two approaches generate election forecasts from the data we have. In the first approach the survey data is adjusted in a two step procedure: First, the representativeness of survey data to the general population is increased by finding appropiate weights. Then a likely voting model is used to get to the election forecast. Our second approach does this in one step: The survey data will be directly adjusted to the likely voter population based on exit poll data from the last German federal election. 
 
-In order to follow both procedures, we need methods to compute weights for sub-groups of the survey sample aiming at increased representativeness. A classical way to get these weights is *raking*. With raking weights are assigned to each respondent in order to match the marginal distribution of characteristics in the 'true' population. For example, if we know the distribution of education level and employment status in the population, for each we can compute a weight so that the weighted survey sample has the same distribution of these characteristics as the 'true' population. Basically, raking computes a joint distributions for each combination of characteristics. 
+In order to follow both procedures, we need methods to compute weights for sub-groups of the survey sample aiming at increased representativeness. A classical way to get these weights is *raking*. With raking weights are assigned to each respondent in order to match the marginal distribution of characteristics in the 'true' population. For example, if we know the distribution of education level and employment status in the population, for each we can compute a weight so that the weighted survey sample has the same distribution of these characteristics as the 'true' population. Basically, raking estimates a joint distributions for each combination of characteristics. 
 
-In formal terms, we can describe each combination of an individual and a characteristic with $x_{i,j} \in \{0,1\}$ where $i$ stands for the individual and $j$ for the characteristic. To illustrate, if $x_{i,j} = 1$ an individual may be female and if $x_{i,j} = 0$ an individual is not female. Hence, each characteristic is modeled with a binary variable. $c_j$ expresses the prevailance of a characteristic in the population and raking estimates the weights $w_i$ such that:
+In formal terms, we can describe each combination of an individual and a characteristic with $x_{i,j} \in \{0,1\}$ where $i$ stands for the individual and $j$ for the characteristic. To illustrate, in the case of the characteristic gender (j): if $x_{i,j} = 1$ the individual $i$ is female and if $x_{i,j} = 0$ the individual $i$ is not female. Hence, each characteristic is modeled with a binary variable. $c_j$ expresses the prevailance of a characteristic in the population and raking estimates the weights $w_i$ such that:
 
 \begin{equation}
 c_j = \frac{\sum_{i = 1}^{n}w_i x_{i,j}}{\sum_{i = 1}^{n}w_i} \forall j
 \end{equation}
 
-The weights can than be used to compute the raking estimates for each observation in the survey $y$:
+The weights can then be used to compute the raking estimates for each observation in the survey $y$:
 
 \begin{equation}
 \hat y^{rake} = \frac{\sum_{i = 1}^{n}w_i y_{i}}{\sum_{i = 1}^{n}w_i} 
 \end{equation}
 
-<!-- @Goel.2017 use the anesrake package to execute this -->
+<!-- @Goel.2017 use the anesrake package to execute this, alternatively survey  -->
 
-However, raking is not ideal. It is often used if only marginal probabilities are available. This is also the case for some of our data. However, if the joint distribution of characteristics is known we can use *post-stratification* instead. In contrast to raking, post stratification takes into account the distribution of combination of characteristics in the population. In other words: It sub-divides the population into stratas for each combination Unfortunately, publically available data often only includes the distribution of pairs of characteristics or in rare cases triples (e.g. age, gender and past vote). Ideally, we would like to know the distribution of the population for each strata (combination of the characteristics).
-
-Formally the post-stratification estimator can be expressed as follows [@Goel.2017]:
+However, raking is not ideal. It is often used if only marginal probabilities are available. This is also the case for some of our data. However, if the joint distribution of characteristics is known we can use *post-stratification* instead. In contrast to raking, post-stratification takes into account the distribution of combination of characteristics in the population. In other words: It sub-divides the population into stratas for each combination. Formally the post-stratification estimator can be expressed as follows [@Goel.2017, @Lohr.2010[p. 142f.]]:
 
 \begin{equation}
-  y^{post} = \frac{\sum^{J}_{j=1}N_J \hat y_j}{\sum^{J}_{j=1}N_J}
+ \hat y^{post} = \frac{\sum^{J}_{j=1}N_J \hat y_j}{\sum^{J}_{j=1}N_J} \text{ where } \hat y_j = \frac{1}{n_J} \sum_{i = 1}^{n_J} y_i 
 \end{equation}
 
-where $\hat y^{post}$ is the estimator of y in the strata j and $N_J$ the size of the j-th strata in the population. But even if the size of $N_J$ is known for each strata, the number of strata's grows exponentially with each characteristic included. If we use for instance two gender categories and four age groups we have eight stratas, if we add past vote (7 categories) we have immediately 54. As a result we might only have a few individuals for each strata or even none. Hence, a few respondents in the strata female, old (60+) and FDP voter in 2013 will have an overproproportional influence on the strata estimate. 
+where $\hat y^{post}$ is the estimator of $y$ in the strata $j$, $N_J$ the size of the j-th strata in the population and $n_J$ the size of the j-th strata in the sample. From the equation it is obvious that post-stratification is only feasible if we have at least one observation for each strata ($n_J > 0$). But even for small stratas sizes in the same ($n_J < 30$) the standard errors will be large. This is a serious issue as the number of strata's grows exponentially with each characteristic included. If we use for instance two gender categories and four age groups we have eight stratas, if we add past vote (7 categories) we have immediately 54. As a result we might only have a few individuals for each strata or even none. Hence, a few respondents in the strata female, old (60+) and FDP voter in 2013 will have an overproproportional influence on the strata estimate. 
+
+And there is a second likely problem for post-stratification: Publically available data often only includes the distribution of pairs of characteristics or in rare cases triples (e.g. age, gender and past vote). Ideally, we would like to know the distribution of the population for each strata (combination of the characteristics).^[Formally speaking, we need to know all $N_j$]. 
 
 If possible, we might use *model-based post-stratification* to counter this effect. In this approach the estimates for each strata are not based on the average in the strata, but the result of a multinomial logistic regression. In order to arrive at this regression results, demographic variables in the sample can be used. In order to execute this we will orient ourself at the work of @Goel.2017.^[They are developing an r package for this (postr) and might be willing to share their r script (as they already anounced to make ot public).] The larger question here is, whether it makes any sense at all to use model-based post-stratification if we only have the strata size for triples at best.
 
