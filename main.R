@@ -392,7 +392,7 @@ plyr::count(DaliaDE_temp, c('gender','age.gr','voted_party_last_election_de'))
 StrataGdrAgeParty <- DaliaDE_temp %>% group_by(gender, age.gr, voted_party_last_election_de) %>%
   tally()  %>% complete(gender, age.gr, voted_party_last_election_de)
 
-Strata$n[is.na(Strata$n)] <- 0
+StrataGdrAgeParty$n[is.na(StrataGdrAgeParty$n)] <- 0
 
 # plyr::count(DaliaDE_temp, c('gender','age.gr', 'edu.cat', 'voted_party_last_election_de'))
 
