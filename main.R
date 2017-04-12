@@ -385,18 +385,14 @@ DaliaDE_temp$age.gr <- c("18-29", "30-44",
                     "45-59", "60+")[findInterval(DaliaDE_temp$age , 
                                                  c(-Inf, 29.5, 44.5,59.5, Inf))]
 
-
-
 # cluster gender-age
 plyr::count(DaliaDE_temp, c('gender','age.gr','voted_party_last_election_de'))
+# 2*4*7 = 56 Cluster; three are empty
 
-
-# cluster: gender-age-educational level
-
-Strata <- DaliaDE_temp %>% group_by(gender, age.gr, voted_party_last_election_de) %>%
+StrataGdrAgeParty <- DaliaDE_temp %>% group_by(gender, age.gr, voted_party_last_election_de) %>%
   tally()  %>% complete(gender, age.gr, voted_party_last_election_de)
 
-Strata$n[is.na(Strata$n)] <- 0
+StrataGdrAgeParty$n[is.na(StrataGdrAgeParty$n)] <- 0
 
 # plyr::count(DaliaDE_temp, c('gender','age.gr', 'edu.cat', 'voted_party_last_election_de'))
 
