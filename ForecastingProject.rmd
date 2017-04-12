@@ -200,6 +200,10 @@ The first problem of empty or low numbers in stratas can be countered with *mode
 ## Likely voter models
 
 
+<<<<<<< HEAD
+=======
+The first problem of empthy or low numbers in stratas can be countered with *model-based post-stratification*. In this approach the estimates for each strata are not based on the average in the strata as in the equation above, but the result of a multinomial logistic regression. In order to arrive at this regression results, demographic variables in the sample can be used. If we decide to implement this, we will orient ourself at the work of @Goel.2017.^[They are developing an r package for this (postr) and might be willing to share their r script (as they already anounced to make it public).] However, the implementation ultimately depends on the availability of the strata sizes in the true population. This is the major problem for our (second) application, as the exit polls do not publish the extensive contingency tables which reveal sub group sizes in their voter sample.
+>>>>>>> origin/master
 
 
 <!-- The larger question here is, whether it makes any sense at all to use model-based post-stratification if we only have the strata size for triples at best. -->
