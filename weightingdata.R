@@ -1,38 +1,15 @@
-# Get and clean election data
-
-
 # Clear Global environment
 rm(list=ls())
 
 ## Setting Working directory
 try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/ElectionForecasting"), silent = TRUE)
-try(setwd("C:\\Users\\Moritz\\Desktop\\ElectionForecasting"), silent = TRUE)
+try(setwd("C:/Users/Moritz/Desktop/ElectionForecasting"), silent = TRUE)
 
-# Collect packages/libraries we need:
-packages <- c("readxl", "dplyr", "ggplot2", "tidyr" ,"reshape2", "scales")
-# package and why it is needed
-# readxl: import excel files
-# dyplyr: data manipulation
-# ggplot: plots (e.g. density)
-# tidyr: spread function
-# reshape2: melt function
-# scales: label transformation in ggplot
-# survey: tools for survey weighting and post-stratification
-# sjPlot: nice alternative plots
-
-# install packages if not installed before
-for (p in packages) {
-  if (p %in% installed.packages()[,1]) {
-    require(p, character.only=T)
-  }
-  else {
-    install.packages(p, repos="http://cran.rstudio.com", dependencies = TRUE)
-    require(p, character.only=T)
-  }
-}
-rm(p, packages)
+source("packages.R")
 
 ###################################
+
+# Election statistics
 
 # Get data Bundeswahlstatistik
 # Wähler der Parteien nach Alter und Geschlecht
@@ -48,7 +25,7 @@ colnames <- c("Parties",
 types <- replicate(13, "numeric")
 types[1] <- "factor"
 
-Wahlstatistik <- read.csv2("C:\\Users\\Moritz\\Desktop\\ElectionForecasting\\Weitere Daten\\Bundeswahlstatistik\\Wählerschaft_der_Parteien_nach_Geschlecht_und_Alter.csv", 
+Wahlstatistik <- read.csv2("./Weitere Daten/Bundeswahlstatistik/W�hlerschaft_der_Parteien_nach_Geschlecht_und_Alter.csv", 
                             sep = ";",dec =",", skip = 6, stringsAsFactors = FALSE)
 Wahlstatistik <- Wahlstatistik[c(4:11,13:20,22:29),]
 colnames(Wahlstatistik) <- colnames
@@ -60,4 +37,7 @@ Wahlstatistik[3] <- as.numeric(sub(",", ".", unlist(Wahlstatistik[3]), fixed = T
 Wahlstatistik[1] <- as.factor(unlist(Wahlstatistik[1]))
 Wahlstatistik[2] <- as.factor(unlist(Wahlstatistik[2]))
 
-# Get data
+save(Wahlstatistik, file = "Wahlstatistik.RData")
+
+# Census data
+

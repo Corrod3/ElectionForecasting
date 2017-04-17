@@ -42,29 +42,7 @@ rm(list=ls())
 try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/ElectionForecasting"), silent = TRUE)
 try(setwd("C:\\Users\\Moritz\\Desktop\\ElectionForecasting"), silent = TRUE)
 
-# Collect packages/libraries we need:
-packages <- c("readxl", "dplyr", "ggplot2", "tidyr", "reshape2", "scales", "survey", "sjPlot", "sjmisc")
-# package and why it is needed
-# readxl: import excel files
-# dyplyr: data manipulation
-# ggplot: plots (e.g. density)
-# tidyr: spread function
-# reshape2: melt function
-# scales: label transformation in ggplot
-# survey: tools for survey weighting and post-stratification
-# sjPlot: nice alternative plots
-
-# install packages if not installed before
-for (p in packages) {
-  if (p %in% installed.packages()[,1]) {
-    require(p, character.only=T)
-  }
-  else {
-    install.packages(p, repos="http://cran.rstudio.com", dependencies = TRUE)
-    require(p, character.only=T)
-  }
-}
-rm(p, packages)
+source("packages.R")
 
 ###############################################################################
 # 1. get data + cleaning
@@ -377,23 +355,50 @@ ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
 # weights #####################################################################
 # Careful: 4 years difference between Exit polls and Dalia!!!
 
-DaliaDE_temp <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" | voted_party_last_election_de == "Not able"))
-DaliaDE_temp$voted_party_last_election_de <- factor(DaliaDE_temp$voted_party_last_election_de)
+DaliaDE <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" | 
+                               voted_party_last_election_de == "Not able"))
+DaliaDE$voted_party_last_election_de <- factor(DaliaDE$voted_party_last_election_de)
 
-# create age.gr
-DaliaDE_temp$age.gr <- c("18-29", "30-44", 
-                    "45-59", "60+")[findInterval(DaliaDE_temp$age , 
-                                                 c(-Inf, 29.5, 44.5,59.5, Inf))]
+# create age.gr (like in election statistics)
+DaliaDE$age.gr <- c("18-25", "26-35", 
+                    "36-45", "46-60", "60+")[findInterval(DaliaDE$age, 
+                                                 c(-Inf, 25.5, 35.5, 45.5, 60.5, Inf))]
 
-# cluster gender-age
-plyr::count(DaliaDE_temp, c('gender','age.gr','voted_party_last_election_de'))
-# 2*4*7 = 56 Cluster; three are empty
+### Create Strata ###
 
-StrataGdrAgeParty <- DaliaDE_temp %>% group_by(gender, age.gr, voted_party_last_election_de) %>%
-  tally()  %>% complete(gender, age.gr, voted_party_last_election_de)
+# Create Strata gender-age-party
+plyr::count(DaliaDE, c('gender','age.gr','voted_party_last_election_de')) 
+# 2*5*7 = 70 Cluster; four are empty
 
-StrataGdrAgeParty$n[is.na(StrataGdrAgeParty$n)] <- 0
+Strata.1 <- DaliaDE %>% group_by(gender, age.gr, voted_party_last_election_de) %>%
+  tally() %>% complete(nesting(gender), age.gr, voted_party_last_election_de)
+# replace missing
+Strata.1$n[is.na(Strata.1$n)] <- 0
 
+# Create Trata gender-age-education
 # plyr::count(DaliaDE_temp, c('gender','age.gr', 'edu.cat', 'voted_party_last_election_de'))
 
-# discuss with Simon about the small group size and groups with zero observations
+# discuss small group size
+
+#####################
+### Direct method ###
+#####################
+# 1. Load exit poll data (either KAS or election statistics)
+load("Wahlstatistik.RData")
+
+# big problem: no AfD data in Exit Polls
+
+
+# 2. Compute weights for gender, age, vote
+
+
+# 3. Apply weights on Dalia Data
+
+########################
+### Indirect methods ###
+########################
+# 1. Get data from census
+# 2. Compute weights.
+# 3. Apply on data.class
+# 4. Create deterministic or probabilistic measure of likely voter
+# 5. Apply on Dalia data
