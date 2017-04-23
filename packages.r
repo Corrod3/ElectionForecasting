@@ -9,6 +9,7 @@ p.needed <- c("readr", # imports spreadsheet data (Wickham)
               "stringr", # for string processing (Wickham)
               "ggplot2", # for graphics (Wickham)
               "tidyr", # for tidying data frames (Wickham)
+              "forcats",  # conveniently handling factors with fct_recode etc.
               "purrr", # pure and completing function programming package
               "httr", # talking to web APIs
               "scales", # supports scaling for graphs

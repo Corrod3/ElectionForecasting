@@ -10,6 +10,7 @@ header-includes:
     - \fancyhead[LO,LE]{Smartphone polling}
     - \fancyfoot[LO,LE]{Election Forecasting Project}
     - \fancyfoot[RE,RO]{Moritz Hemmerlein \\ Alexander Sacharow}
+    #- \footskip = 10pt
     - \usepackage{graphicx}
     - \usepackage{setspace}
     - \usepackage{subfig}

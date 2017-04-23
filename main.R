@@ -358,6 +358,7 @@ ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
 DaliaDE <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" | 
                                voted_party_last_election_de == "Not able"))
 DaliaDE$voted_party_last_election_de <- factor(DaliaDE$voted_party_last_election_de)
+# droplevels()
 
 # create age.gr (like in election statistics)
 DaliaDE$age.gr <- c("18-25", "26-35", 
@@ -375,18 +376,34 @@ Strata.1 <- DaliaDE %>% group_by(gender, age.gr, voted_party_last_election_de) %
 # replace missing
 Strata.1$n[is.na(Strata.1$n)] <- 0
 
-# Create Trata gender-age-education
-# plyr::count(DaliaDE_temp, c('gender','age.gr', 'edu.cat', 'voted_party_last_election_de'))
+# Create Strata gender-age-party: 
+Strata.2 <- DaliaDE %>% filter(vote_nextelection_de != "No vote") %>%
+  droplevels() %>%  # drops unused factor "No vote"
+  group_by(gender, age.gr, vote_nextelection_de) %>%
+  tally() %>% complete(nesting(gender), age.gr, vote_nextelection_de)
+
+Strata.2$n[is.na(Strata.2$n)] <- 0 
+
+
+# Create Strata gender-age-education
+
 
 # discuss small group size
+
 
 #####################
 ### Direct method ###
 #####################
 # 1. Load exit poll data (either KAS or election statistics)
-load("Wahlstatistik.RData")
+load("Vote_Age_Gender_2013.RData")
 
-# big problem: no AfD data in Exit Polls
+# next steps: compute percentages for Strata.2;
+# merge CDU/CSU
+# make both same format
+# divide weights = vote.2013 / vote.2017
+
+
+# big problem: no AfD data in Exit Polls from 2013 -> computable?
 
 
 # 2. Compute weights for gender, age, vote
