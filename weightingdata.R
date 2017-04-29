@@ -152,4 +152,28 @@ save(VoteAgeGndr.2013, file = "./Processed/Vote_Age_Gender_2013.RData")
 
 ### Census data ---------------------------------------------------------------
 
+Census.AgeGndrEdu <- read_csv2(
+  "./Weitere Daten/Census2011/Population_Age_Gender_Education.csv", 
+  skip = 6, na = c("/", ""))
+
+Census.AgeGndrEdu <- Census.AgeGndrEdu[complete.cases(Census.AgeGndrEdu[,2]),]
+
+names(Census.AgeGndrEdu) <- names(Census.AgeGndrEdu) %>% 
+  str_replace("M.+ch", "Male") %>%
+  str_replace("Weiblich", "Female") %>%
+  str_replace("H.+ss", "edu.lvl") %>%
+  str_replace("Insgesamt$", "Total") %>%
+  str_replace("Insgesamt_1", "Total_pct")
+
+for (i in 4:length(names(Census.AgeGndrEdu))) {
+  names(Census.AgeGndrEdu)[i] <- 
+    str_replace(names(Census.AgeGndrEdu)[i] ,"_\\d", "")
+  names(Census.AgeGndrEdu)[i] <- 
+    str_c(names(Census.AgeGndrEdu[i]), Census.AgeGndrEdu[2,i], sep = "_")
+  names(Census.AgeGndrEdu)[i] <- 
+    str_replace(names(Census.AgeGndrEdu)[i], "\\s-\\s", "_")
+  }
+
+names(Census.AgeGndrEdu) <- str_replace(names(Census.AgeGndrEdu), "Unter\\s10", "<10")
+names(Census.AgeGndrEdu) <- str_replace(names(Census.AgeGndrEdu), "\\s.+ter", "+")
 

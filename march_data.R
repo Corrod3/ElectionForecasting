@@ -150,3 +150,4 @@ p1.weighted <- p1 +
            width = 0.8) 
   
 grid.arrange(p1.unweighted, p1.weighted, ncol = 2)
+
