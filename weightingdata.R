@@ -9,7 +9,7 @@ source("packages.R")
 
 ###################################
 
-# Election statistics
+### Election statistics -------------------------------------------------------
 
 # Get data Bundeswahlstatistik
 # Wähler der Parteien nach Alter und Geschlecht
@@ -25,7 +25,7 @@ colnames <- c("Parties",
 coltype <- rep(c("c", "i"), times = c(1,12))
 
 # read_csv2 delimits with ;
-Wahlstatistik <- read_csv2("./Weitere Daten/Bundeswahlstatistik_2013/W�hlerschaft_der_Parteien_nach_Geschlecht_und_Alter.csv", 
+Wahlstatistik <- read_csv2("./Weitere Daten/Bundeswahlstatistik_2013/Wählerschaft_der_Parteien_nach_Geschlecht_und_Alter.csv", 
                            skip = 10, col_names = colnames) 
 
 # filter rows with no entries
@@ -46,20 +46,20 @@ vote.2013$age18_25.2013 <- as.numeric(scan(text = vote.2013$age18_25.2013, dec="
 vote.2013$age18_25.2013 <- as.numeric(vote.2013$age18_25.2013)
 
 # check column sum
-vote.2013$sum <- rowSums(vote.2013[c(3:7)])
+#vote.2013$sum <- rowSums(vote.2013[c(3:7)])
 
 # rename
 vote.2013 <- vote.2013 %>% mutate(
   Parties = str_replace(Parties, "G.*?E", "Gruene"),
   Parties = str_replace(Parties, "DIE LINKE", "Linke"),
-  Parties = str_replace(Parties, "Sonstige", "Others"))
+  Parties = str_replace(Parties, "Sonstige", "Other"))
 
 # save file
-save(vote.2013, file = "Vote_2013.RData")
+save(vote.2013, file = "./Processed/Vote_2013.RData")
 
-#################################
-## Total election results 2013 ##
-#################################
+
+###########################
+### Total election results -----------------------------------------------------
 
 total.2013 <- read_csv("./Weitere Daten/Bundeswahlstatistik_2013/Wahlergebnisse_2013.csv")
 
@@ -72,10 +72,10 @@ total.2013 <- total.2013 %>% filter(!is.na(total.2013$Zweitstimmen_pct) &
                                       !is.na(total.2013$Erststimmen_pct))
 total.2013 <- total.2013[c(3:nrow(total.2013)),]
 
-# collapse Others
+# collapse Other
 
 total.2013 <- total.2013 %>% mutate(
-  Parteien = ifelse(Parteien %in% c("CDU", "CSU", "SPD", "DIE LINKE", "AfD", "FDP", "GRUENE"), Parteien, "Others"),
+  Parteien = ifelse(Parteien %in% c("CDU", "CSU", "SPD", "DIE LINKE", "AfD", "FDP", "GRUENE"), Parteien, "Other"),
   Parteien = str_replace(Parteien, c("DIE LINKE"), c("Linke")),
   Parteien = str_replace(Parteien, c("GRUENE"), c("Gruene"))
   ) %>% 
@@ -85,48 +85,71 @@ total.2013 <- total.2013 %>% mutate(
 
 colnames(total.2013)[1] <- "Parties"
 
-save(total.2013, file = "Total_2013.RData")
+save(total.2013, file = "./Processed/Total_2013.RData")
+
+
+
+### General turnout by gender -------------------------------------------------
+
+turnout.2013 <- read_csv2("./Weitere Daten/Bundeswahlstatistik_2013/Wahlbeteiligung_nach_Geschlecht_und_alter_seit_1983.csv", 
+                           skip = 8, col_types = "cddddddddd")
+turnout.2013 <- turnout.2013[,c(1:4)] %>% filter(X1 == "Insgesamt" | X1 == "Zusammen") 
+colnames(turnout.2013) <- c("Gndr", "EligibleVoter", "ActualVoter", "TurnoutWithin")
+turnout.2013$Gndr <- c("Total", "Male", "Female")
+turnout.2013$TurnoutOverall <- 
+  turnout.2013$ActualVoter/turnout.2013$EligibleVoter[turnout.2013$Gndr == "Total"]
+turnout.2013$TurnoutGndr <- 
+  turnout.2013$ActualVoter/turnout.2013$ActualVoter[turnout.2013$Gndr == "Total"]
+
 
 #################################
-# Zweitstimmen nach Geschlecht ##
-#################################
+### Zweitstimmen nach Geschlecht ----------------------------------------------
 
-VoteByGndr <- read_csv2("./Weitere Daten/Bundeswahlstatistik_2013/Zweitstimmen_nach_Geschlecht_seit_1953.csv", 
-                        skip = 6, col_names = c("Year", "CDU", "SPD", "FDP", "Linke", "Gruene", "CSU", "Others"),
-                        col_types = "cddddddd")
+VoteByGndr <- read_csv2(
+  "./Weitere Daten/Bundeswahlstatistik_2013/Zweitstimmen_nach_Geschlecht_seit_1953.csv", 
+  skip = 6, col_names = c("Year", "CDU", "SPD", "FDP", "Linke", "Gruene", "CSU", "Other"),
+  col_types = "cddddddd")
 
-VoteByGndr <- VoteByGndr[c(18, 34, 50),c(2:length(VoteByGndr))]
+VoteByGndr <- filter(VoteByGndr, Year == "2013")
 VoteByGndr$gndr <- c("Total", "Male", "Female")
 
-VoteByGndr <- gather(VoteByGndr, one_of(names(VoteByGndr[,c(-length(VoteByGndr))])), key = "Parties", value = "TotalShare")
+VoteByGndr <- cbind(VoteByGndr[-1], TurnoutGndr = turnout.2013$TurnoutGndr)
 
-####################################################################
-## Computing combined frequencies - Age and Gender across parties ##
-####################################################################
+for(i in 1:nrow(VoteByGndr)) {
+  VoteByGndr[i,c(1:7)] <- VoteByGndr[i,c(1:7)]/100 * VoteByGndr[i,9]
+}
+
+VoteByGndr <- VoteByGndr %>% gather(
+  one_of(names(VoteByGndr[-c(length(VoteByGndr)-1, length(VoteByGndr))])), 
+  key = "Parties", 
+  value = "GndrVote") %>% arrange(desc(gndr)) %>% select(-TurnoutGndr)
+
+
+###################################################################
+### Computing combined frequencies - Age and Gender across parties ------------
 
 # Problem: get frequencies across age groups for AfD; no 2013 data; computable?
 
 # add AfD to Sonstige
 total.2013.v1 <- total.2013 %>% mutate(
-  Parties = str_replace(Parties, c("AfD"), c("Others"))) %>%
+  Parties = str_replace(Parties, c("AfD"), c("Other"))) %>%
   group_by(Parties) %>%
   summarise_all(sum)
 
 #Insgesamt <- rep(c(Insgesamt, NA, turnout.2013, NA), c(1, 4, 1, 1))
 #total.2013.v1 <- rbind(total.2013.v1, Insgesamt)
 
-### Join tibbles
+### Join tibbles --------------------------------------------------------------
 #VoteAgeGndr.2013 <- left_join(vote.2013, total.2013.v1, by = "Parties")
 VoteAgeGndr.2013 <- left_join(vote.2013, VoteByGndr, by = c("Parties", "gndr"))
                  
-VoteAgeGndr.2013 <- VoteAgeGndr.2013[-c(8, 16, 24),]
+VoteAgeGndr.2013 <- filter(VoteAgeGndr.2013, !is.na(GndrVote))
 
-VoteAgeGndr.2013[,c(3:7)] <- (VoteAgeGndr.2013[,c(3:7)] / 100) * VoteAgeGndr.2013$TotalShare
+VoteAgeGndr.2013[,c(3:7)] <- (VoteAgeGndr.2013[,c(3:7)] / 100) * VoteAgeGndr.2013$GndrVote
 
-TurnoutAgeGndr.2013 <- VoteAgeGndr.2013[-1] %>% group_by(gndr) %>%
-  summarise_all(sum) 
-TurnoutAgeGndr.2013$Turnout <- c(turnout.2013, NA, NA)
-# need get gender turnout from somewhere
+save(VoteAgeGndr.2013, file = "./Processed/Vote_Age_Gender_2013.RData")
 
 
-save(VoteAgeGndr.2013, file = "Vote_Age_Gender_2013.RData")
+### Census data ---------------------------------------------------------------
+
+

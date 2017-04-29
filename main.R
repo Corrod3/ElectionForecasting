@@ -48,7 +48,7 @@ source("packages.R")
 # 1. get data + cleaning
 ###############################################################################
 
-# Import Dalia data coded
+# Import Dalia data coded December
 DaliaC <- read.csv("Raw\\coded_csv\\data_coded_e28.csv - data_coded_e28.csv")
 
 # change data type to character and factor
@@ -88,10 +88,10 @@ DaliaDE <- select(DaliaDE, identifier, weight, country_code, age, gender, degree
 # weights vary across four demographic variables  
 
 # Rename label (order in parties vector must equal order in vote_nextelection_de)
-parties <- c("AfD", "Gruenen", "Union", "Linke", "FDP", "No vote", "Other", "SPD")
+parties <- c("AfD", "Gruene", "Union", "Linke", "FDP", "No vote", "Other", "SPD")
 levels(DaliaDE$vote_nextelection_de) <- parties
 
-label_temp <- c("Not able", "No vote", "Other" ,"AfD", "Gruenen", "Union", "Linke", "FDP", "SPD")
+label_temp <- c("Not able", "No vote", "Other" ,"AfD", "Gruene", "Union", "Linke", "FDP", "SPD")
 levels(DaliaDE$voted_party_last_election_de) <- label_temp
 rm(label_temp)
 
@@ -133,9 +133,13 @@ DaliaDE <- filter(DaliaDE,
                     age > 16)
 # 255 observations drop out
 
+
+
 ###############################################################################
 # 2. data mining
 ###############################################################################
+
+### December
 
 # residency
 plot(DaliaDE$residency)
@@ -146,8 +150,7 @@ DaliaDE$turnout_exp <- plyr::mapvalues(DaliaDE$turnout_exp, from = c("I'm not el
                                                                    "No, I will probably not vote",
                                                                    "Yes, I will definitely vote",
                                                                    "Yes, I will probably vote") , 
-                                                             to = c(0,0,0,1,1))
-
+                                                            to = c(0,0,0,1,1))
 ### Tables ###
 # Set general table setting
 
@@ -184,19 +187,6 @@ sjp.xtab(DaliaDE$turnout_exp, DaliaDE$gender, weight.by=DaliaDE$weight,
 
 # why are the turnouts so high? What can we do about that?
 # probably (self-)selection bias within demographic groups 
-
-#last election vote
-
-#ggplot(filter(DaliaDE,  
-#              voted_party_last_election_de != "No vote" & 
-#              voted_party_last_election_de != "Not able"), 
-#       aes(x=voted_party_last_election_de)) +
-#  geom_bar(aes(y = (..count..)/sum(..count..))) + # bar type
-#  coord_flip() + # flip sides
-#  scale_y_continuous(labels=scales::percent) + # percentages on y axis
-#  ylab("Share of total voters") +
-#  xlab("Parties") +
-#  theme_bw()
 
 # filter not vote and not able
 DaliaDE_temp <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" | voted_party_last_election_de == "Not able"))
@@ -317,8 +307,8 @@ rownames(VoteLast) <- VoteLast$last.vote
 VoteLast <- select(VoteLast, c(2:ncol(VoteLast)))
 
 # order rows and columns
-VoteLast <- VoteLast[c("Union", "SPD", "Gruenen", "Linke", "FDP", "AfD"),]
-VoteLast <- VoteLast[,c("Union", "SPD", "Gruenen", "Linke", "FDP", "AfD", "No vote", "Other")]
+VoteLast <- VoteLast[c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD"),]
+VoteLast <- VoteLast[,c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD", "No vote", "Other")]
 
 # loyality: last vote = next vote / total respondents per party (last election)
 VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
@@ -326,7 +316,7 @@ VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
 # Table for 2013 -> 2017 voter transitions 
 # Weil die Loyalitätsstroeme so fett sind lassen die anderen sich kaum unterscheiden :/
 transitionPlot(as.matrix(VoteLast[,c(1:6)]),  
-               box_txt = c("Union", "SPD", "Gruenen", "Linke", "FDP", "AfD"))
+               box_txt = c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD"))
 
 # alternative voter loyality: certainty_party_to_vote
 ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
@@ -339,6 +329,7 @@ ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
        aes(x = vote_nextelection_de, fill = vote_next_national_election)) +
   geom_bar() +
   coord_flip() # flip sides
+
 
 ###############################################################################
 # 3. Estimates
@@ -360,27 +351,27 @@ DaliaDE <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" |
 DaliaDE$voted_party_last_election_de <- factor(DaliaDE$voted_party_last_election_de)
 # droplevels()
 
-# create age.gr (like in election statistics)
-DaliaDE$age.gr <- c("18-25", "26-35", 
+# create AgeGroup (like in election statistics)
+DaliaDE$AgeGroup <- c("18-25", "26-35", 
                     "36-45", "46-60", "60+")[findInterval(DaliaDE$age, 
                                                  c(-Inf, 25.5, 35.5, 45.5, 60.5, Inf))]
 
 ### Create Strata ###
 
 # Create Strata gender-age-party
-plyr::count(DaliaDE, c('gender','age.gr','voted_party_last_election_de')) 
+plyr::count(DaliaDE, c('gender','AgeGroup','voted_party_last_election_de')) 
 # 2*5*7 = 70 Cluster; four are empty
 
-Strata.1 <- DaliaDE %>% group_by(gender, age.gr, voted_party_last_election_de) %>%
-  tally() %>% complete(nesting(gender), age.gr, voted_party_last_election_de)
+Strata.1 <- DaliaDE %>% group_by(gender, AgeGroup, voted_party_last_election_de) %>%
+  tally() %>% complete(nesting(gender), AgeGroup, voted_party_last_election_de)
 # replace missing
 Strata.1$n[is.na(Strata.1$n)] <- 0
 
 # Create Strata gender-age-party: 
 Strata.2 <- DaliaDE %>% filter(vote_nextelection_de != "No vote") %>%
   droplevels() %>%  # drops unused factor "No vote"
-  group_by(gender, age.gr, vote_nextelection_de) %>%
-  tally() %>% complete(nesting(gender), age.gr, vote_nextelection_de)
+  group_by(gender, AgeGroup, vote_nextelection_de) %>%
+  tally() %>% complete(nesting(gender), AgeGroup, vote_nextelection_de)
 
 Strata.2$n[is.na(Strata.2$n)] <- 0 
 
@@ -395,7 +386,7 @@ Strata.2$n[is.na(Strata.2$n)] <- 0
 ### Direct method ###
 #####################
 # 1. Load exit poll data (either KAS or election statistics)
-load("Vote_Age_Gender_2013.RData")
+load("./Processed/Vote_Age_Gender_2013.RData")
 
 # next steps: compute percentages for Strata.2;
 # merge CDU/CSU
@@ -407,6 +398,14 @@ load("Vote_Age_Gender_2013.RData")
 
 
 # 2. Compute weights for gender, age, vote
+
+
+
+# 2.1 Compute weights for age group and vote
+
+
+# 2.2 compute weights for age and gender without party
+
 
 
 # 3. Apply weights on Dalia Data

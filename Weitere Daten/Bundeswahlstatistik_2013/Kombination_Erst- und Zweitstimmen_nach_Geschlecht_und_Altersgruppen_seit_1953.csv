@@ -1,0 +1,43 @@
+# (c) Statistisches Bundesamt, Wiesbaden 2014
+# 
+# Ergebnisse der repräsentativen Wahlstatistik zur Bundestagswahl 2013
+# Kombination der Erst- und Zweitstimmen 2013
+# Zweitstimmen
+# 
+Partei;Geschlecht;Von 100 Wählern, die mit der Zweitstimme nebenstehende Partei bzw. ungültig wählten, wählten mit der anderen Stimme;;;;;;;;;
+;;CDU;SPD;FDP;DIE LINKE;GRÜNE;CSU;Sonstige;dar. PIRATEN1;dar. AfD2;ungültig
+;;;;;;;;;;;
+CDU;insgesamt;89,8;4,4;1,5;1,1;1,6;0;1,3;0,4;0,3;0,5
+;männlich;90,8;3,9;1,4;0,9;1,1;0;1,5;0,4;0,3;0,4
+;weiblich;89;4,7;1,5;1,2;1,9;0;1,1;0,3;0,3;0,5
+SPD;insgesamt;4,6;84,1;0,5;2,7;5,1;0,8;1,7;0,6;0,3;0,4
+;männlich;4,3;85,2;0,4;2,7;4,2;0,9;2;0,8;0,4;0,4
+;weiblich;5;83,1;0,5;2,8;5,9;0,8;1,4;0,5;0,3;0,4
+FDP;insgesamt;53,8;5,4;27,4;0,6;1,2;9,3;1,9;0,5;0,5;0,4
+;männlich;55,1;4,7;26,7;0,5;1;9,6;2,1;0,6;0,5;0,3
+;weiblich;52,2;6,2;28,4;0,8;1,4;9;1,6;0,4;0,3;0,4
+DIE LINKE;insgesamt;5,5;15,7;0,4;69,2;4,7;0,5;3,7;1,7;0,5;0,4
+;männlich;4,5;16;0,3;70,2;4;0,4;4;1,9;0,6;0,4
+;weiblich;6,6;15,3;0,5;68,1;5,4;0,5;3,3;1,5;0,4;0,4
+GRÜNE;insgesamt;6,5;34,4;0,6;3,2;51,4;1,3;2,4;1,2;0,2;0,3
+;männlich;5,1;37,8;0,4;3,2;49,4;1,2;2,6;1,5;0,2;0,3
+;weiblich;7,5;31,9;0,7;3,2;52,9;1,4;2,2;1;0,2;0,3
+CSU;insgesamt;0;2,4;1,3;0,2;1,1;92,3;2,2;0,3;0,3;0,4
+;männlich;0;2,2;1,2;0,2;0,8;92,9;2,3;0,3;0,3;0,4
+;weiblich;0;2,7;1,5;0,2;1,4;91,8;2,1;0,2;0,2;0,4
+Sonstige;insgesamt;14,3;13,2;2,2;7,7;5;3,8;52;14,7;14,4;2
+;männlich;13,9;12,8;2;7,4;3,8;3,4;54,8;16,1;15;1,9
+;weiblich;14,8;13,7;2,3;8,1;6,5;4,4;48,1;12,9;13,6;2,1
+dar. PIRATEN;insgesamt;8,8;14,8;1,4;8,1;8,4;1,5;56,6;51,7;0,9;0,5
+;männlich;8,2;15,3;1,3;7,5;7,3;1,4;58,6;53,7;1;0,5
+;weiblich;9,7;14;1,6;9;10,2;1,6;53,3;48,3;0,9;0,6
+dar. AfD;insgesamt;19,5;13,9;2,6;9;2,9;3,1;46,4;5,1;30;2,6
+;männlich;19,3;13,5;2,6;8,8;2,5;3,1;47,7;5,5;30,1;2,5
+;weiblich;19,8;14,4;2,6;9,3;3,5;3,1;44,5;4,4;29,9;2,7
+Ungültig;insgesamt;10,6;8,1;0,7;1,5;1;2,3;1,9;0,4;0,3;73,8
+;männlich;8,2;6,8;0,7;1,4;1;1,7;1,9;0,4;0,2;78,2
+;weiblich;12,5;9,1;0,7;1,6;1;2,8;1,8;0,4;0,4;70,4
+;;;;;;;;;;;
+;;;;;;;;;;;
+1 Aussagewert eingeschränkt, da die Partei nur in 276 von 299 Wahlkreisen angetreten ist.;;;;;;;;;;;
+2 Aussagewert eingeschränkt, da die Partei nur in 158 von 299 Wahlkreisen angetreten ist.;;;;;;;;;;;
