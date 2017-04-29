@@ -181,7 +181,7 @@ w.shares <- Dalia.March %>%
 
 w.shares %>% shares.plot()
 uw.shares %>% shares.plot()
-  
+
 # -> bei den gewichteten Daliawerten kommt am Ende genau das Ergebnis der Bundestagswahl raus.
 # Ist ja auch logisch, wenn man die cluster so justiert, dass sie genau den exit polls entsprechen
 
