@@ -18,6 +18,7 @@ p.needed <- c("readr", # imports spreadsheet data (Wickham)
               "janitor", # for basic data tidying and examinations
               "reshape2", # reshape data(Wickham)
               "xtable", # generate table output
+              "directlabels", # add direct labels to plots
               "stargazer", # generate nice model table
               "babynames", # dataset compiled by Hadley Wickham; 
               "nycflights13", # data on 336776 flights departing from NYC in 2013

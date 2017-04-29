@@ -131,23 +131,44 @@ Dalia.March <- left_join(Dalia.March, exitPollWeights, by = c("gndr", "vote_next
 
 ### graph with new weights ----------------------------------------------------
 position <- c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD", "Other")
+farben = c("AfD" = "#009dd1","Union" = "#222222", "FDP" = "#ffb700", "Gruene" = "#349f29", "Linke" = "#cc35a0", "SPD" = "#ce1b1b", "Other" = "grey")
 
-p1 <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>%
-  ggplot(mapping = aes(x = vote_nextelection_de)) + 
+p1.unweighted <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>%  
+    ggplot(aes(x = vote_nextelection_de)) +
+    geom_bar(aes(fill = vote_nextelection_de)) + 
+               scale_fill_manual(values = farben) +
+              scale_colour_manual(values = farben) +
+   theme_classic() +
+   scale_x_discrete(limits = position, name = "Major Parties") +
+  guides(fill = FALSE)
+
+p1.weighted <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>%  
+  ggplot(aes(x = vote_nextelection_de, weight = wtGndrAgeParty)) +
+  geom_bar(aes(fill = vote_nextelection_de)) + 
+  scale_fill_manual(values = farben) +
+  scale_colour_manual(values = farben) +
   theme_classic() +
-  scale_x_discrete(limits = rev(position), name = "Major Parties") +
-  scale_y_continuous(name = "Overall Vote Share", limits = c(0,0.42),
-                     breaks = c(0, 0.1, 0.2, 0.3, 0.4), 
-                     labels = percent)
-
-p1.unweighted <- p1 + 
-  geom_bar(aes(y = ..prop.., group = 1), fill = "cadetblue3", width = 0.8) 
-
-p1.weighted <- p1 + 
-  geom_bar(aes(weight = wtGndrAgeParty, 
-               y = ..prop.., group = 1), 
-           fill = "cadetblue3",
-           width = 0.8) 
+  scale_x_discrete(limits = position, name = "Major Parties") +
+  guides(fill = FALSE)
   
 grid.arrange(p1.unweighted, p1.weighted, ncol = 2)
 
+w.shares <- Dalia.March %>% 
+  filter(vote_nextelection_de != "No vote") %>% 
+  count(vote_nextelection_de, wt = wtGndrAgeParty) %>%
+  mutate(shares = n / sum(n))
+
+uw.shares <- Dalia.March %>% 
+  filter(vote_nextelection_de != "No vote") %>% 
+  count(vote_nextelection_de) %>%
+  mutate(shares = n / sum(n))
+  
+barplot(w.shares$shares)
+barplot(uw.shares$shares)
+
+# -> bei den gewichteten Daliawerten kommt am Ende genau das Ergebnis der Bundestagswahl raus.
+# Ist ja auch logisch, wenn man die Gewichte so justiert, dass sie den Exit Poll Werten entsprechen
+
+
+### -> Gewichtung nach demographischen Faktoren aus den Exit Polls --------
+# GndrAgeEdu? GndrAge
