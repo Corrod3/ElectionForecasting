@@ -133,41 +133,57 @@ Dalia.March <- left_join(Dalia.March, exitPollWeights, by = c("gndr", "vote_next
 position <- c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD", "Other")
 farben = c("AfD" = "#009dd1","Union" = "#222222", "FDP" = "#ffb700", "Gruene" = "#349f29", "Linke" = "#cc35a0", "SPD" = "#ce1b1b", "Other" = "grey")
 
-p1.unweighted <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>%  
-    ggplot(aes(x = vote_nextelection_de)) +
-    geom_bar(aes(fill = vote_nextelection_de)) + 
-               scale_fill_manual(values = farben) +
-              scale_colour_manual(values = farben) +
-   theme_classic() +
-   scale_x_discrete(limits = position, name = "Major Parties") +
-  guides(fill = FALSE)
-
-p1.weighted <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>%  
-  ggplot(aes(x = vote_nextelection_de, weight = wtGndrAgeParty)) +
-  geom_bar(aes(fill = vote_nextelection_de)) + 
-  scale_fill_manual(values = farben) +
-  scale_colour_manual(values = farben) +
-  theme_classic() +
-  scale_x_discrete(limits = position, name = "Major Parties") +
-  guides(fill = FALSE)
+# Plot function
+shares.plot <- function(share.frame){
+  ggplot(data = share.frame, aes(x = vote_nextelection_de, y = shares)) +
+    geom_bar(aes(fill = vote_nextelection_de), stat = "identity") + 
+    scale_fill_manual(values = farben) +
+    scale_colour_manual(values = farben) +
+    theme_classic() +
+    scale_x_discrete(limits = position, name = "Major Parties") +
+    ylab("Vote Share in %") +
+    guides(fill = FALSE) +
+    geom_text(aes(label=paste0(round(shares,2),"%"), y=shares+1.1), size = 3.5)
   
-grid.arrange(p1.unweighted, p1.weighted, ncol = 2)
+  ggsave(file = "./Grafiken/plot.png")
+}
 
-w.shares <- Dalia.March %>% 
-  filter(vote_nextelection_de != "No vote") %>% 
-  count(vote_nextelection_de, wt = wtGndrAgeParty) %>%
-  mutate(shares = n / sum(n))
+
+# p1.unweighted <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>%  
+#     ggplot(aes(x = vote_nextelection_de)) +
+#     geom_bar(aes(fill = vote_nextelection_de)) + 
+#                scale_fill_manual(values = farben) +
+#               scale_colour_manual(values = farben) +
+#    theme_classic() +
+#    scale_x_discrete(limits = position, name = "Major Parties") +
+#   guides(fill = FALSE)
+# 
+# p1.weighted <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>%  
+#   ggplot(aes(x = vote_nextelection_de, weight = wtGndrAgeParty)) +
+#   geom_bar(aes(fill = vote_nextelection_de)) + 
+#   scale_fill_manual(values = farben) +
+#   scale_colour_manual(values = farben) +
+#   theme_classic() +
+#   scale_x_discrete(limits = position, name = "Major Parties") +
+#   guides(fill = FALSE)
+#   
+# grid.arrange(p1.unweighted, p1.weighted, ncol = 2)
 
 uw.shares <- Dalia.March %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de) %>%
-  mutate(shares = n / sum(n))
-  
-barplot(w.shares$shares)
-barplot(uw.shares$shares)
+  mutate(shares = 100*n / sum(n))
 
+w.shares <- Dalia.March %>% 
+  filter(vote_nextelection_de != "No vote") %>% 
+  count(vote_nextelection_de, wt = wtGndrAgeParty) %>%
+  mutate(shares = 100*n / sum(n))
+
+w.shares %>% shares.plot()
+uw.shares %>% shares.plot()
+  
 # -> bei den gewichteten Daliawerten kommt am Ende genau das Ergebnis der Bundestagswahl raus.
-# Ist ja auch logisch, wenn man die Gewichte so justiert, dass sie den Exit Poll Werten entsprechen
+# Ist ja auch logisch, wenn man die cluster so justiert, dass sie genau den exit polls entsprechen
 
 
 ### -> Gewichtung nach demographischen Faktoren aus den Exit Polls --------

@@ -61,6 +61,10 @@ rm(p, packages)
 
 There was no Exit Poll data across the cluster specifically for AfD, therefore I took the share of the total AfD result from the Others total result. This share is thus equal across age groups and gender
 
+Shall we use the average of December and March wave. Or focus entirely on March wave?
+
+
+
 # Introduction
 
 **together**
@@ -103,7 +107,8 @@ Likely voter modelling is notoriously the secret-sauce aspect of polling, says K
 
 Typical biases in polling (most important: non-response bias; sample-selection bias)
     Which biases do we expect in the data -->
-    
+
+
 # Data and Potential Biases
 
 **Moritz**
@@ -167,12 +172,39 @@ The data used for post-stratification and weighting come from several sources. T
 
 Furthermore, we collected data from election polls conducted by Forschungsgruppe Wahlen e.V., Infratest dimap and from the official German election statistics [@KAS.2013]<!-- add further links / sources -->. While the latter contains only information on turnout and the demographic dimensions age and gender, Forschungsgruppe Wahlen e.V. has also issued election results and turnout along groups with different education, different employment status and confession. Such data is the closest estimate of the actual voting population and their voting behaviour across demographic groups and across the spectrum of political parties we can get.
 
-<!-- more data could be obtained form ALLBUS social survey? -->
-
-
 <!-- noch kurz: Als vergleichs daten nehmen wir daten von wahlrecht.de-->
 Finally, in order to set our forecasts into context we will use polling data from other institutes. For this we plan to get the respective information from [wahlrecht.de](wahlrecht.de). 
 
+
+
+# Data Sources and Quality 
+
+## Data sources
+
+<!-- data sources --->
+Here explain Dalia data, election statistics, census and wahlrecht.com data (briefly)
+mainly design paper part
+
+## Raw forecasts and data quality
+
+<!-- raw data graphics --->
+Get raw forecasts and show data summary statistics -> distribution of cluster
+statistics and data mining results without weighting
+
+1. raw data forecast. Compared to other forecastes the data under represents the CDU as well as the SPD. (Verify) -> We could take the average of the german polls as computed by Süddeutsche.de
+
+<!-- contrast data with census and exit polls and current polls -->
+put here summary stats of weighting data
+
+2. Show distribution of respondents on different demographic clusters and compare to zensus / exit polls / election statistics
+
+3. Raw (voted last election)
+
+
+<!-- put here other data shortcommings -->
+Elaborate on shortcommings of the data: 
+  e.g there is not specific AfD data across age groups and gender provided by the german election statistics
+  
 # Methodology
 
 We want to employ two approaches to generate election forecasts from our data. In the first approach, the survey data is adjusted in a two step procedure: First, the representativeness of survey data to the general population is increased by finding appropiate weights. Then, a likely voter model is used to obtain an election forecast. Our second approach does this in one step: The survey data will be directly adjusted to the likely voter population based on exit poll data from the German federal election in 2013. 
@@ -239,16 +271,6 @@ Poststratification
 --> 
 
 
-<!-- THIS WILL BE PART OF THE FINAL PAPER
-# Data Overview
-
-how representative our data already is
-
-1. raw data forecast. Compared to other forecastes the data under represents the CDU as well as the SPD. (Verify) 
-
-2. Show distribution of respondents on different demographic clusters and compare to zensus / exit polls / election statistics
-
-3. Raw (voted last election)
 
 # Results
 
@@ -276,6 +298,6 @@ My approach would be:
 Summary of the core finding
 
 Further implications
--->
+
 # References
 
