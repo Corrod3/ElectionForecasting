@@ -56,13 +56,12 @@ rm(p, packages)
 ```
 \newpage
 
-
-# Notizen from data work
+<!-- Notizen from data work
 
 There was no Exit Poll data across the cluster specifically for AfD, therefore I took the share of the total AfD result from the Others total result. This share is thus equal across age groups and gender
 
 Shall we use the average of December and March wave. Or focus entirely on March wave?
-
+-->
 
 
 # Introduction

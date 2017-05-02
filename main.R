@@ -122,8 +122,8 @@ DaliaDE$edu.cat <- ifelse(
       "Medium education",
       DaliaDE$edu.cat)
 DaliaDE$edu.cat <- factor(DaliaDE$edu.cat, levels = c("Lower education",
-                                                                  "Medium education",
-                                                                  "Higher education"))
+                                                      "Medium education",
+                                                      "Higher education"))
 
 
 # Filter: not eligible to vote, not german resident, below 18 at the time of election
@@ -146,11 +146,13 @@ plot(DaliaDE$residency)
 
 # create binary turnout variable
 DaliaDE$turnout_exp <- DaliaDE$vote_next_national_election
-DaliaDE$turnout_exp <- plyr::mapvalues(DaliaDE$turnout_exp, from = c("I'm not eligible to vote","No, I will definitely not vote", 
-                                                                   "No, I will probably not vote",
-                                                                   "Yes, I will definitely vote",
-                                                                   "Yes, I will probably vote") , 
-                                                            to = c(0,0,0,1,1))
+DaliaDE$turnout_exp <- plyr::mapvalues(DaliaDE$turnout_exp, 
+                                       from = c("I'm not eligible to vote",
+                                                "No, I will definitely not vote", 
+                                                "No, I will probably not vote",
+                                                "Yes, I will definitely vote",
+                                                "Yes, I will probably vote") , 
+                                       to = c(0,0,0,1,1))
 ### Tables ###
 # Set general table setting
 
@@ -164,33 +166,56 @@ sjp.setTheme(geom.outline.color = "cadetblue",
              base = theme_classic())
 
 # Self-reported turnout
-sjp.xtab(DaliaDE$turnout_exp, DaliaDE$gender,
-         title = "Expected turnout by gender", 
-         axis.titles = c("Self-reported turnout by gender", "Expected federal election turnout"),
-         axis.labels = c("No, I will (probably) not vote", "Yes, I will (probably) vote"),
-         geom.size = 0.5, 
-         geom.colors = c("cadetblue","cadetblue3") ,
-         legend.title = "Gender", 
-         legend.labels = c("Male", "Female"), 
-         coord.flip=TRUE, 
-         hjust = "top", 
-         show.total = FALSE,
-         show.n = FALSE)
+turnout.plot <- sjp.xtab(DaliaDE$turnout_exp, DaliaDE$gender,
+                         title = "Expected turnout by gender", 
+                         axis.titles = c("Self-reported turnout by gender",
+                                         "Expected federal election turnout"),
+                         axis.labels = c("No, I will (probably) not vote",
+                                         "Yes, I will (probably) vote"),
+                         geom.size = 0.5, 
+                         geom.colors = c("cadetblue","cadetblue3") ,
+                         legend.title = "Gender", 
+                         legend.labels = c("Male", "Female"), 
+                         coord.flip=TRUE, 
+                         hjust = "top", 
+                         show.total = FALSE,
+                         show.n = FALSE)
         
 # with Dalia weights
-sjp.xtab(DaliaDE$turnout_exp, DaliaDE$gender, weight.by=DaliaDE$weight,
-         title = "Expected turnout by gender (unweighted)", 
-         axis.titles = c("Vote intent by gender","Expected federal election turnout"),
-         axis.labels = c("No, I will (probably) not vote", "Yes, I will (probably) vote"),
-         geom.size = 0.5, legend.title = "Gender", legend.labels = c("Male", "Female"), 
-         coord.flip=TRUE, hjust = "top",show.n = FALSE)
+turnout.plot.w <- sjp.xtab(DaliaDE$turnout_exp, DaliaDE$gender, 
+                           weight.by=DaliaDE$weight,
+                           title = "Expected turnout by gender (unweighted)", 
+                           axis.titles = c("Vote intent by gender",
+                                           "Expected federal election turnout"),
+                           axis.labels = c("No, I will (probably) not vote", 
+                                           "Yes, I will (probably) vote"),
+                           geom.size = 0.5, legend.title = "Gender", 
+                           legend.labels = c("Male", "Female"), 
+                           coord.flip=TRUE, hjust = "top",show.n = FALSE)
 
 # why are the turnouts so high? What can we do about that?
 # probably (self-)selection bias within demographic groups 
+# A: do we have a possiblity to look tournout of 2013?
+# according to our data the turnout 2013 was 78,03%, in reality it was 71,5%
+
+turnout.2013 <- 1 - 
+                length(DaliaDE$voted_party_last_election_de[DaliaDE$age > 22 & 
+                           DaliaDE$voted_party_last_election_de == "No vote"])/
+                length(DaliaDE$voted_party_last_election_de[DaliaDE$age > 22 & 
+                           DaliaDE$voted_party_last_election_de != "Not able"])
+
 
 # filter not vote and not able
-DaliaDE_temp <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" | voted_party_last_election_de == "Not able"))
-DaliaDE_temp$voted_party_last_election_de <- factor(DaliaDE_temp$voted_party_last_election_de)
+DaliaDE_temp <- filter(DaliaDE, 
+                       !(voted_party_last_election_de == "No vote" |
+                         voted_party_last_election_de == "Not able"
+                         ))
+DaliaDE_temp$voted_party_last_election_de <- 
+                              factor(DaliaDE_temp$voted_party_last_election_de,
+                                     levels = c("Union", "SPD",  "Linke", "Gruene", 
+                                                "FDP" ,"AfD" , "Other" ))
+
+# reorder factors
 
 # last election vote without weights
 sjp.frq(DaliaDE_temp$voted_party_last_election_de,
@@ -214,8 +239,26 @@ sjp.frq(DaliaDE_temp$voted_party_last_election_de,
 
 # FAILURE: labels are completely mixed up after weighting
 
+# ggplot last election forecasts
+# Problem: AfD over represented, FDP under representated (biased memory?)
+#          CDU under representated
+ggplot(DaliaDE_temp, aes(x = voted_party_last_election_de)) +
+       geom_bar(aes(y = (..count..)/sum(..count..))) +
+       theme_bw() +
+       coord_flip() # flip sides
+
+ggplot(DaliaDE_temp, aes(x = voted_party_last_election_de, weight = weight)) +
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  theme_bw() +
+  coord_flip() # flip sides
+
+
+# remove No vote
 DaliaDE_temp <- filter(DaliaDE, vote_nextelection_de != "No vote")
-DaliaDE_temp$vote_nextelection_de <- factor(DaliaDE_temp$vote_nextelection_de)
+DaliaDE_temp$vote_nextelection_de <- factor(DaliaDE_temp$vote_nextelection_de,
+                                            levels = c("Union", "SPD",  
+                                                       "Linke", "Gruene", 
+                                                       "FDP" ,"AfD" , "Other"))
 
 sjp.frq(DaliaDE_temp$vote_nextelection_de,
         title = "Vote next federal election (unweighted)", 
@@ -235,10 +278,16 @@ sjp.frq(DaliaDE_temp$vote_nextelection_de,
         show.axis.values = FALSE,
         weight.by = DaliaDE_temp$weight,
         title.wtd.suffix = " (weighted)")
+
 # mit weights verschieben sich wieder die label -> scheisse
 
-rm(DaliaDE_temp)
+# ggplot ohne verschobene labels
+ggplot(DaliaDE_temp, aes(x = vote_nextelection_de, weight = weight)) +
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  theme_bw() +
+  coord_flip() # flip sides
 
+#rm(DaliaDE_temp)
 
 # Party ranking ################################################################
 # comment to Dalia: Include in ranking: I prefer not to vote 
@@ -246,7 +295,11 @@ rm(DaliaDE_temp)
 
 # split ranking
 # test with one string
-# strsplit("Die Linke | Bündnis 90 / Die Grünen | SPD – Sozialdemokratische Partei Deutschlands | FDP - Freie Demokratische Partei | CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union | AfD – Alternative für Deutschland"
+# strsplit("Die Linke | Bündnis 90 / Die Grünen | 
+#           SPD – Sozialdemokratische Partei Deutschlands | 
+#           FDP - Freie Demokratische Partei | 
+#           CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union | 
+#           AfD – Alternative für Deutschland"
 #          , split = " | ", fixed = TRUE)
 
 # list of all splitted strings
@@ -269,10 +322,7 @@ DaliaDE$ranking6 <- sapply(strsplit(as.character(DaliaDE$ranking_party_de),
                                     split = " | ", fixed = TRUE),
                            function(x) x[[6]])
 
-# most preferred party (consistency check with vote for next election/identify divergencies?)
-ggplot(DaliaDE, aes(x=ranking1)) +
-  geom_bar() + # bar type
-  coord_flip() # flip sides
+
 
 # How voters 1 to 2nd preferences are related
 # plot function for flow chart
@@ -286,6 +336,32 @@ SecPref <- spread(SecPref, rank2, Freq)
 # transition plot (see transistion plot script for example)
 transitionPlot(as.matrix(SecPref[,-1]),  
                box_txt = as.character(SecPref[,1]))
+
+# most preferred party (consistency check with vote for next election/identify divergencies?)
+DaliaDE$ranking1 <- as.factor(DaliaDE$ranking1)
+
+# create data frame for experimenting -> adds ranking1 to DaliaDE_temp
+DaliaDEPlot <- merge(DaliaDE_temp[,c("identifier", 
+                                     "vote_nextelection_de")], 
+                     DaliaDE[,c("identifier", "ranking1")],
+                     by = "identifier")
+
+# relabel and reorder factors
+levels(DaliaDEPlot$ranking1) <- c("AfD", "Gruene", "Union", "Linke", "FDP", "SPD")
+DaliaDEPlot$ranking1 <-
+               factor(DaliaDEPlot$ranking1,
+               levels = c("Union", "SPD",  "Linke", "Gruene", 
+                          "FDP" ,"AfD"))
+
+# remove individuals who could not choose their party in the ranking question
+DaliaDEPlot <- DaliaDEPlot %>% filter(vote_nextelection_de != "Other")
+
+
+# plot comparing number of vote intention and ranking1
+vote.rank.plot <- ggplot(melt(DaliaDEPlot, id.vars = "identifier"), aes(x=value, fill = variable)) +
+                            geom_bar(position = 'dodge') +
+                            theme_bw() +
+                            coord_flip() # flip sides
 
 # voter loyality ##############################################################
 # idea: compare past self-reported voting with intended voting?!
@@ -316,6 +392,11 @@ VoteLast$loyality <- diag(as.matrix(VoteLast))/rowSums(VoteLast)
 # Table for 2013 -> 2017 voter transitions 
 # Weil die Loyalitätsstroeme so fett sind lassen die anderen sich kaum unterscheiden :/
 transitionPlot(as.matrix(VoteLast[,c(1:6)]),  
+               box_txt = c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD"))
+
+transitionMatrix <- as.matrix(VoteLast[,c(1:6)])
+diag(transitionMatrix) <- 0
+transitionPlot(transitionMatrix,  
                box_txt = c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD"))
 
 # alternative voter loyality: certainty_party_to_vote
@@ -349,7 +430,6 @@ ggplot(filter(DaliaDE, vote_nextelection_de != "I would not vote"),
 DaliaDE <- filter(DaliaDE, !(voted_party_last_election_de == "No vote" | 
                                voted_party_last_election_de == "Not able"))
 DaliaDE$voted_party_last_election_de <- factor(DaliaDE$voted_party_last_election_de)
-# droplevels()
 
 # create AgeGroup (like in election statistics)
 DaliaDE$AgeGroup <- c("18-25", "26-35", 
