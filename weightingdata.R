@@ -8,17 +8,11 @@
 # 2. finish census
 ### End ToDO ##################################################################
 
-
-# Clear Global environment
-rm(list=ls())
-
 ## Setting Working directory
 try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/ElectionForecasting"), silent = TRUE)
 try(setwd("C:/Users/Moritz/Desktop/ElectionForecasting"), silent = TRUE)
 
 source("packages.R")
-
-
 
 ### Election statistics #######################################################
 
@@ -36,10 +30,10 @@ colnames <- c("parties",
 
 
 # read_csv2 delimits with ;
-#Vote2013 <- read_csv2("./Weitere Daten/Bundeswahlstatistik_2013/Wählerschaft_der_Parteien_nach_Geschlecht_und_Alter.csv", 
+#Vote2013 <- read_csv2("./Weitere Daten/Bundeswahlstatistik_2013/Waehlerschaft_der_Parteien_nach_Geschlecht_und_Alter.csv", 
 #                           skip = 10, col_names = colnames)
 
-Vote2013 <- read.csv2("./Weitere Daten/Bundeswahlstatistik_2013/Wählerschaft_der_Parteien_nach_Geschlecht_und_Alter.csv", 
+Vote2013 <- read.csv2("./Weitere Daten/Bundeswahlstatistik_2013/Waehlerschaft_der_Parteien_nach_Geschlecht_und_Alter.csv", 
                             skip = 10, sep=";", dec=",", header = FALSE, col.names = colnames)
 rm(colnames)
 
@@ -74,9 +68,7 @@ Vote2013 <- Vote2013 %>% mutate(
 # save file
 save(Vote2013, file = "./Processed/Vote_2013.RData")
 
-
-###########################
-### Total election results -----------------------------------------------------
+### Total election results ####################################################
 
 # import election results
 # changed the function because read.csv is less error prone
@@ -84,10 +76,9 @@ save(Vote2013, file = "./Processed/Vote_2013.RData")
 Total2013 <- read.csv("./Weitere Daten/Bundeswahlstatistik_2013/Wahlergebnisse_2013.csv")
 
 # general election info
-eligible.voter.2013 <- Total2013[[1,2]]
-voter.2013 <- Total2013[[2,2]]
-turnout.2013 <- voter.2013/eligible.voter.2013
-invalid.votes.2013 <- Total2013[c(3,4),] 
+# turnout: actual voter / elegible voter
+turnout.2013 <- Total2013[[2,2]]/Total2013[[1,2]]
+# invalid.votes.2013 <- Total2013[c(3,4),] 
 Total2013 <- Total2013 %>% filter(!is.na(Total2013$Zweitstimmen_pct) &
                                       !is.na(Total2013$Erststimmen_pct))
 # drop gueltig + ungueltige votes

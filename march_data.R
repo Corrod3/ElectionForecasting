@@ -9,62 +9,15 @@ try(setwd("C:\\Users\\Moritz\\Desktop\\ElectionForecasting"), silent = TRUE)
 
 source("packages.R")
 
-### March data ################################################################
-
-# load
-Dalia.March <- read_csv("./Raw/March_Wave/data_coded_HertieSchool of Governance_2017-04-11_10-20.csv")
-
-# create variable names
-var.names <- names(Dalia.March) %>% str_replace("(.+Q\\d+_)|(\\[.+\\]\\s)", "") %>%
-  str_replace("\\s.+", "") %>%
-  str_replace("_[A-Z].+.|\\d", "") %>%
-  str_replace("\\]", "")
-
-colnames(Dalia.March) <- var.names   
-colnames(Dalia.March)[8] <- c("gender")
-
-# interesting vars: opinion_eu, opinion_government, political_views, likelihood_to_demonstrate
-# frequency_of_voting, vote_next_national_election, vote_nextelection_de, voted_party_last_election_de,
-# certainty_party_to_vote, ranking_party_de, bundeskanzler_candidate, frequent_sharing_of_politicalviews
-
-# clean NAs (might be interesting to look for a pattern in NAs in this question)
-Dalia.March <- Dalia.March %>% filter(!is.na(vote_nextelection_de)) 
-
-# rename variables
-Dalia.March$vote_nextelection_de <- str_replace(Dalia.March$vote_nextelection_de, 
-         "(\\s.+lands)|(\\s.+land)|(CDU.+le\\s)|(Die\\s)|(\\s.+Partei)|(B.+Die\\s)",
-         "")
-Dalia.March$vote_nextelection_de <- str_replace(Dalia.March$vote_nextelection_de,
-                                                "Grünen", "Gruene")
-Dalia.March$vote_nextelection_de <- str_replace(Dalia.March$vote_nextelection_de,
-                                                "I would not vote", "No vote")
-
-Dalia.March$gender <- Dalia.March$gender %>% mapvalues(c("female", "male"), c("Female", "Male"))
 
 
-# Dalia.March$bundeskanzler_candidate %>% table()
-# Dalia.March$vote_nextelection_de %>% table()
-
-
-### March data mining #########################################################
-
-# Charts
-ggplot(data = Dalia.March, mapping = aes(x = vote_nextelection_de, weight = weight)) + 
-  geom_bar()
-ggplot(data = Dalia.March, mapping = aes(x = vote_nextelection_de)) + 
-  geom_bar(aes(fill = gender))
-ggplot(data = Dalia.March, mapping = aes(x = fct_infreq(vote_nextelection_de))) + 
-  geom_bar(aes(fill = certainty_party_to_vote))
-# -> Dalia weights cause hardly any changes
 
 
 ### Strata construction Dalia march ###########################################
 
-Dalia.March$AgeGroup <- c("18-25", "26-35", 
-                    "36-45", "46-60", "60+")[findInterval(Dalia.March$age, 
-                                                          c(-Inf, 25.5, 35.5, 45.5, 60.5, Inf))]
 
-Strata.1.March <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>% 
+
+Strata.1.March <- DaliaMar %>% filter(vote_nextelection_de != "No vote") %>% 
   group_by(gender, AgeGroup, vote_nextelection_de) %>% 
   tally() 
 
@@ -132,7 +85,7 @@ exitPollWeights$wtGenderAgeParty <- (exitPollWeights$vote.share.exit)/exitPollWe
 exitPollWeights <- rename(exitPollWeights, vote_nextelection_de = parties)
 
 # assign weights to Dalia data
-Dalia.March <- left_join(Dalia.March, exitPollWeights, by = c("gender", "vote_nextelection_de", "AgeGroup"))
+DaliaMar <- left_join(DaliaMar, exitPollWeights, by = c("gender", "vote_nextelection_de", "AgeGroup"))
 
 ### graph with new weights ----------------------------------------------------
 position <- c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD", "Other")
@@ -154,7 +107,7 @@ shares.plot <- function(share.frame){
 }
 
 
-# p1.unweighted <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>%  
+# p1.unweighted <- DaliaMar %>% filter(vote_nextelection_de != "No vote") %>%  
 #     ggplot(aes(x = vote_nextelection_de)) +
 #     geom_bar(aes(fill = vote_nextelection_de)) + 
 #                scale_fill_manual(values = farben) +
@@ -163,7 +116,7 @@ shares.plot <- function(share.frame){
 #    scale_x_discrete(limits = position, name = "Major parties") +
 #   guides(fill = FALSE)
 # 
-# p1.weighted <- Dalia.March %>% filter(vote_nextelection_de != "No vote") %>%  
+# p1.weighted <- DaliaMar %>% filter(vote_nextelection_de != "No vote") %>%  
 #   ggplot(aes(x = vote_nextelection_de, weight = wtGenderAgeParty)) +
 #   geom_bar(aes(fill = vote_nextelection_de)) + 
 #   scale_fill_manual(values = farben) +
@@ -174,12 +127,12 @@ shares.plot <- function(share.frame){
 #   
 # grid.arrange(p1.unweighted, p1.weighted, ncol = 2)
 
-uw.shares <- Dalia.March %>% 
+uw.shares <- DaliaMar %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de) %>%
   mutate(shares = 100*n / sum(n))
 
-w.shares <- Dalia.March %>% 
+w.shares <- DaliaMar %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de, wt = wtGenderAgeParty) %>%
   mutate(shares = 100*n / sum(n))
