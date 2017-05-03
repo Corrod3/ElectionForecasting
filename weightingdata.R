@@ -156,7 +156,7 @@ for(i in 1:nrow(VoteByGender)) {
   VoteByGender[i,c(1:7)] <- VoteByGender[i,c(1:7)]/100 * VoteByGender[i,9]
 }
 
-VoteByGender <- melt(select(VoteByGender, -Turnoutgender), id.vars = "gender")
+VoteByGender <- reshape2::melt(select(VoteByGender, -Turnoutgender), id.vars = "gender")
 colnames(VoteByGender)[-1] <- c("parties","gender.vote")
 
 #VoteByGender <- VoteByGender %>% gather(
