@@ -167,6 +167,8 @@ DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_e
 DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de, 
                                                      "No, I did not vote",
                                                      "No vote")
+DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de,
+                                             "G.*?en", "Gruene")
   
 DaliaMar$gender <- DaliaMar$gender %>% mapvalues(c("female", "male"), c("Female", "Male"))
 

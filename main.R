@@ -22,10 +22,14 @@ source("weightingdata.R")
 
 # delete non voters and unable voters
 DaliaDec <- DaliaDec %>% filter(!(voted_party_last_election_de == "No vote" | 
-                                 voted_party_last_election_de == "Not able"))
+                                  voted_party_last_election_de == "Not able" | 
+                                  is.na(vote_nextelection_de) |
+                                  is.na(voted_party_last_election_de)))
 
-DaliaMar <- DaliaMar %>% filter(!is.na(vote_nextelection_de) |
-                                  !is.na(voted_party_last_election_de)) 
+DaliaMar <- DaliaMar %>% filter(!(voted_party_last_election_de == "No vote" | 
+                                    voted_party_last_election_de == "Not able" | 
+                                    is.na(vote_nextelection_de) |
+                                    is.na(voted_party_last_election_de)))
 
 ### 2. Strata #################################################################
 
@@ -33,23 +37,33 @@ DaliaMar <- DaliaMar %>% filter(!is.na(vote_nextelection_de) |
 # plyr::count(DaliaDec, c('gender','AgeGroup','voted_party_last_election_de')) 
 # 2*5*7 = 70 Cluster; four are empty
 
-### Dalia gender-age-lastvote #################################################
-S.GAV.DDec <- DaliaDec %>% 
+### Dalia december gender-age-lastvote ########################################
+S.GAV.DDec <- DaliaDec %>% filter(voted_party_last_election_de != "No vote" & 
+                                  voted_party_last_election_de != "Not able") %>%
+  droplevels() %>%  # drops unused factor "No vote" "not able"
   group_by(gender, AgeGroup, voted_party_last_election_de) %>%
   tally() %>% complete(nesting(gender), AgeGroup, voted_party_last_election_de)
 
+S.GAV.DDec <- S.GAV.DDec %>% ungroup() %>%
+                        rename(parties = voted_party_last_election_de) %>% 
+                        mutate(parties = as.character(parties), 
+                               gender = as.character(gender))
+
+S.GAV.DDec <- S.GAV.DDec %>% mutate(gender = str_replace(gender, 
+                                                         "^female",
+                                                         "Female"),
+                                    gender = str_replace(gender, 
+                                                         "^male",
+                                                         "Male"))
+                                      
 # replace missing
 S.GAV.DDec$n[is.na(S.GAV.DDec$n)] <- 0
 
-# Create Strata gender-age-party: 
-Strata.2 <- DaliaDec %>% filter(vote_nextelection_de != "No vote") %>%
-  droplevels() %>%  # drops unused factor "No vote"
-  group_by(gender, AgeGroup, vote_nextelection_de) %>%
-  tally() %>% complete(nesting(gender), AgeGroup, vote_nextelection_de)
+# in percentages
 
-Strata.2$n[is.na(Strata.2$n)] <- 0 
+S.GAV.DDec$n <- 100*(S.GAV.DDec$n/sum(S.GAV.DDec$n))
 
-### Strata construction Dalia march ###########################################
+### Dalia march gender-age-last-vote ##########################################
 
 S.GAV.DMar <- DaliaMar %>% filter(vote_nextelection_de != "No vote") %>% 
   group_by(gender, AgeGroup, vote_nextelection_de) %>% 
@@ -65,14 +79,14 @@ load("./Processed/Vote_Age_Gender_2013.RData")
 load("./Processed/Total_2013.RData")
 
 # AfD - share of total "Others"
-AfD <- Total2013[8,"Zweitstimmen_pct"]/(Total2013[8,"Zweitstimmen_pct"]+
-                                          Total2013[6,"Zweitstimmen_pct"])
+AfD.share <- as.numeric(Total2013[8,"Zweitstimmen_pct"]/
+                       (Total2013[8,"Zweitstimmen_pct"] + 
+                        Total2013[6,"Zweitstimmen_pct"]))
 
 # compute AfD share from their total vote share across all "Other" parties:
 # assumption: Distribution of voters across age groups AND gender equal
-# alternative solution: collect demographics of AfD voter data
 
-AfDShares <- data.frame(parties = rep("AfD", 3), gender = c("Total", "Male", "Female"), 
+AfDrows <- data.frame(parties = rep("AfD", 3), gender = c("Total", "Male", "Female"), 
                         "age1825" = as.numeric(rep(NA, 3)),
                         "age2635" = as.numeric(rep(NA, 3)),
                         "age3645" = as.numeric(rep(NA, 3)),
@@ -81,45 +95,91 @@ AfDShares <- data.frame(parties = rep("AfD", 3), gender = c("Total", "Male", "Fe
                         "gender.vote" = as.numeric(rep(NA, 3)), stringsAsFactors = FALSE)
 
 # Add AfD to vote shares of Exitpoll
-VoteAgeGender.2013 <- data.frame(rbind(as.matrix(VoteAgeGender.2013), as.matrix(AfDShares)), 
+S.GAV.Exit <- data.frame(rbind(as.matrix(VoteAgeGender.2013), as.matrix(AfDrows)), 
                                  stringsAsFactors = FALSE)
+rm(AfDrows, VoteAgeGender.2013)
+
 # format as.double (why not just as.numeric?)
-VoteAgeGender.2013[,c(3:8)] <- sapply(VoteAgeGender.2013[,c(3:8)], as.double)
+S.GAV.Exit[,c(3:8)] <- sapply(S.GAV.Exit[,c(3:8)], as.double)
 
 # compute AfD and others share
-VoteAgeGender.2013[VoteAgeGender.2013$parties == "AfD", c(3:8)] <- 
-  VoteAgeGender.2013[VoteAgeGender.2013$parties == "Other", c(3:8)]*(as.double(AfD))
-VoteAgeGender.2013[VoteAgeGender.2013$parties == "Other", c(3:8)] <- 
-  VoteAgeGender.2013[VoteAgeGender.2013$parties == "Other", c(3:8)]*(1-as.double(AfD))
+S.GAV.Exit[S.GAV.Exit$parties == "AfD", c(3:8)] <- 
+  S.GAV.Exit[S.GAV.Exit$parties == "Other", c(3:8)]*(AfD.share)
+S.GAV.Exit[S.GAV.Exit$parties == "Other", c(3:8)] <- 
+  S.GAV.Exit[S.GAV.Exit$parties == "Other", c(3:8)]*(1-AfD.share)
 
 # combine CDU/CSU
-VoteAgeGender.2013 <- VoteAgeGender.2013 %>% mutate(
-  parties = str_replace(parties, "CDU|CSU", "Union")
-) %>% group_by(gender, parties) %>%
-  summarise_all(sum) %>% filter(gender != "Total")
+S.GAV.Exit <- S.GAV.Exit %>% mutate(parties = str_replace(parties, 
+                                                          "CDU|CSU",
+                                                          "Union")) %>%
+                              group_by(gender, parties) %>%
+                              summarise_all(sum) %>% filter(gender != "Total")
 
 # reshape
-S.GAV.Exit <- dplyr::select(VoteAgeGender.2013, -gender.vote) %>% 
+S.GAV.Exit <- dplyr::select(S.GAV.Exit, -gender.vote) %>% 
   gather(key = "AgeGroup", value = "vote.share", starts_with("age"))
 
 # rename age group values
 S.GAV.Exit$AgeGroup <- mapvalues(S.GAV.Exit$AgeGroup,
-                                        c("age1825.2013", "age2635.2013", "age3645.2013", "age4660.2013", "age60P.2013"),
-                                        c("18-25", "26-35", "36-45", "46-60", "60+"))
+                                  c("age1825.2013", "age2635.2013",
+                                    "age3645.2013", "age4660.2013",
+                                    "age60P.2013"),
+                                  c("18-25", "26-35", "36-45", "46-60", "60+"))
 
 
 S.GAV.Exit$vote.share <- S.GAV.Exit$vote.share*100
 S.GAV.Exit <- rename(S.GAV.Exit, vote.share.exit = vote.share)
-S.GAV.DMar <- rename(
-  S.GAV.DMar, parties = vote_nextelection_de, vote.share.dalia = n)
+S.GAV.DMar <- rename(S.GAV.DMar,
+                     parties = vote_nextelection_de,
+                     vote.share.dalia = n)
 
-### compute weights
-exitPollWeights <- left_join(S.GAV.Exit, S.GAV.DMar, by = c("gender", "parties", "AgeGroup"))
-exitPollWeights$wtGenderAgeParty <- (exitPollWeights$vote.share.exit)/exitPollWeights$vote.share.dalia
-exitPollWeights <- rename(exitPollWeights, vote_nextelection_de = parties)
+### compute weights #####################################################################
+# December wave 
+# (has empty stratas!!! -> Poststratification not possible)
+# Adjust 
+
+S.GAV.Exit.A4 <- S.GAV.Exit %>% mutate(AgeGroup = str_replace(AgeGroup, 
+                                                          "(46-60)|(60\\+)",
+                                                          "45Plus")) %>%
+  group_by(gender, parties, AgeGroup) %>%
+  summarise_all(sum) 
+
+S.GAV.DDec.A4 <- S.GAV.DDec %>% ungroup %>% 
+  mutate(AgeGroup = str_replace(AgeGroup, "(46-60)|(60\\+)", "45Plus")) %>%
+  group_by(gender, parties, AgeGroup) %>%
+  summarise_all(sum) 
+
+
+w.GAV.Exit.DDec <- left_join(S.GAV.Exit.A4,
+                             S.GAV.DDec.A4,
+                             by = c("gender","parties","AgeGroup"))
+w.GAV.Exit.DDec$w.GAV.Exit.DDec <- (w.GAV.Exit.DDec$vote.share.exit)/w.GAV.Exit.DDec$n
+w.GAV.Exit.DDec <- rename(w.GAV.Exit.DDec, voted_party_last_election_de = parties)
+
+add <- w.GAV.Exit.DDec[w.GAV.Exit.DDec$AgeGroup == "45Plus",] 
+add <- add %>% mutate(AgeGroup = "60+")
+w.GAV.Exit.DDec <- rbind(w.GAV.Exit.DDec, add)
+w.GAV.Exit.DDec <- w.GAV.Exit.DDec %>% ungroup() %>%
+                        mutate(AgeGroup = str_replace(AgeGroup,"45Plus","46-60"),
+                               gender = str_replace(gender,
+                                                    "^Female",
+                                                    "female"),
+                               gender = str_replace(gender, "^Male", "male")) %>%
+                                     select(-vote.share.exit,-n)
+rm(add)
 
 # assign weights to Dalia data
-DaliaMar <- left_join(DaliaMar, exitPollWeights, by = c("gender", "vote_nextelection_de", "AgeGroup"))
+DaliaDec <- left_join(DaliaDec, w.GAV.Exit.DDec, by = c("gender", "voted_party_last_election_de", "AgeGroup"))
+
+# March wave
+w.GAV.Exit.DMar <- left_join(S.GAV.Exit, S.GAV.DMar, by = c("gender", "parties", "AgeGroup"))
+w.GAV.Exit.DMar$w.GAV.Exit.DMar <- (w.GAV.Exit.DMar$vote.share.exit)/w.GAV.Exit.DMar$vote.share.dalia
+w.GAV.Exit.DMar <- w.GAV.Exit.DMar %>% rename(voted_party_last_election_de = parties) %>%
+                        select(-vote.share.exit, -vote.share.dalia)
+
+# assign weights to Dalia data
+DaliaMar <- left_join(DaliaMar, w.GAV.Exit.DMar, by = c("gender", "voted_party_last_election_de", "AgeGroup"))
+
 
 ### graph with new weights ####################################################
 position <- c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD", "Other")
@@ -137,7 +197,7 @@ shares.plot <- function(share.frame){
     guides(fill = FALSE) +
     geom_text(aes(label=paste0(round(shares,2),"%"), y=shares+1.1), size = 3.5)
   
-  ggsave(file = "./Grafiken/plot.png")
+  #ggsave(file = "./Grafiken/plot.png")
 }
 
 
@@ -168,12 +228,18 @@ uw.shares <- DaliaMar %>%
 
 w.shares <- DaliaMar %>% 
   filter(vote_nextelection_de != "No vote") %>% 
-  count(vote_nextelection_de, wt = wtGenderAgeParty) %>%
+  count(vote_nextelection_de, wt = w.GAV.Exit.DMar) %>%
   mutate(shares = 100*n / sum(n))
 
 w.shares %>% shares.plot()
 uw.shares %>% shares.plot()
 
+w.sharesDec <- DaliaDec %>% 
+  filter(vote_nextelection_de != "No vote") %>% 
+  count(vote_nextelection_de, wt = w.GAV.Exit.DDec) %>%
+  mutate(shares = 100*n / sum(n))
+
+w.sharesDec %>% shares.plot()
 # -> bei den gewichteten Daliawerten kommt am Ende genau das Ergebnis der Bundestagswahl raus.
 # Ist ja auch logisch, wenn man die cluster so justiert, dass sie genau den exit polls entsprechen
 
