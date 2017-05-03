@@ -51,7 +51,7 @@ levels(DaliaDec$education_level) <- c("High school or equivalent",
                                      "University or equivalent",
                                      "Some high school or secondary school",
                                      "Other/Rather not answer")
-
+# education category
 DaliaDec$edu.cat <- ifelse(
   DaliaDec$education_level == "University or equivalent", 
   "Higher education", 
@@ -73,8 +73,8 @@ DaliaDec$edu.cat <- ifelse(
   "Medium education",
   DaliaDec$edu.cat)
 DaliaDec$edu.cat <- factor(DaliaDec$edu.cat, levels = c("Lower education",
-                                                      "Medium education",
-                                                      "Higher education"))
+                                                        "Medium education",
+                                                        "Higher education"))
 
 
 # Filter: not eligible to vote, not german resident, below 18 at the time of election
@@ -130,7 +130,8 @@ colnames(DaliaMar)[8] <- c("gender")
 # certainty_party_to_vote, ranking_party_de, bundeskanzler_candidate, frequent_sharing_of_politicalviews
 
 # clean NAs (might be interesting to look for a pattern in NAs in this question)
-DaliaMar <- DaliaMar %>% filter(!is.na(vote_nextelection_de)) 
+
+# DaliaDec$voted_party_last_election_de <- factor(DaliaDec$voted_party_last_election_de)
 
 # rename variables
 DaliaMar$vote_nextelection_de <- str_replace(DaliaMar$vote_nextelection_de, 
@@ -142,44 +143,34 @@ DaliaMar$vote_nextelection_de <- str_replace(DaliaMar$vote_nextelection_de,
                                                 "I would not vote", "No vote")
 
 
-#DaliaMar$voted_party_last_election_de <- plyr::mapvalues(DaliaMar$voted_party_last_election_de, 
-#                from = c("I wanted to vote but I wasn't able to",                                             
-#                         "No, I did not vote",                                                                
-#                         "Yes, but I voted for another party",
-#                         "Yes, I voted for AfD – Alternative für Deutschland",
-#                         "Yes, I voted for Bündnis 90 / Die Grünen",                               
-#                         "Yes, I voted for CDU/CSU – Christlich Demokratische Union/Christlich Soziale Union",
-#                         "Yes, I voted for Die Linke",
-#                         "Yes, I voted for FDP - Freie Demokratische Partei",
-#                         "Yes, I voted for SPD – Sozialdemokratische Partei Deutschlands") , 
-#                to = c("No able",
- #                      "No vote",
-#                       "Other",
-#                       "AfD", 
-#                       "Gruene", 
-#                       "Union",
-#                       "Linke",
-#                       "FDP", 
-#                       "SPD"))
-
- 
 DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de, 
-                                             "(Yes, I voted for )|(Yes, but I voted for an)",
+                                             "(Yes, I voted for\\s)|
+                                             (Yes, but I voted for an)", "")
+
+DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de, 
+                                             "(\\s.+lands)|(\\s.+land)|(Die\\s)|
+                                             (\\s.+Partei)|(B.+Die\\s)",
                                              "")
 
-#DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$ voted_party_last_election_de, 
-#                                             "(\\s.+lands)|(\\s.+land)|(CDU.+le\\s)|(Die\\s)|(\\s.+Partei)|(B.+Die\\s)",
-#                                             "")
-#DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de,
-#                                             "G.*?en", "Gruene")
-#DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de,
- #                                            "I would not vote", "No vote")
-
-
+DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de, 
+                                             "I wanted to vote but I wasn't able to",
+                                             "Not able")
+DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de, 
+                                                     "Yes, but I voted for another party",
+                                                     "Other")
+DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de, 
+                                                     "CDU.*Union",
+                                                     "Union")
+DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de, 
+                                                     "FDP.*Partei",
+                                                     "FDP")
+DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de, 
+                                                     "No, I did not vote",
+                                                     "No vote")
+  
 DaliaMar$gender <- DaliaMar$gender %>% mapvalues(c("female", "male"), c("Female", "Male"))
 
 ### compute variables
-
 DaliaMar$AgeGroup <- c("18-25", "26-35", 
                           "36-45", "46-60", "60+")[findInterval(DaliaMar$age, 
                                                                 c(-Inf, 25.5, 35.5, 45.5, 60.5, Inf))]
@@ -187,12 +178,43 @@ DaliaMar$AgeGroup <- c("18-25", "26-35",
 # DaliaMar$bundeskanzler_candidate %>% table()
 # DaliaMar$vote_nextelection_de %>% table()
 
+# Education Category ##########################################################
+
+# are coded with numbers
+DaliaMar$edu.cat <- ifelse(DaliaMar$education_level == 4, 
+                           "Higher education", 
+                           DaliaMar$education_level) 
+DaliaMar$edu.cat <- ifelse(DaliaMar$education_level == 1,
+                           "Lower education",
+                           DaliaMar$edu.cat)
+DaliaMar$edu.cat <- ifelse(DaliaMar$education_level == 5,
+                           "Lower education",
+                           DaliaMar$edu.cat)
+DaliaMar$edu.cat <- ifelse(DaliaMar$education_level == 3,
+                           "Medium education",
+                           DaliaMar$edu.cat)
+DaliaMar$edu.cat <- ifelse(DaliaMar$education_level == 2,
+                           "Medium education",
+                           DaliaMar$edu.cat)
+DaliaMar$edu.cat <- factor(DaliaMar$edu.cat, levels = c("Lower education",
+                                                        "Medium education",
+                                                        "Higher education"))
+# create binary turnout variable
+DaliaMar$turnout_exp <- DaliaMar$vote_next_national_election
+DaliaMar$turnout_exp <- plyr::mapvalues(DaliaMar$turnout_exp, 
+                                        from = c("I'm not eligible to vote",
+                                                 "No, I will definitely not vote", 
+                                                 "No, I will probably not vote",
+                                                 "Yes, I will definitely vote",
+                                                 "Yes, I will probably vote") , 
+                                        to = c(0,0,0,1,1))
+
 # drop unnessessary information
 DaliaMar <- DaliaMar %>% select(uuid, weight, age, country_code,
                                 education_level, AgeGroup, gender, religion, 
                                 employment_status, vote_next_national_election,
                                 voted_party_last_election_de,
-                                vote_nextelection_de)
+                                vote_nextelection_de, edu.cat, turnout_exp)
 
 ### March data mining #########################################################
 

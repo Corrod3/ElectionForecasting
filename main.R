@@ -20,25 +20,26 @@ source("daliadata.R")
 source("weightingdata.R")
 # add benchmark data
 
-### 2. Weights ################################################################
+# delete non voters and unable voters
+DaliaDec <- DaliaDec %>% filter(!(voted_party_last_election_de == "No vote" | 
+                                 voted_party_last_election_de == "Not able"))
 
-# weights #####################################################################
-# Careful: 4 years difference between Exit polls and Dalia!!!
+DaliaMar <- DaliaMar %>% filter(!is.na(vote_nextelection_de) |
+                                  !is.na(voted_party_last_election_de)) 
 
-DaliaDec <- filter(DaliaDec, !(voted_party_last_election_de == "No vote" | 
-                               voted_party_last_election_de == "Not able"))
-DaliaDec$voted_party_last_election_de <- factor(DaliaDec$voted_party_last_election_de)
+### 2. Strata #################################################################
 
-### Create Strata ###
-
-# Create Strata gender-age-party
+# Create Strata 
 # plyr::count(DaliaDec, c('gender','AgeGroup','voted_party_last_election_de')) 
 # 2*5*7 = 70 Cluster; four are empty
 
-Strata.1 <- DaliaDec %>% group_by(gender, AgeGroup, voted_party_last_election_de) %>%
+### Dalia gender-age-lastvote #################################################
+S.GAV.DDec <- DaliaDec %>% 
+  group_by(gender, AgeGroup, voted_party_last_election_de) %>%
   tally() %>% complete(nesting(gender), AgeGroup, voted_party_last_election_de)
+
 # replace missing
-Strata.1$n[is.na(Strata.1$n)] <- 0
+S.GAV.DDec$n[is.na(S.GAV.DDec$n)] <- 0
 
 # Create Strata gender-age-party: 
 Strata.2 <- DaliaDec %>% filter(vote_nextelection_de != "No vote") %>%
@@ -50,14 +51,14 @@ Strata.2$n[is.na(Strata.2$n)] <- 0
 
 ### Strata construction Dalia march ###########################################
 
-Strata.1.March <- DaliaMar %>% filter(vote_nextelection_de != "No vote") %>% 
+S.GAV.DMar <- DaliaMar %>% filter(vote_nextelection_de != "No vote") %>% 
   group_by(gender, AgeGroup, vote_nextelection_de) %>% 
   tally() 
 
 # strata percentages
-Strata.1.March$n <- 100*(Strata.1.March$n/sum(Strata.1.March$n))
+S.GAV.DMar$n <- 100*(S.GAV.DMar$n/sum(S.GAV.DMar$n))
 
-### Exit poll Strata ----------------------------------------------------------
+### Exit poll Strata ##########################################################
 
 # load weighting data
 load("./Processed/Vote_Age_Gender_2013.RData")
@@ -98,29 +99,29 @@ VoteAgeGender.2013 <- VoteAgeGender.2013 %>% mutate(
   summarise_all(sum) %>% filter(gender != "Total")
 
 # reshape
-Strata.1.ExitPoll <- dplyr::select(VoteAgeGender.2013, -gender.vote) %>% 
+S.GAV.Exit <- dplyr::select(VoteAgeGender.2013, -gender.vote) %>% 
   gather(key = "AgeGroup", value = "vote.share", starts_with("age"))
 
 # rename age group values
-Strata.1.ExitPoll$AgeGroup <- mapvalues(Strata.1.ExitPoll$AgeGroup,
+S.GAV.Exit$AgeGroup <- mapvalues(S.GAV.Exit$AgeGroup,
                                         c("age1825.2013", "age2635.2013", "age3645.2013", "age4660.2013", "age60P.2013"),
                                         c("18-25", "26-35", "36-45", "46-60", "60+"))
 
 
-Strata.1.ExitPoll$vote.share <- Strata.1.ExitPoll$vote.share*100
-Strata.1.ExitPoll <- rename(Strata.1.ExitPoll, vote.share.exit = vote.share)
-Strata.1.March <- rename(
-  Strata.1.March, parties = vote_nextelection_de, vote.share.dalia = n)
+S.GAV.Exit$vote.share <- S.GAV.Exit$vote.share*100
+S.GAV.Exit <- rename(S.GAV.Exit, vote.share.exit = vote.share)
+S.GAV.DMar <- rename(
+  S.GAV.DMar, parties = vote_nextelection_de, vote.share.dalia = n)
 
 ### compute weights
-exitPollWeights <- left_join(Strata.1.ExitPoll, Strata.1.March, by = c("gender", "parties", "AgeGroup"))
+exitPollWeights <- left_join(S.GAV.Exit, S.GAV.DMar, by = c("gender", "parties", "AgeGroup"))
 exitPollWeights$wtGenderAgeParty <- (exitPollWeights$vote.share.exit)/exitPollWeights$vote.share.dalia
 exitPollWeights <- rename(exitPollWeights, vote_nextelection_de = parties)
 
 # assign weights to Dalia data
 DaliaMar <- left_join(DaliaMar, exitPollWeights, by = c("gender", "vote_nextelection_de", "AgeGroup"))
 
-### graph with new weights ----------------------------------------------------
+### graph with new weights ####################################################
 position <- c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD", "Other")
 farben = c("AfD" = "#009dd1","Union" = "#222222", "FDP" = "#ffb700", "Gruene" = "#349f29", "Linke" = "#cc35a0", "SPD" = "#ce1b1b", "Other" = "grey")
 
