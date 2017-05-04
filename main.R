@@ -189,7 +189,7 @@ shares.plot <- function(share.frame){
 uw.shares <- DaliaMar %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de) %>%
-  mutate(shares = 100*n / sum(n))
+  mutate(shares = 100*n / sum(n)) %>% transpose()
 
 w.shares <- DaliaMar %>% 
   filter(vote_nextelection_de != "No vote") %>% 
@@ -206,7 +206,7 @@ w.sharesDec <- DaliaDec %>%
 
 w.sharesDec %>% shares.plot()
 
-
+save(w.shares, file = "./Processed/w.march.plot.RData")
 
 ### Gewichtung nach demographischen Faktoren aus den Exit Polls ###############
 
