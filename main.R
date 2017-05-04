@@ -154,7 +154,9 @@ w.GAV.Exit.DDec <- w.GAV.Exit.DDec %>% ungroup() %>%
 rm(add)
 
 # assign weights to Dalia data
-DaliaDec <- left_join(DaliaDec, w.GAV.Exit.DDec, by = c("gender", "voted_party_last_election_de", "AgeGroup"))
+DaliaDec <- left_join(DaliaDec, w.GAV.Exit.DDec, 
+                      by = c("gender", "voted_party_last_election_de",
+                             "AgeGroup"))
 
 # March wave
 w.GAV.Exit.DMar <- left_join(S.GAV.Exit, S.GAV.DMar, by = c("gender", "parties", "AgeGroup"))
@@ -163,7 +165,54 @@ w.GAV.Exit.DMar <- w.GAV.Exit.DMar %>% rename(voted_party_last_election_de = par
                         select(-vote.share.exit, -vote.share.dalia)
 
 # assign weights to Dalia data
-DaliaMar <- left_join(DaliaMar, w.GAV.Exit.DMar, by = c("gender", "voted_party_last_election_de", "AgeGroup"))
+DaliaMar <- left_join(DaliaMar, w.GAV.Exit.DMar,
+                      by = c("gender", "voted_party_last_election_de", "AgeGroup"))
+
+### age - gender - religion weights with census data ##########################
+
+# december data ###############################################################
+S.GAR.DDec <- DaliaDec %>% 
+  group_by(gender, AgeGroup30, religion.cat) %>% 
+  tally() 
+
+# strata percentages
+S.GAR.DDec$n <- 100*(S.GAR.DDec$n/sum(S.GAR.DDec$n))
+
+# march data ##################################################################
+S.GAR.DMar <- DaliaMar %>% 
+  group_by(gender, AgeGroup30, religion.cat) %>% 
+  tally() 
+
+# strata percentages
+S.GAR.DMar$n <- 100*(S.GAR.DMar$n/sum(S.GAR.DMar$n))
+
+# census strata ###############################################################
+S.GAR.Census <- Census.AgeGenderRel
+S.GAR.Census$n <- 100*(S.GAR.Census$n/sum(S.GAR.Census$n))
+
+# weights for december data
+w.GAR.Census.DDec <- left_join(S.GAR.Census,
+                             S.GAR.DDec,
+                             by = c("gender","religion.cat","AgeGroup30"))
+w.GAR.Census.DDec$w.GAR.Census.DDec <- (w.GAR.Census.DDec$n.x)/w.GAR.Census.DDec$n.y
+
+w.GAR.Census.DDec <- w.GAR.Census.DDec %>% select(-n.x, -n.y)
+
+# assign weights to Dalia data
+DaliaDec <- left_join(DaliaDec, w.GAR.Census.DDec,
+                      by = c("gender", "religion.cat", "AgeGroup30"))
+
+# weights for march data
+w.GAR.Census.DMar <- left_join(S.GAR.Census,
+                               S.GAR.DMar,
+                               by = c("gender","religion.cat","AgeGroup30"))
+w.GAR.Census.DMar$w.GAR.Census.DMar <- (w.GAR.Census.DMar$n.x)/w.GAR.Census.DMar$n.y
+
+w.GAR.Census.DMar <- w.GAR.Census.DMar %>% select(-n.x, -n.y)
+
+# assign weights to Dalia data
+DaliaMar <- left_join(DaliaMar, w.GAR.Census.DMar,
+                      by = c("gender", "religion.cat", "AgeGroup30"))
 
 
 ### graph with new weights ####################################################
@@ -187,7 +236,7 @@ shares.plot <- function(share.frame){
   #ggsave(file = "./Grafiken/plot.png")
 }
 
-# unweighted Dalia Poll December
+# unweighted Dalia Poll December ########################################################
 Polls <- DaliaDec %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de) %>%
@@ -212,7 +261,6 @@ Poll.w.DDec[,"date"] <- ymd(replicate(2,"2016-12-10"))
 Polls <- rbind(Polls, Poll.w.DDec)
 rm(Poll.w.DDec)
 
-
 # unweighted Dalia Poll March
 Poll.uw.DMar <- DaliaMar %>% 
   filter(vote_nextelection_de != "No vote") %>% 
@@ -227,8 +275,7 @@ Poll.uw.DMar[,"date"] <- ymd(replicate(2,"2017-03-20"))
 Polls <- rbind(Polls, Poll.uw.DMar)
 rm(Poll.uw.DMar)
 
-# weighted Dalia Poll March
-
+# weighted Dalia Poll March GAV #########################################################
 Poll.w.DMar <- DaliaMar %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de, wt = w.GAV.Exit.DMar) %>%
@@ -243,6 +290,35 @@ Polls <- rbind(Polls, Poll.w.DMar)
 rm(Poll.w.DMar)
 Polls <- tibble::remove_rownames(Polls)
 
+# weighted Dalia Poll December GAR ############################################
+Poll.w.DDec.GAR <- DaliaDec %>% 
+  filter(vote_nextelection_de != "No vote" & turnout_exp == 1) %>% 
+  count(vote_nextelection_de, wt = w.GAR.Census.DDec) %>%
+  mutate(shares = 100*n / sum(n)) %>% t() %>% as.data.frame()
+colnames(Poll.w.DDec.GAR) <- as.character(unlist(Poll.w.DDec.GAR[1,]))
+Poll.w.DDec.GAR <- Poll.w.DDec.GAR[-1,]
+Poll.w.DDec.GAR[,"method"] <- c("GAR.w.DDec.count", "GAR.w.DDec.pct")
+Poll.w.DDec.GAR[,"date"] <- ymd(replicate(2,"2016-12-10"))
+
+# add to other polls
+Polls <- rbind(Polls, Poll.w.DDec.GAR)
+rm(Poll.w.DDec.GAR)
+
+# weighted Dalia Poll March GAR ############################################
+Poll.w.DMar.GAR <- DaliaMar %>% 
+  filter(vote_nextelection_de != "No vote" & turnout_exp == 1) %>% 
+  count(vote_nextelection_de, wt = w.GAR.Census.DMar) %>%
+  mutate(shares = 100*n / sum(n)) %>% t() %>% as.data.frame()
+colnames(Poll.w.DMar.GAR) <- as.character(unlist(Poll.w.DMar.GAR[1,]))
+Poll.w.DMar.GAR <- Poll.w.DMar.GAR[-1,]
+Poll.w.DMar.GAR[,"method"] <- c("GAR.w.DMar.count", "GAR.w.DMar.pct")
+Poll.w.DMar.GAR[,"date"] <- ymd(replicate(2,"2016-12-10"))
+
+# add to other polls
+Polls <- rbind(Polls, Poll.w.DMar.GAR)
+rm(Poll.w.DMar.GAR)
+
+# save 
 save(Polls, file = "./Processed/polls.RData")
 
 ### Plots #####################################################################
