@@ -185,28 +185,100 @@ shares.plot <- function(share.frame){
   #ggsave(file = "./Grafiken/plot.png")
 }
 
-
-uw.shares <- DaliaMar %>% 
+# unweighted Dalia Poll December
+Polls <- DaliaDec %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de) %>%
   mutate(shares = 100*n / sum(n)) %>% transpose()
 
-w.shares <- DaliaMar %>% 
-  filter(vote_nextelection_de != "No vote") %>% 
-  count(vote_nextelection_de, wt = w.GAV.Exit.DMar) %>%
-  mutate(shares = 100*n / sum(n))
+colnames(Polls) <- Polls[1,]
+Polls <- Polls[-1,]
+Polls[,"method"] <- c("GAV.uw.DDec.count", "GAV.uw.DDec.pct")
+Polls[,"date"] <- ymd(replicate(2,"2016-12-10"))
 
-w.shares %>% shares.plot()
-uw.shares %>% shares.plot()
-
-w.sharesDec <- DaliaDec %>% 
+# weighted Dalia Poll December
+Poll.w.DDec <- DaliaDec %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de, wt = w.GAV.Exit.DDec) %>%
-  mutate(shares = 100*n / sum(n))
+  mutate(shares = 100*n / sum(n)) %>% t() %>% as.data.frame()
+colnames(Poll.w.DDec) <- as.character(unlist(Poll.w.DDec[1,]))
+Poll.w.DDec <- Poll.w.DDec[-1,]
+Poll.w.DDec[,"method"] <- c("GAV.w.DDec.count", "GAV.w.DDec.pct")
+Poll.w.DDec[,"date"] <- ymd(replicate(2,"2016-12-10"))
 
-w.sharesDec %>% shares.plot()
+# add to other polls
+Polls <- rbind(Polls, Poll.w.DDec)
+rm(Poll.w.DDec)
 
-save(w.shares, file = "./Processed/w.march.plot.RData")
+
+# unweighted Dalia Poll March
+Poll.uw.DMar <- DaliaMar %>% 
+  filter(vote_nextelection_de != "No vote") %>% 
+  count(vote_nextelection_de) %>%
+  mutate(shares = 100*n / sum(n)) %>% t() %>% as.data.frame()
+colnames(Poll.uw.DMar) <- as.character(unlist(Poll.uw.DMar[1,]))
+Poll.uw.DMar <- Poll.uw.DMar[-1,]
+Poll.uw.DMar[,"method"]  <- c("GAV.uw.DMar.count", "GAV.uw.DMar.pct")
+Poll.uw.DMar[,"date"] <- ymd(replicate(2,"2017-03-20"))
+
+# add to other polls
+Polls <- rbind(Polls, Poll.uw.DMar)
+rm(Poll.uw.DMar)
+
+# weighted Dalia Poll March
+
+Poll.w.DMar <- DaliaMar %>% 
+  filter(vote_nextelection_de != "No vote") %>% 
+  count(vote_nextelection_de, wt = w.GAV.Exit.DMar) %>%
+  mutate(shares = 100*n / sum(n)) %>% t() %>% as.data.frame()
+colnames(Poll.w.DMar) <- as.character(unlist(Poll.w.DMar[1,]))
+Poll.w.DMar <- Poll.w.DMar[-1,]
+Poll.w.DMar[,"method"]  <- c("GAV.w.DMar.count", "GAV.w.DMar.pct")
+Poll.w.DMar[,"date"] <- ymd(replicate(2,"2017-03-20"))
+
+# add to other polls
+Polls <- rbind(Polls, Poll.w.DMar)
+rm(Poll.w.DMar)
+Polls <- tibble::remove_rownames(Polls)
+
+### Plots #####################################################################
+
+# unweighted December
+poll.GAV.uw.DDec <- Polls %>% dplyr::filter(grepl("GAV.uw.DDec",method)) %>% 
+          select(-method,-date) %>%  t() %>% as.data.frame %>% 
+          tibble::rownames_to_column("vote_nextelection_de") %>% 
+          rename(shares = V2) %>% mutate(shares = as.numeric(as.character(shares)))
+
+poll.GAV.uw.DDec %>% shares.plot()
+save(poll.GAV.uw.DDec, file = "./Processed/GAV_uw_DDec.RData")
+
+# weighted December
+poll.GAV.w.DDec <- Polls %>% dplyr::filter(grepl("GAV.w.DDec",method)) %>% 
+  select(-method,-date) %>%  t() %>% as.data.frame %>% 
+  tibble::rownames_to_column("vote_nextelection_de") %>% 
+  rename(shares = V2) %>% mutate(shares = as.numeric(as.character(shares)))
+
+poll.GAV.w.DDec %>% shares.plot()
+save(poll.GAV.w.DDec, file = "./Processed/GAV_w_DDec.RData")
+
+# unweighted March
+poll.GAV.uw.DMar <- Polls %>% dplyr::filter(grepl("GAV.uw.DMar",method)) %>% 
+  select(-method,-date) %>%  t() %>% as.data.frame %>% 
+  tibble::rownames_to_column("vote_nextelection_de") %>% 
+  rename(shares = V2) %>% mutate(shares = as.numeric(as.character(shares)))
+
+poll.GAV.uw.DMar %>% shares.plot()
+save(poll.GAV.uw.DMar, file = "./Processed/GAV_uw_DMar.RData")
+
+# weighted March
+poll.GAV.w.DMar <- Polls %>% dplyr::filter(grepl("GAV.w.DMar",method)) %>% 
+  select(-method,-date) %>%  t() %>% as.data.frame %>% 
+  tibble::rownames_to_column("vote_nextelection_de") %>% 
+  rename(shares = V2) %>% mutate(shares = as.numeric(as.character(shares)))
+
+poll.GAV.w.DMar %>% shares.plot()
+save(poll.GAV.w.DMar, file = "./Processed/GAV_w_DMar.RData")
+
 
 ### Gewichtung nach demographischen Faktoren aus den Exit Polls ###############
 
