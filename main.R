@@ -10,7 +10,7 @@ rm(list=ls())
 
 ## Setting Working directory
 try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/ElectionForecasting"), silent = TRUE)
-try(setwd("C:\\Users\\Moritz\\Desktop\\ElectionForecasting"), silent = TRUE)
+try(setwd("C:/Users/Moritz/Desktop/ElectionForecasting"), silent = TRUE)
 
 source("packages.R")
 
