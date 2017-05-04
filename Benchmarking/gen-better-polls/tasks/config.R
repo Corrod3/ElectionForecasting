@@ -11,14 +11,17 @@ library(xml2)
 library(ggplot2)
 library(directlabels)
 library(grid)
+library(stringr)
+library(lubridate)
+library(ggrepel)
 
 
 
 options(scipen = 999)
-farben = c("AfD" = "#009dd1","CDU/CSU" = "#222222", "FDP" = "#ffb700", "Grüne" = "#349f29", "Linke" = "#cc35a0", "SPD" = "#ce1b1b")
-farben_ci = c("SPD" = "#eba4a4","AfD" = "#99d8ed","Grüne" = "#aed9a9", "CDU/CSU" = "#bbbbbb", "Linke" = "#ebaed9", "FDP" = "#ffe299")
-plabels = c("SPD" = "SPD ", "AfD" = "AfD ","Grüne" = "Grüne ", "CDU/CSU" = "CDU/CSU ", "Linke" = "Linke ", "FDP" = "FDP ")
-mlabels = c("SPD" = "SPD", "AfD" = "AfD","Grüne" = "Grüne", "CDU/CSU" = "CDU/CSU", "Linke" = "Linke", "FDP" = "FDP")
+farben = c("AfD" = "#009dd1","Union" = "#222222", "FDP" = "#ffb700", "Gruene" = "#349f29", "Linke" = "#cc35a0", "SPD" = "#ce1b1b")
+farben_ci = c("SPD" = "#eba4a4","AfD" = "#99d8ed","Gruene" = "#aed9a9", "Union" = "#bbbbbb", "Linke" = "#ebaed9", "FDP" = "#ffe299")
+plabels = c("SPD" = "SPD ", "AfD" = "AfD ","Gruene" = "Gruene ", "Union" = "Union ", "Linke" = "Linke ", "FDP" = "FDP ")
+mlabels = c("SPD" = "SPD", "AfD" = "AfD","Gruene" = "Gruene", "Union" = "Union", "Linke" = "Linke", "FDP" = "FDP")
 
 sztheme_points <- theme(
   strip.background = element_blank(),
