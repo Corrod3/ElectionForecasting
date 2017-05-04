@@ -77,5 +77,5 @@ df_l$anteil <- df_l$anteil/100
 unique(df_l$partei)
 df_l$partei <- apply(df_l["partei"],1, refine_party)
 
-write.csv(df_l, file="data/data-input-longform.csv", row.names = F, quote = F)
+write.csv(df_l, file = "data/data-input-longform.csv", row.names = F, quote = F)
 

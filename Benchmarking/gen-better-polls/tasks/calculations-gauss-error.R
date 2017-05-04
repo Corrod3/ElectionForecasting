@@ -68,5 +68,5 @@ df_rolling_average_and_error <- left_join(df_rolling_average, df_rolling_error, 
   mutate(ci_higher = rolling_average + rolling_error) %>%
   mutate(ci_lower = rolling_average - rolling_error)
 
-write.csv(df_rolling_average_and_error, file="data/data-rolling-average-and-error.csv", row.names = FALSE, quote = FALSE)
+write.csv(df_rolling_average_and_error, file = "data/data-rolling-average-and-error.csv", row.names = FALSE, quote = FALSE)
 

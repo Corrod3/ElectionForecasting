@@ -24,7 +24,7 @@ sztheme_points <- theme(
   strip.background = element_blank(),
   strip.text.y = element_blank(),
   strip.text.x = element_blank(),
-  axis.text = element_text(family = "SZoSansCond-Light", size = 18),
+  #axis.text = element_text(family = "SZoSansCond-Light", size = 18),
   axis.ticks.y = element_blank(),
   axis.ticks.x = element_line(color = "#999999", size = 0.2),
   axis.ticks.length = unit(0.1, "in"),
@@ -71,8 +71,8 @@ sztheme_lines <- theme(
 
 sztheme_lines_mobile <- theme(
   # plot.margin = unit(c(0,0,0,0), "lines"),
-  legend.margin = margin(0, 0, 0, 0.3, "in"), 
-  legend.text = element_text(family = "SZoSans-Light", size = 14, colour = "#666666")
+  legend.margin = margin(0, 0, 0, 0.3, "in") 
+  #legend.text = element_text(family = "SZoSans-Light", size = 14, colour = "#666666")
 )
 
 sztheme_teaser <- theme(
