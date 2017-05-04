@@ -117,6 +117,24 @@ DaliaDec$AgeGroup <- c("18-25", "26-35",
                        "36-45", "46-60", "60+")[findInterval(DaliaDec$age, 
                                                              c(-Inf, 25.5, 35.5, 45.5, 60.5, Inf))]
 
+# create AgeGroup (like in election statistics)
+DaliaDec$AgeGroup <- c("18-25", "26-35", 
+                       "36-45", "46-60", "60+")[findInterval(DaliaDec$age, 
+                                                             c(-Inf, 25.5, 35.5, 45.5, 60.5, Inf))]
+
+# create AgeGroup (like in census aggregate)
+DaliaDec$AgeGroup30 <- c("10.29", "30.49", 
+                       "50p")[findInterval(DaliaDec$age,
+                                           c(-Inf, 29.5, 49.5, Inf))]
+# religion categories
+DaliaDec <- DaliaDec %>%  
+  mutate(religion.cat = str_replace(religion, 
+                                    "Other|Buddhist|Hinduism|Muslim|Jewish|(Orthodox Catholic)",
+                                    "Other")) %>% 
+  mutate(religion.cat = str_replace(religion.cat, "No.*us","None")) %>%
+  mutate(religion.cat = str_replace(religion.cat, "Ro.*lic","Roman Catholicism")) %>% 
+  mutate(religion.cat = str_replace(religion.cat, "Protestant","Protestantism")) 
+
 ### load March data ###########################################################
 
 ### March data ################################################################
@@ -178,14 +196,25 @@ DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_e
 DaliaMar$voted_party_last_election_de <- str_replace(DaliaMar$voted_party_last_election_de,
                                              "G.*?en", "Gruene")
   
-DaliaMar$gender <- DaliaMar$gender %>% mapvalues(c("female", "male"), c("Female", "Male"))
+DaliaMar$gender <- DaliaMar$gender %>% mapvalues(c("female", "male"), 
+                                                 c("Female", "Male"))
 
 ### compute variables
 DaliaMar$AgeGroup <- c("18-25", "26-35", 
                           "36-45", "46-60", "60+")[findInterval(DaliaMar$age, 
                                                                 c(-Inf, 25.5, 35.5, 45.5, 60.5, Inf))]
 
-#table(DaliaMar$religion)
+# create AgeGroup (like in census aggregate)
+DaliaMar$AgeGroup30 <- c("10.29", "30.49", 
+                         "50p")[findInterval(DaliaMar$age,
+                                             c(-Inf, 29.5, 49.5, Inf))]
+# religion ####################################################################
+
+DaliaMar <- DaliaMar %>%  
+  mutate(religion.cat = str_replace(religion, 
+                                    "Other|Buddhism|Hinduism|Islam|Judaism|(Orthodox Catholicism)",
+                                    "Other")) %>% 
+  mutate(religion.cat = str_replace(religion.cat, "No.*us","None"))
 
 # Education Category ##########################################################
 
@@ -220,8 +249,9 @@ DaliaMar$turnout_exp <- plyr::mapvalues(DaliaMar$turnout_exp,
 
 # drop unnessessary information
 DaliaMar <- DaliaMar %>% select(uuid, weight, age, country_code,
-                                education_level, AgeGroup, gender, religion, 
-                                employment_status, religion, vote_next_national_election,
+                                education_level, AgeGroup, AgeGroup30, 
+                                gender, employment_status, religion, 
+                                religion.cat, vote_next_national_election,
                                 voted_party_last_election_de,
                                 vote_nextelection_de, edu.cat, turnout_exp)
 

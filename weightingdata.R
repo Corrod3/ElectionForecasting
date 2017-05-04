@@ -287,9 +287,23 @@ Census.AgeGenderRel <- Census.AgeGenderRel %>% group_by(religion) %>%
       summarise_all(sum) %>% ungroup %>% select(-total.pct, -total) %>% 
       reshape2::melt(id.var = "religion")
 
-Census.AgeGenderRel %>% rename(AgeGroup = variable)
-  #mutate( = str_replace(parties, 
-#                             "CDU|CSU",
-#                             "Union")) %>%
-#  group_by(gender, parties) %>%
-# summarise_all(sum)
+# separate gender and age
+Census.AgeGenderRel <- Census.AgeGenderRel %>% rename(AgeGroup30 = variable, n = value) %>% 
+    mutate(gender = str_extract(as.character(AgeGroup30),"^.*male")) %>%
+    mutate(AgeGroup30 = sub("^.*male\\.","", as.character(AgeGroup30))) 
+
+# gender capitalization
+Census.AgeGenderRel$gender <- Census.AgeGenderRel$gender %>%
+                              mapvalues(c("female", "male"), c("Female", "Male"))
+
+# age clusters 
+Census.AgeGenderRel <- Census.AgeGenderRel %>%  
+  mutate(AgeGroup30 = str_replace(AgeGroup30, "50.59|60.69|70.79|80p","50p")) %>% 
+  mutate(AgeGroup30 = str_replace(AgeGroup30, "30.39|40.49","30.49")) %>%
+  mutate(AgeGroup30 = str_replace(AgeGroup30, "10.19|20.29","10.29")) %>%
+  filter(AgeGroup30 != "below10") %>%  group_by(religion, gender, AgeGroup30) %>%
+  summarise_all(sum) %>% ungroup
+
+# rename religion category column
+Census.AgeGenderRel <- Census.AgeGenderRel %>% rename(religion.cat = religion)
+
