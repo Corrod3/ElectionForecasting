@@ -243,6 +243,7 @@ Polls <- tibble::remove_rownames(Polls)
 
 save(Polls, file = "./Processed/polls.RData")
 
+source("main_benchmarking.r")
 
 ### Plots #####################################################################
 
