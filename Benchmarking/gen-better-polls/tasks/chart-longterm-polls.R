@@ -57,7 +57,9 @@ basechart <- ggplot() +
              color = farben[w.shares$partei], size = 3) +
   geom_text_repel(data = w.shares, 
                   mapping = aes(x = datum, y = shares, label = pct), 
-                  size = 4, fontface = 'bold', color = farben[w.shares$partei])
+                  size = 4, fontface = 'bold', color = farben[w.shares$partei],
+                  box.padding = unit(0.35, "lines"),
+                  point.padding = unit(0.5, "lines"))
   # geom_text(data = w.shares,
   #           aes(x = datum, y = shares, label = pct))
 
@@ -73,7 +75,7 @@ article_chart <- basechart + sztheme_lines +
 article_chart <- ggplotGrob(article_chart)
 article_chart$layout$clip[article_chart$layout$name == "panel"] <- "off"
 
-ggsave(file="data/assets/longterm-poll-article.png", plot=article_chart, dpi = 144, units = "in", width = 8.89, height = 5)
+ggsave(file="data/assets/longterm-poll-article2.png", plot=article_chart, dpi = 144, units = "in", width = 8.89, height = 5)
 # ggsave(file="data/assets/longterm-poll-hp.png", plot=article_chart, dpi = 144, units = "in", width = 7.78, height = 4.38)
 
 
