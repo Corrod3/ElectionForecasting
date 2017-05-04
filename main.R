@@ -33,10 +33,6 @@ DaliaMar <- DaliaMar %>% filter(!(voted_party_last_election_de == "No vote" |
 
 ### 2. Strata #################################################################
 
-# Create Strata 
-# plyr::count(DaliaDec, c('gender','AgeGroup','voted_party_last_election_de')) 
-# 2*5*7 = 70 Cluster; four are empty
-
 ### Dalia december gender-age-lastvote ########################################
 S.GAV.DDec <- DaliaDec %>% filter(voted_party_last_election_de != "No vote" & 
                                   voted_party_last_election_de != "Not able") %>%
@@ -49,13 +45,6 @@ S.GAV.DDec <- S.GAV.DDec %>% ungroup() %>%
                         mutate(parties = as.character(parties), 
                                gender = as.character(gender))
 
-S.GAV.DDec <- S.GAV.DDec %>% mutate(gender = str_replace(gender, 
-                                                         "^female",
-                                                         "Female"),
-                                    gender = str_replace(gender, 
-                                                         "^male",
-                                                         "Male"))
-                                      
 # replace missing
 S.GAV.DDec$n[is.na(S.GAV.DDec$n)] <- 0
 
@@ -160,11 +149,7 @@ add <- w.GAV.Exit.DDec[w.GAV.Exit.DDec$AgeGroup == "45Plus",]
 add <- add %>% mutate(AgeGroup = "60+")
 w.GAV.Exit.DDec <- rbind(w.GAV.Exit.DDec, add)
 w.GAV.Exit.DDec <- w.GAV.Exit.DDec %>% ungroup() %>%
-                        mutate(AgeGroup = str_replace(AgeGroup,"45Plus","46-60"),
-                               gender = str_replace(gender,
-                                                    "^Female",
-                                                    "female"),
-                               gender = str_replace(gender, "^Male", "male")) %>%
+                        mutate(AgeGroup = str_replace(AgeGroup,"45Plus","46-60")) %>%
                                      select(-vote.share.exit,-n)
 rm(add)
 
@@ -201,26 +186,6 @@ shares.plot <- function(share.frame){
 }
 
 
-# p1.unweighted <- DaliaMar %>% filter(vote_nextelection_de != "No vote") %>%  
-#     ggplot(aes(x = vote_nextelection_de)) +
-#     geom_bar(aes(fill = vote_nextelection_de)) + 
-#                scale_fill_manual(values = farben) +
-#               scale_colour_manual(values = farben) +
-#    theme_classic() +
-#    scale_x_discrete(limits = position, name = "Major parties") +
-#   guides(fill = FALSE)
-# 
-# p1.weighted <- DaliaMar %>% filter(vote_nextelection_de != "No vote") %>%  
-#   ggplot(aes(x = vote_nextelection_de, weight = wtGenderAgeParty)) +
-#   geom_bar(aes(fill = vote_nextelection_de)) + 
-#   scale_fill_manual(values = farben) +
-#   scale_colour_manual(values = farben) +
-#   theme_classic() +
-#   scale_x_discrete(limits = position, name = "Major parties") +
-#   guides(fill = FALSE)
-#   
-# grid.arrange(p1.unweighted, p1.weighted, ncol = 2)
-
 uw.shares <- DaliaMar %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de) %>%
@@ -240,12 +205,11 @@ w.sharesDec <- DaliaDec %>%
   mutate(shares = 100*n / sum(n))
 
 w.sharesDec %>% shares.plot()
-# -> bei den gewichteten Daliawerten kommt am Ende genau das Ergebnis der Bundestagswahl raus.
-# Ist ja auch logisch, wenn man die cluster so justiert, dass sie genau den exit polls entsprechen
 
 
-### -> Gewichtung nach demographischen Faktoren aus den Exit Polls --------
-# GenderAgeEdu? GenderAge
+
+### Gewichtung nach demographischen Faktoren aus den Exit Polls ###############
+
 
 
 

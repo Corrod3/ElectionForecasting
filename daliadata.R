@@ -51,6 +51,14 @@ levels(DaliaDec$education_level) <- c("High school or equivalent",
                                      "University or equivalent",
                                      "Some high school or secondary school",
                                      "Other/Rather not answer")
+
+DaliaDec <- DaliaDec %>% mutate(gender = str_replace(gender, 
+                                           "^female",
+                                           "Female"),
+                      gender = str_replace(gender, 
+                                           "^male",
+                                           "Male"))
+
 # education category
 DaliaDec$edu.cat <- ifelse(
   DaliaDec$education_level == "University or equivalent", 
