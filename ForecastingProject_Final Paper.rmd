@@ -273,6 +273,14 @@ Poststratification
 
 # Results
 
+```{r}
+poll.GAV.w.DDec %>% shares.plot()
+poll.GAV.uw.DDec %>% shares.plot()
+poll.GAV.w.DMar %>% shares.plot()
+poll.GAV.uw.DMar %>% shares.plot()
+```
+
+
 What the result is of making it representative
 
 1. Election forecast Weighted with exit polls
