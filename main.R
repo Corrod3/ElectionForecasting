@@ -168,7 +168,9 @@ DaliaMar <- left_join(DaliaMar, w.GAV.Exit.DMar, by = c("gender", "voted_party_l
 
 ### graph with new weights ####################################################
 position <- c("Union", "SPD", "Gruene", "Linke", "FDP", "AfD", "Other")
-farben = c("AfD" = "#009dd1","Union" = "#222222", "FDP" = "#ffb700", "Gruene" = "#349f29", "Linke" = "#cc35a0", "SPD" = "#ce1b1b", "Other" = "grey")
+farben = c("AfD" = "#009dd1","Union" = "#222222", "FDP" = "#ffb700", 
+           "Gruene" = "#349f29", "Linke" = "#cc35a0", "SPD" = "#ce1b1b",
+           "Other" = "grey")
 
 # Plot function
 shares.plot <- function(share.frame){
@@ -243,8 +245,6 @@ Polls <- tibble::remove_rownames(Polls)
 
 save(Polls, file = "./Processed/polls.RData")
 
-source("main_benchmarking.r")
-
 ### Plots #####################################################################
 
 # unweighted December
@@ -287,46 +287,5 @@ save(poll.GAV.w.DMar, file = "./Processed/GAV_w_DMar.RData")
 ### Gewichtung nach demographischen Faktoren aus den Exit Polls ###############
 
 
-
-
-
-
-
-
-
-#####################
-### Direct method ###
-#####################
-# 1. Load exit poll data (either KAS or election statistics)
-load("./Processed/Vote_Age_Gender_2013.RData")
-
-# next steps: compute percentages for Strata.2;
-# merge CDU/CSU
-# make both same format
-# divide weights = vote.2013 / vote.2017
-
-
-# big problem: no AfD data in Exit Polls from 2013 -> computable?
-
-
-# 2. Compute weights for gender, age, vote
-
-
-
-# 2.1 Compute weights for age group and vote
-
-
-# 2.2 compute weights for age and gender without party
-
-
-
-# 3. Apply weights on Dalia Data
-
-########################
-### Indirect methods ###
-########################
-# 1. Get data from census
-# 2. Compute weights.
-# 3. Apply on data.class
-# 4. Create deterministic or probabilistic measure of likely voter
-# 5. Apply on Dalia data
+# SZ Graph, benchmark table, mse computing
+source("main_benchmarking.r")

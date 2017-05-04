@@ -95,7 +95,7 @@ DaliaDec <- filter(DaliaDec,
 # only use relevant information
 DaliaDec <- DaliaDec %>% select(uuid, identifier, weight, age, country_code,
                                 education_level, edu.cat, gender, religion, 
-                                employment_status, vote_next_national_election,
+                                employment_status, religion, vote_next_national_election,
                                 voted_party_last_election_de,
                                 vote_nextelection_de)
 
@@ -185,8 +185,7 @@ DaliaMar$AgeGroup <- c("18-25", "26-35",
                           "36-45", "46-60", "60+")[findInterval(DaliaMar$age, 
                                                                 c(-Inf, 25.5, 35.5, 45.5, 60.5, Inf))]
 
-# DaliaMar$bundeskanzler_candidate %>% table()
-# DaliaMar$vote_nextelection_de %>% table()
+#table(DaliaMar$religion)
 
 # Education Category ##########################################################
 
@@ -222,7 +221,7 @@ DaliaMar$turnout_exp <- plyr::mapvalues(DaliaMar$turnout_exp,
 # drop unnessessary information
 DaliaMar <- DaliaMar %>% select(uuid, weight, age, country_code,
                                 education_level, AgeGroup, gender, religion, 
-                                employment_status, vote_next_national_election,
+                                employment_status, religion, vote_next_national_election,
                                 voted_party_last_election_de,
                                 vote_nextelection_de, edu.cat, turnout_exp)
 

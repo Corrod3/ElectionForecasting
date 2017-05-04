@@ -287,8 +287,8 @@ Census.AgeGenderRel <- Census.AgeGenderRel %>% group_by(religion) %>%
       summarise_all(sum) %>% ungroup %>% select(-total.pct, -total) %>% 
       reshape2::melt(id.var = "religion")
 
-#Census.AgeGenderRel %>% 
-#  mutate( = str_replace(parties, 
+Census.AgeGenderRel %>% rename(AgeGroup = variable)
+  #mutate( = str_replace(parties, 
 #                             "CDU|CSU",
 #                             "Union")) %>%
 #  group_by(gender, parties) %>%
