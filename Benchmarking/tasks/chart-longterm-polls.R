@@ -1,16 +1,13 @@
-df_rolling_average_and_error <- read.csv("data/data-rolling-average-and-error.csv", stringsAsFactors = F, sep=",", encoding ="utf-8")
+df_rolling_average_and_error <- read.csv("Benchmarking/data/data-rolling-average-and-error.csv", stringsAsFactors = F, sep=",", encoding ="utf-8")
 
-load("C:/Users/Moritz/Desktop/ElectionForecasting/Processed/poll.RData")
+load("C:/Users/Moritz/Desktop/ElectionForecasting/Processed/polls.RData")
 
 # format forecasts
-w.shares %<>% 
-  select(vote_nextelection_de, shares) %>% 
-  rename(partei = vote_nextelection_de) %>%
-  arrange(desc(shares))
-  
-w.shares$shares <- w.shares$shares/100
-w.shares$datum <- ymd(rep("2017-03-20", nrow(w.shares)))
-w.shares$pct <- round(w.shares$shares*100, 1)
+Polls %<>% filter(!str_detect(method ,".+count")) %>% 
+  gather("partei", "shares", -method, -date) %>%
+  rename(datum = date, pct = shares)
+
+Polls$shares <- as.numeric(Polls$pct)/100
 
 # set formats
 df_rolling_average_and_error$partei %<>%  
@@ -38,6 +35,35 @@ get_label_value <- function (partei){
 }
 
 
+### Table #####################################################################
+
+rolling.average.dates <- df_rolling_average_and_error %>%
+  filter(datum %in% ymd(c("2016-12-10", "2017-3-18", "2017-3-22"))) %>%
+  mutate(year = year(datum),
+         shares = rolling_average,
+         pct = shares*100) %>%
+  group_by(year, partei) %>%
+  summarize_all(mean) %>%
+  ungroup() %>%
+  select(-year, -sz_err, -rolling_average, -matches("ci_"))
+
+rolling.average.dates$method = rep("sz.rolling.av", nrow(rolling.average.dates))
+
+Polls <- rbind(Polls, rolling.average.dates)
+Polls$pct <- round(as.numeric(Polls$pct), 1)
+
+
+PollsTable <- Polls %>% select(-shares) %>% spread(partei, pct)
+
+a <- PollsTable %>% 
+  filter(is.na(Other)) %>%
+ select(-method, -datum, -Other)
+PollsTable[is.na(PollsTable)] <- 100-rowSums(a) 
+
+# rename PollsTable to fit rmarkdown
+
+stargazer(PollsTable, title = "Benchmarking the Forecasts", type = "latex", out = "sumstats.tex")
+
 
 ### Plot ######################################################################
 
@@ -52,15 +78,15 @@ basechart <- ggplot() +
           label = as.character(get_label_value(partei))), 
           color = farben[df_rolling_average_and_error$partei], 
           method = list(dl.trans(x = x + .1, cex = 1.5, fontfamily="SZoSansCond-Light"),"calc.boxes", "last.bumpup")) +
-  geom_point(data = w.shares, 
+  geom_point(data = Polls, 
              mapping = aes(x = datum, y = shares),
-             color = farben[w.shares$partei], size = 3) +
-  geom_text_repel(data = w.shares, 
+             color = farben[Polls$partei], size = 3) +
+  geom_text_repel(data = Polls, 
                   mapping = aes(x = datum, y = shares, label = pct), 
-                  size = 4, fontface = 'bold', color = farben[w.shares$partei],
+                  size = 4, fontface = 'bold', color = farben[Polls$partei],
                   box.padding = unit(0.35, "lines"),
                   point.padding = unit(0.5, "lines"))
-  # geom_text(data = w.shares,
+  # geom_text(data = Polls,
   #           aes(x = datum, y = shares, label = pct))
 
 basechart <- basechart + 
@@ -79,5 +105,4 @@ ggsave(file="data/assets/longterm-poll-article2.png", plot=article_chart, dpi = 
 # ggsave(file="data/assets/longterm-poll-hp.png", plot=article_chart, dpi = 144, units = "in", width = 7.78, height = 4.38)
 
 
-### Table #####################################################################
 

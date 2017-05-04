@@ -240,7 +240,9 @@ Poll.w.DMar[,"date"] <- ymd(replicate(2,"2017-03-20"))
 Polls <- rbind(Polls, Poll.w.DMar)
 rm(Poll.w.DMar)
 Polls <- tibble::remove_rownames(Polls)
+
 save(Polls, file = "./Processed/polls.RData")
+
 
 ### Plots #####################################################################
 
