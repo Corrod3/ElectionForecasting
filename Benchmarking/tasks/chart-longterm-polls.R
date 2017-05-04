@@ -9,7 +9,7 @@ load("Processed/polls.RData")
 # format forecasts
 Polls %<>% filter(!str_detect(method ,".+count")) %>% 
   gather("partei", "shares", -method, -date) %>%
-  rename(datum = date, pct = shares)
+  dplyr::rename(datum = date, pct = shares)
 
 Polls$shares <- as.numeric(Polls$pct)/100
 
@@ -38,7 +38,6 @@ get_label_value <- function (partei){
   label = as.character(label)
 }
 
-
 ### Table #####################################################################
 
 rolling.average.dates <- df_rolling_average_and_error %>%
@@ -55,7 +54,7 @@ rolling.average.dates$method = rep("sz.rolling.av", nrow(rolling.average.dates))
 
 Polls <- rbind(Polls, rolling.average.dates)
 Polls$pct <- round(as.numeric(Polls$pct), 1)
-
+Polls$datum <- lubridate::month(Polls$datum, label = TRUE)
 PollsTable <- Polls %>% select(-shares) %>% spread(partei, pct)
 
 a <- PollsTable %>% 
@@ -64,12 +63,28 @@ a <- PollsTable %>%
 
 PollsTable[is.na(PollsTable)] <- 100-rowSums(a) 
 
+# rmse computation
+partynames <- names(PollsTable[,-c(1,2)])
+PollsTable$rmse <- rep(0, nrow(PollsTable)) 
+#df <- PollsTable
+
+rmse.func <- function(df) {
+  for (j in unique(as.character(df$datum))) {
+    for (i in unique(df$method)) {
+      vec.f <- unlist(df[df$method == i & df$datum == j, which(names(df) %in% partynames)])
+      vec.sz <- unlist(df[df$method == "sz.rolling.av" & df$datum == j, which(names(df) %in% partynames)])
+      df$rmse[df$method == i & df$datum == j] <- rmse(vec.sz, vec.f)
+  } }
+  return(df)
+  }
+
+PollsTable <- rmse.func(PollsTable)                   
+
+
 # rename PollsTable methods to fit paper style
 
-rmse <- function(df){
-  mean = mean()
-  error = 
-}
+
+
 
 
 stargazer(PollsTable, title = "Benchmarking the Forecasts", type = "latex", out = "sumstats.tex")
@@ -78,7 +93,7 @@ stargazer(PollsTable, title = "Benchmarking the Forecasts", type = "latex", out 
 ### Plot ######################################################################
 
 # filter forecast of best method for March and December
-ForecastBest <- PollsTable %>% filter(min(RMSE)) 
+# ForecastBest <- PollsTable %>% filter(min(RMSE)) 
 
 # Diagramm zusammen bauen
 basechart <- ggplot() +

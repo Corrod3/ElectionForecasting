@@ -27,8 +27,8 @@ p.needed <- c("readr", # imports spreadsheet data (Wickham)
               "sjPlot", "sjmisc",
               "survey",
               "rvest", # whickham for web scraping
-              "data.table" # package for very large data (faster than other packages)
-              )
+              "data.table", # package for very large data (faster than other packages)
+              "Metrics")  # for useful functions and machine learning
 
 # install packages which are not in installed.packages()
 packages <- rownames(installed.packages())

@@ -18,6 +18,7 @@ library(stargazer)
 
 
 
+
 options(scipen = 999)
 farben = c("AfD" = "#009dd1","Union" = "#222222", "FDP" = "#ffb700", "Gruene" = "#349f29", "Linke" = "#cc35a0", "SPD" = "#ce1b1b")
 farben_ci = c("SPD" = "#eba4a4","AfD" = "#99d8ed","Gruene" = "#aed9a9", "Union" = "#bbbbbb", "Linke" = "#ebaed9", "FDP" = "#ffe299")

@@ -1,6 +1,6 @@
 
 # RMSE
 
-rmse <- function(x) {
-  
-}
+# rmse <- function(x) {
+#   
+# }
