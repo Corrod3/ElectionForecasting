@@ -1,6 +1,6 @@
 df_rolling_average_and_error <- read.csv("data/data-rolling-average-and-error.csv", stringsAsFactors = F, sep=",", encoding ="utf-8")
 
-load("C:/Users/Moritz/Desktop/ElectionForecasting/Processed/w_march_plot.RData")
+load("C:/Users/Moritz/Desktop/ElectionForecasting/Processed/poll.RData")
 
 # format forecasts
 w.shares %<>% 
