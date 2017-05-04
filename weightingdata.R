@@ -87,7 +87,9 @@ Total2013 <- Total2013[-c(1:2),]
 
 # collapse Other
 Total2013 <- Total2013 %>% mutate(
-  Parteien = ifelse(Parteien %in% c("CDU", "CSU", "SPD", "DIE LINKE", "AfD", "FDP", "GRUENE"), as.character(Parteien), "Other"),
+  Parteien = ifelse(Parteien %in% c("CDU", "CSU", "SPD", "DIE LINKE", "AfD",
+                                    "FDP", "GRUENE"),
+                    as.character(Parteien), "Other"),
   Parteien = str_replace(Parteien, c("DIE LINKE"), c("Linke")),
   Parteien = str_replace(Parteien, c("GRUENE"), c("Gruene"))
   ) %>% 
@@ -96,8 +98,6 @@ Total2013 <- Total2013 %>% mutate(
   arrange(desc(Zweitstimmen_pct))
 
 colnames(Total2013)[1] <- "parties"
-
-# how about combining CSU and CDU
 
 # export
 save(Total2013, file = "./Processed/Total_2013.RData")
@@ -185,13 +185,11 @@ save(VoteAgeGender.2013, file = "./Processed/Vote_Age_Gender_2013.RData")
 
 ### Census data ###############################################################
 
-#Census.AgegenderEdu <- read_csv2(
- # "./Weitere Daten/Census2011/Population_Age_Gender_Education.csv", 
- # skip = 6, na = c("/", ""))
+Census.AgegenderEdu <- read_csv2("./Weitere Daten/Census2011/Population_Age_Gender_Education.csv", 
+                       skip = 6, na = c("/", ""))
 
-Census.AgegenderEdu <- read.csv2(
-  "./Weitere Daten/Census2011/Population_Age_Gender_Education.csv", 
-  skip = 6, sep = ";",quote = "")
+#Census.AgegenderEdu <- read.csv2("./Weitere Daten/Census2011/Population_Age_Gender_Education.csv", 
+#  skip = 6, sep = ";",quote = "")
 
 Census.AgegenderEdu[Census.AgegenderEdu == "/"] <- NA
 
@@ -205,8 +203,7 @@ names(Census.AgegenderEdu) <- names(Census.AgegenderEdu) %>%
   str_replace("Insgesamt$", "total") %>%
   str_replace("Insgesamt.1", "total.pct")
 
-
-# Baustelle:
+# change column names to include the age group
 for (i in 4:length(names(Census.AgegenderEdu))) {
   names(Census.AgegenderEdu)[i] <- 
     str_replace(names(Census.AgegenderEdu)[i] ,".\\d", "")
@@ -216,7 +213,83 @@ for (i in 4:length(names(Census.AgegenderEdu))) {
     str_replace(names(Census.AgegenderEdu)[i], "\\s-\\s", ".")
   }
 
-
+# remove special symbols
 names(Census.AgegenderEdu) <- str_replace(names(Census.AgegenderEdu), "Unter\\s10", "below10")
 names(Census.AgegenderEdu) <- str_replace(names(Census.AgegenderEdu), "\\s.+ter", "p")
 
+# delete two head columns
+Census.AgegenderEdu <- Census.AgegenderEdu[-c(1:3),]
+
+Census.AgegenderEdu <- Census.AgegenderEdu %>% as.matrix() %>%
+  plyr::mapvalues(from = as.matrix(unique(Census.AgegenderEdu$edu.lvl)),
+                  to = c("No formal education",
+                         "No formal education",
+                         "No formal education",
+                         "Some high school or secondary school",
+                         "Some high school or secondary school",
+                         "Some high school or secondary school",
+                         "High school or equivalent", 
+                         "High school or equivalent", 
+                         "High school or equivalent",
+                         "Other"))
+
+### Census Age - Gender - Religion ############################################
+
+Census.AgeGenderRel <- read_csv2("./Weitere Daten/Census2011/Population_Gender_Age_Religion_detailed.csv", 
+                                 skip = 6, na = c("/", ""))
+
+Census.AgeGenderRel <- Census.AgeGenderRel[complete.cases(Census.AgeGenderRel[,2]),]
+
+# change columnnames
+names(Census.AgeGenderRel) <- names(Census.AgeGenderRel) %>% 
+  str_replace("M.+ch", "male") %>%
+  str_replace("Weiblich", "female") %>%
+  str_replace("H.+ss", "edu.lvl") %>%
+  str_replace("Insgesamt$", "total") %>%
+  str_replace("Insgesamt.1", "total.pct") %>%
+  str_replace("Religion\\s\\(.+\\)", "religion")
+
+# column names with age groups
+for (i in 4:length(names(Census.AgeGenderRel))) {
+  names(Census.AgeGenderRel)[i] <- 
+    str_replace(names(Census.AgeGenderRel)[i] ,".\\d", "")
+  names(Census.AgeGenderRel)[i] <- 
+    str_c(names(Census.AgeGenderRel[i]), Census.AgeGenderRel[2,i], sep = ".")
+  names(Census.AgeGenderRel)[i] <- 
+    str_replace(names(Census.AgeGenderRel)[i], "\\s-\\s", ".")
+}
+
+# remove special symbols
+names(Census.AgeGenderRel) <- str_replace(names(Census.AgeGenderRel), "Unter\\s10", "below10")
+names(Census.AgeGenderRel) <- str_replace(names(Census.AgeGenderRel), "\\s.+ter", "p")
+
+# delete two head columns
+Census.AgeGenderRel <- Census.AgeGenderRel[-c(1:3),]
+Census.AgeGenderRel <- Census.AgeGenderRel %>% filter(religion != "Insgesamt")
+
+# categorize religions (Muslims are largely in none group (no official religion))
+Census.AgeGenderRel <- Census.AgeGenderRel %>% mutate(
+  religion = str_replace(religion, "R.*Kirche", "Roman Catholicism"),
+  religion = str_replace(religion, "Evan.+irche.?", "Protestantism"),
+  religion = str_replace(religion, "J.+meinden", "Other"),
+  religion = str_replace(religion, "Sonstige", "Other"),
+  religion = str_replace(religion, "Kein.*ig", "None"),
+  religion = str_replace(religion, "Orthodoxe Kirchen", "Other"))
+
+#Census.AgeGenderRel$total.pct
+
+# type to numeric
+Census.AgeGenderRel[,-1] <- apply(Census.AgeGenderRel[,-1], 2,
+                                  function(x) FUN = as.numeric(sub(",",".",x)))
+
+# to long format
+Census.AgeGenderRel <- Census.AgeGenderRel %>% group_by(religion) %>% 
+      summarise_all(sum) %>% ungroup %>% select(-total.pct, -total) %>% 
+      reshape2::melt(id.var = "religion")
+
+#Census.AgeGenderRel %>% 
+#  mutate( = str_replace(parties, 
+#                             "CDU|CSU",
+#                             "Union")) %>%
+#  group_by(gender, parties) %>%
+# summarise_all(sum)
