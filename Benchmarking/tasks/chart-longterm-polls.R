@@ -1,6 +1,10 @@
-df_rolling_average_and_error <- read.csv("Benchmarking/data/data-rolling-average-and-error.csv", stringsAsFactors = F, sep=",", encoding ="utf-8")
+df_rolling_average_and_error <- 
+  read.csv("Benchmarking/data/data-rolling-average-and-error.csv",
+           stringsAsFactors = F, 
+           sep=",", 
+           encoding ="utf-8")
 
-load("C:/Users/Moritz/Desktop/ElectionForecasting/Processed/polls.RData")
+load("Processed/polls.RData")
 
 # format forecasts
 Polls %<>% filter(!str_detect(method ,".+count")) %>% 
@@ -52,20 +56,29 @@ rolling.average.dates$method = rep("sz.rolling.av", nrow(rolling.average.dates))
 Polls <- rbind(Polls, rolling.average.dates)
 Polls$pct <- round(as.numeric(Polls$pct), 1)
 
-
 PollsTable <- Polls %>% select(-shares) %>% spread(partei, pct)
 
 a <- PollsTable %>% 
   filter(is.na(Other)) %>%
  select(-method, -datum, -Other)
+
 PollsTable[is.na(PollsTable)] <- 100-rowSums(a) 
 
-# rename PollsTable to fit rmarkdown
+# rename PollsTable methods to fit paper style
+
+rmse <- function(df){
+  mean = mean()
+  error = 
+}
+
 
 stargazer(PollsTable, title = "Benchmarking the Forecasts", type = "latex", out = "sumstats.tex")
 
 
 ### Plot ######################################################################
+
+# filter forecast of best method for March and December
+ForecastBest <- PollsTable %>% filter(min(RMSE)) 
 
 # Diagramm zusammen bauen
 basechart <- ggplot() +

@@ -1,0 +1,6 @@
+
+# RMSE
+
+rmse <- function(x) {
+  
+}
