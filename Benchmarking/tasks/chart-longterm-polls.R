@@ -28,7 +28,7 @@ latest_values <- arrange(df_rolling_average_and_error, desc(datum)) %>% filter(d
 hidden_chars <- c("\U200C","\u200D","\u200E","\u200F","\U200C","\u200D")
 latest_values <- arrange(latest_values, desc(rolling_average))
 latest_values <- cbind(latest_values, hidden_chars)
-startDatum <- "2015-06-01"
+startDatum <- "2016-01-01"
 df_rolling_average_and_error <- filter(df_rolling_average_and_error, datum > startDatum)
 
 # andere Namen für die Linien als das Standardlabel
@@ -80,10 +80,7 @@ rmse.func <- function(df) {
 
 PollsTable <- rmse.func(PollsTable)                   
 
-
 # rename PollsTable methods to fit paper style
-
-
 
 
 
@@ -96,16 +93,14 @@ bench.table <- stargazer(PollsTable, title = "Benchmarking the Forecasts", type 
 bestMethod <- c("GAV.w.DMar.pct", "GAV.w.DDec.pct") 
 
 ForecastBest <- PollsTable %>% filter(method %in% bestMethod) %>%
-  mutate(datum = str_replace(datum, "Mar", "2015-03-20")) %>%
-  mutate(datum = str_replace(datum, "Dec", "2015-05-10")) %>%
+  mutate(datum = str_replace(datum, "Mar", "2017-03-20")) %>%
+  mutate(datum = str_replace(datum, "Dec", "2016-12-10")) %>%
   select(-rmse, -method)
 
 ForecastBest$datum <- ymd(ForecastBest$datum)
 
-ForecastBest %<>% melt(id.var = "datum") %>%
-  rename(partei = variable, shares = value) %>%
-  mutate(pct = shares,
-         shares = pct/100)
+ForecastBest %<>% gather(partei, pct, -datum) %>%
+  mutate(shares = pct/100) %>% filter(!partei == "Other")
 
 # Diagramm zusammen bauen
 basechart <- ggplot() +
@@ -117,29 +112,29 @@ basechart <- ggplot() +
           mapping = aes(x = datum, y = rolling_average, 
           label = as.character(get_label_value(partei))), 
           color = farben[df_rolling_average_and_error$partei], 
-          method = list(dl.trans(x = x + .1, cex = 1.5, fontfamily="SZoSansCond-Light"),"calc.boxes", "last.bumpup")) +
+          method = list(dl.trans(x = x + .1, cex = 1.5, fontfamily="Times"), "calc.boxes", "last.bumpup")) +
   geom_point(data = ForecastBest, 
              mapping = aes(x = datum, y = shares),
-             color = farben[ForecastBest$partei], size = 3) +
+             color = farben[ForecastBest$partei], size = 2.8) +
   geom_text_repel(data = ForecastBest, 
                   mapping = aes(x = datum, y = shares, label = pct), 
-                  size = 4, fontface = 'bold', color = farben[ForecastBest$partei],
-                  box.padding = unit(0.35, "lines"),
-                  point.padding = unit(0.5, "lines"))
+                  size = 4,family = "Times", fontface = 'bold', color = farben[ForecastBest$partei],
+                  box.padding = unit(0.3, "lines"),
+                  point.padding = unit(0.4, "lines"))
 
 basechart <- basechart + 
   scale_fill_manual(values = farben_ci[mlabels], labels = plabels) + 
-  guides(fill = guide_legend(override.aes = list(alpha = 1, fill = farben), nrow = 1)) +
+  guides(fill = guide_legend(override.aes = list(alpha = 1), nrow = 1)) +
   scale_colour_manual(values = farben[mlabels], labels = NULL, breaks = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, NA))
 
 article_chart <- basechart + sztheme_lines +
-  scale_x_date(date_labels = "%B %y", limits = as.Date(c(startDatum, NA)), expand = c(0, 0))
+  scale_x_date(date_labels = "%b %y", limits = as.Date(c(startDatum, NA)), expand = c(0, 0))
 
 article_chart <- ggplotGrob(article_chart)
 article_chart$layout$clip[article_chart$layout$name == "panel"] <- "off"
 
-ggsave(file="data/assets/longterm-poll-article2.png", plot=article_chart, dpi = 144, units = "in", width = 8.89, height = 5)
+ggsave(file="Benchmarking/data/assets/longterm-poll-article2.png", plot=article_chart, dpi = 144, units = "in", width = 10, height = 5)
 # ggsave(file="data/assets/longterm-poll-hp.png", plot=article_chart, dpi = 144, units = "in", width = 7.78, height = 4.38)
 
 

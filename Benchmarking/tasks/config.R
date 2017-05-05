@@ -15,8 +15,10 @@ library(stringr)
 library(lubridate)
 library(ggrepel)
 library(stargazer)
+library(Metrics)
 
 
+windowsFonts(Times=windowsFont("TT Times New Roman"))
 
 
 options(scipen = 999)
@@ -29,7 +31,7 @@ sztheme_points <- theme(
   strip.background = element_blank(),
   strip.text.y = element_blank(),
   strip.text.x = element_blank(),
-  #axis.text = element_text(family = "SZoSansCond-Light", size = 18),
+  axis.text = element_text(family = "Times", size = 18),
   axis.ticks.y = element_blank(),
   axis.ticks.x = element_line(color = "#999999", size = 0.2),
   axis.ticks.length = unit(0.1, "in"),
@@ -49,7 +51,7 @@ sztheme_lines <- theme(
   strip.background = element_blank(),
   strip.text.y = element_blank(),
   strip.text.x = element_blank(),
-  axis.text = element_text(family = "SZoSansCond-Light", size = 18),
+  axis.text = element_text(family = "Times", size = 14),
   axis.text.x = element_text(margin = margin(0.1,0,0,0,"in")),
   axis.line.y = element_blank(),
   axis.ticks = element_blank(),
@@ -70,14 +72,14 @@ sztheme_lines <- theme(
   legend.direction = "vertical",
   legend.key = element_blank(),
   legend.key.size = unit(0.15, "in"),
-  legend.text = element_text(family = "SZoSans-Light", size = 16, colour = "#666666"),
-  text = element_text(size = 18, family = "SZoSansCond-Light", colour = "#666666")
+  legend.text = element_text(family = "Times", size = 14, colour = "#666666"),
+  text = element_text(size = 16, family = "Times", colour = "#666666")
 )
 
 sztheme_lines_mobile <- theme(
-  # plot.margin = unit(c(0,0,0,0), "lines"),
-  legend.margin = margin(0, 0, 0, 0.3, "in") 
-  #legend.text = element_text(family = "SZoSans-Light", size = 14, colour = "#666666")
+  plot.margin = unit(c(0,0,0,0), "lines"),
+  legend.margin = margin(0, 0, 0, 0.3, "in"), 
+  legend.text = element_text(family = "Times", size = 14, colour = "#666666")
 )
 
 sztheme_teaser <- theme(
