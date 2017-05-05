@@ -12,8 +12,8 @@ rm(list=ls())
 try(setwd("D:/Eigene Datein/Dokumente/Uni/Hertie/Materials/Election Forecasting/ElectionForecasting"), silent = TRUE)
 try(setwd("C:/Users/Moritz/Desktop/ElectionForecasting"), silent = TRUE)
 
-source("packages.R")
-
+source("packages.r")
+source("functions.r")
 ### 1. get data + cleaning ####################################################
 
 source("daliadata.R")
@@ -221,20 +221,7 @@ farben = c("AfD" = "#009dd1","Union" = "#222222", "FDP" = "#ffb700",
            "Gruene" = "#349f29", "Linke" = "#cc35a0", "SPD" = "#ce1b1b",
            "Other" = "grey")
 
-# Plot function
-shares.plot <- function(share.frame){
-  ggplot(data = share.frame, aes(x = vote_nextelection_de, y = shares)) +
-    geom_bar(aes(fill = vote_nextelection_de), stat = "identity") + 
-    scale_fill_manual(values = farben) +
-    scale_colour_manual(values = farben) +
-    theme_classic() +
-    scale_x_discrete(limits = position, name = "Major parties") +
-    ylab("Vote Share in %") +
-    guides(fill = FALSE) +
-    geom_text(aes(label=paste0(round(shares,2),"%"), y=shares+1.1), size = 3.5)
-  
-  #ggsave(file = "./Grafiken/plot.png")
-}
+
 
 # unweighted Dalia Poll December ########################################################
 Polls <- DaliaDec %>% 
@@ -329,7 +316,8 @@ poll.GAV.uw.DDec <- Polls %>% dplyr::filter(grepl("GAV.uw.DDec",method)) %>%
           tibble::rownames_to_column("vote_nextelection_de") %>% 
           rename(shares = V2) %>% mutate(shares = as.numeric(as.character(shares)))
 
-poll.GAV.uw.DDec %>% shares.plot()
+pp1 <- poll.GAV.uw.DDec %>% shares.plot() + 
+  ggtitle("Unweighted December")
 save(poll.GAV.uw.DDec, file = "./Processed/GAV_uw_DDec.RData")
 
 # weighted December
@@ -338,7 +326,8 @@ poll.GAV.w.DDec <- Polls %>% dplyr::filter(grepl("GAV.w.DDec",method)) %>%
   tibble::rownames_to_column("vote_nextelection_de") %>% 
   rename(shares = V2) %>% mutate(shares = as.numeric(as.character(shares)))
 
-poll.GAV.w.DDec %>% shares.plot()
+pp2 <- poll.GAV.w.DDec %>% shares.plot() + 
+  ggtitle("Weighted December")
 save(poll.GAV.w.DDec, file = "./Processed/GAV_w_DDec.RData")
 
 # unweighted March
@@ -347,7 +336,8 @@ poll.GAV.uw.DMar <- Polls %>% dplyr::filter(grepl("GAV.uw.DMar",method)) %>%
   tibble::rownames_to_column("vote_nextelection_de") %>% 
   rename(shares = V2) %>% mutate(shares = as.numeric(as.character(shares)))
 
-poll.GAV.uw.DMar %>% shares.plot()
+pp3 <- poll.GAV.uw.DMar %>% shares.plot() + 
+  ggtitle("Unweighted March")
 save(poll.GAV.uw.DMar, file = "./Processed/GAV_uw_DMar.RData")
 
 # weighted March
@@ -356,8 +346,14 @@ poll.GAV.w.DMar <- Polls %>% dplyr::filter(grepl("GAV.w.DMar",method)) %>%
   tibble::rownames_to_column("vote_nextelection_de") %>% 
   rename(shares = V2) %>% mutate(shares = as.numeric(as.character(shares)))
 
-poll.GAV.w.DMar %>% shares.plot()
+pp4 <- poll.GAV.w.DMar %>% shares.plot() +
+  ggtitle("Weighted March")
+
 save(poll.GAV.w.DMar, file = "./Processed/GAV_w_DMar.RData")
+
+plot.final <- multiplot(pp1, pp2, pp3, pp4, cols=2)
+ggsave(filename = "./Grafiken/Plot_Final.png", plot = plot.final)
+
 
 
 ### Gewichtung nach demographischen Faktoren aus den Exit Polls ###############

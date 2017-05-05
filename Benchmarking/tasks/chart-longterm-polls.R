@@ -68,15 +68,6 @@ partynames <- names(PollsTable[,-c(1,2)])
 PollsTable$rmse <- rep(0, nrow(PollsTable)) 
 #df <- PollsTable
 
-rmse.func <- function(df) {
-  for (j in unique(as.character(df$datum))) {
-    for (i in unique(df$method)) {
-      vec.f <- unlist(df[df$method == i & df$datum == j, which(names(df) %in% partynames)])
-      vec.sz <- unlist(df[df$method == "sz.rolling.av" & df$datum == j, which(names(df) %in% partynames)])
-      df$rmse[df$method == i & df$datum == j] <- rmse(vec.sz, vec.f)
-  } }
-  return(df)
-  }
 
 PollsTable <- rmse.func(PollsTable)                   
 
@@ -84,7 +75,7 @@ PollsTable <- rmse.func(PollsTable)
 
 
 
-bench.table <- stargazer(PollsTable, title = "Benchmarking the Forecasts", type = "latex", out = "sumstats.tex")
+#bench.table <- stargazer(PollsTable, title = "Benchmarking the Forecasts", type = "latex", out = "sumstats.tex")
 
 
 ### Plot ######################################################################

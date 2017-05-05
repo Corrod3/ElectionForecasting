@@ -273,12 +273,23 @@ Poststratification
 
 # Results
 
-```{r}
-poll.GAV.w.DDec %>% shares.plot()
-poll.GAV.uw.DDec %>% shares.plot()
-poll.GAV.w.DMar %>% shares.plot()
-poll.GAV.uw.DMar %>% shares.plot()
-```
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=6in]{./Grafiken/RPlot.png}
+  \caption{Weighted and unweighted polls} 
+\end{figure}
+
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=6in]{./Grafiken/longterm-poll-article2.png}
+  \caption{Weighted polls benchmarked to overall poll's rolling average} 
+\end{figure}
+
+
+
+
 
 
 What the result is of making it representative
