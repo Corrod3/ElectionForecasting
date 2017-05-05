@@ -14,11 +14,11 @@ try(setwd("C:/Users/Moritz/Desktop/ElectionForecasting"), silent = TRUE)
 
 source("packages.r")
 source("functions.r")
+
 ### 1. get data + cleaning ####################################################
 
 source("daliadata.R")
-source("weightingdata.R")
-# add benchmark data
+source("weightingdata.R") # add benchmark data
 
 # delete non voters and unable voters
 DaliaDec <- DaliaDec %>% filter(!(voted_party_last_election_de == "No vote" | 
@@ -41,7 +41,7 @@ S.GAV.DDec <- DaliaDec %>% filter(voted_party_last_election_de != "No vote" &
   tally() %>% complete(nesting(gender), AgeGroup, voted_party_last_election_de)
 
 S.GAV.DDec <- S.GAV.DDec %>% ungroup() %>%
-                        rename(parties = voted_party_last_election_de) %>% 
+                        dplyr::rename(parties = voted_party_last_election_de) %>% 
                         mutate(parties = as.character(parties), 
                                gender = as.character(gender))
 
@@ -88,7 +88,7 @@ S.GAV.Exit <- data.frame(rbind(as.matrix(VoteAgeGender.2013), as.matrix(AfDrows)
                                  stringsAsFactors = FALSE)
 rm(AfDrows, VoteAgeGender.2013)
 
-# format as.double (why not just as.numeric?)
+# format as.double 
 S.GAV.Exit[,c(3:8)] <- sapply(S.GAV.Exit[,c(3:8)], as.double)
 
 # compute AfD and others share
@@ -137,7 +137,6 @@ S.GAV.DDec.A4 <- S.GAV.DDec %>% ungroup %>%
   mutate(AgeGroup = str_replace(AgeGroup, "(46-60)|(60\\+)", "45Plus")) %>%
   group_by(gender, parties, AgeGroup) %>%
   summarise_all(sum) 
-
 
 w.GAV.Exit.DDec <- left_join(S.GAV.Exit.A4,
                              S.GAV.DDec.A4,
@@ -222,8 +221,7 @@ farben = c("AfD" = "#009dd1","Union" = "#222222", "FDP" = "#ffb700",
            "Other" = "grey")
 
 
-
-# unweighted Dalia Poll December ########################################################
+# unweighted Dalia Poll December ##############################################
 Polls <- DaliaDec %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de) %>%
@@ -262,7 +260,7 @@ Poll.uw.DMar[,"date"] <- ymd(replicate(2,"2017-03-20"))
 Polls <- rbind(Polls, Poll.uw.DMar)
 rm(Poll.uw.DMar)
 
-# weighted Dalia Poll March GAV #########################################################
+# weighted Dalia Poll March GAV ###############################################
 Poll.w.DMar <- DaliaMar %>% 
   filter(vote_nextelection_de != "No vote") %>% 
   count(vote_nextelection_de, wt = w.GAV.Exit.DMar) %>%
@@ -299,7 +297,7 @@ Poll.w.DMar.GAR <- DaliaMar %>%
 colnames(Poll.w.DMar.GAR) <- as.character(unlist(Poll.w.DMar.GAR[1,]))
 Poll.w.DMar.GAR <- Poll.w.DMar.GAR[-1,]
 Poll.w.DMar.GAR[,"method"] <- c("GAR.w.DMar.count", "GAR.w.DMar.pct")
-Poll.w.DMar.GAR[,"date"] <- ymd(replicate(2,"2016-12-10"))
+Poll.w.DMar.GAR[,"date"] <- ymd(replicate(2,"2016-03-20"))
 
 # add to other polls
 Polls <- rbind(Polls, Poll.w.DMar.GAR)

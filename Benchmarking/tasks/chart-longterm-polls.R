@@ -54,7 +54,7 @@ rolling.average.dates$method = rep("sz.rolling.av", nrow(rolling.average.dates))
 
 Polls <- rbind(Polls, rolling.average.dates)
 Polls$pct <- round(as.numeric(Polls$pct), 1)
-Polls$datum <- lubridate::month(Polls$datum, label = TRUE)
+Polls$datum <- lubridate::month(Polls$datum, label = TRUE, abbr = FALSE)
 PollsTable <- Polls %>% select(-shares) %>% spread(partei, pct)
 
 a <- PollsTable %>% 
@@ -68,14 +68,21 @@ partynames <- names(PollsTable[,-c(1,2)])
 PollsTable$rmse <- rep(0, nrow(PollsTable)) 
 #df <- PollsTable
 
-
-PollsTable <- rmse.func(PollsTable)                   
+# rmse computation
+PollsTable <- rmse.func(PollsTable) 
 
 # rename PollsTable methods to fit paper style
-
-
-
-#bench.table <- stargazer(PollsTable, title = "Benchmarking the Forecasts", type = "latex", out = "sumstats.tex")
+PollsTable %>%
+  rename(Method = method, Date = datum, RMSE = rmse) %>%
+  mutate(Method = str_replace(Method, "GAR.+", "GAR Census Data"),
+         Method = str_replace(Method, "sz.rolling.av", "SZ Rolling Average"),
+         Method = str_replace(Method, "GAV.uw.+", "Dalia Unweighted"),
+         Method = str_replace(Method, "GAV.w.+", "GAV Exit Polls"),
+         Method = as.factor(Method)
+         ) %>%
+  select(Method, Date, Union, SPD, FDP, Gruene, Linke, AfD, Other, RMSE) %>%
+  arrange(desc(Date), desc(Method)) %>%
+  xtable()
 
 
 ### Plot ######################################################################
