@@ -87,13 +87,25 @@ PollsTable <- rmse.func(PollsTable)
 
 
 
-stargazer(PollsTable, title = "Benchmarking the Forecasts", type = "latex", out = "sumstats.tex")
+bench.table <- stargazer(PollsTable, title = "Benchmarking the Forecasts", type = "latex", out = "sumstats.tex")
 
 
 ### Plot ######################################################################
 
 # filter forecast of best method for March and December
-# ForecastBest <- PollsTable %>% filter(min(RMSE)) 
+bestMethod <- c("GAV.w.DMar.pct", "GAV.w.DDec.pct") 
+
+ForecastBest <- PollsTable %>% filter(method %in% bestMethod) %>%
+  mutate(datum = str_replace(datum, "Mar", "2015-03-20")) %>%
+  mutate(datum = str_replace(datum, "Dec", "2015-05-10")) %>%
+  select(-rmse, -method)
+
+ForecastBest$datum <- ymd(ForecastBest$datum)
+
+ForecastBest %<>% melt(id.var = "datum") %>%
+  rename(partei = variable, shares = value) %>%
+  mutate(pct = shares,
+         shares = pct/100)
 
 # Diagramm zusammen bauen
 basechart <- ggplot() +
@@ -106,16 +118,14 @@ basechart <- ggplot() +
           label = as.character(get_label_value(partei))), 
           color = farben[df_rolling_average_and_error$partei], 
           method = list(dl.trans(x = x + .1, cex = 1.5, fontfamily="SZoSansCond-Light"),"calc.boxes", "last.bumpup")) +
-  geom_point(data = Polls, 
+  geom_point(data = ForecastBest, 
              mapping = aes(x = datum, y = shares),
-             color = farben[Polls$partei], size = 3) +
-  geom_text_repel(data = Polls, 
+             color = farben[ForecastBest$partei], size = 3) +
+  geom_text_repel(data = ForecastBest, 
                   mapping = aes(x = datum, y = shares, label = pct), 
-                  size = 4, fontface = 'bold', color = farben[Polls$partei],
+                  size = 4, fontface = 'bold', color = farben[ForecastBest$partei],
                   box.padding = unit(0.35, "lines"),
                   point.padding = unit(0.5, "lines"))
-  # geom_text(data = Polls,
-  #           aes(x = datum, y = shares, label = pct))
 
 basechart <- basechart + 
   scale_fill_manual(values = farben_ci[mlabels], labels = plabels) + 
