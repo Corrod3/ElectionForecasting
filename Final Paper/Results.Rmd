@@ -1,0 +1,61 @@
+<!-- Results -->
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=6in]{./Grafiken/RPlot.png}
+  \caption{Weighted and unweighted polls} 
+\end{figure}
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|lrrrrrrr}
+  \hline
+  \bfseries{December} &&&&&&&& \\
+  Method & Union & SPD & FDP & Gruene & Linke & AfD & Other & RMSE \\ 
+  \hline
+  SZ Rolling Average & 35.50 & 22.20 & 5.70 & 10.60 & 9.70 & 11.60 & 4.70 &  \\ 
+  GAV Exit Polls & 32.50 & 21.10 & 8.70 & 8.60 & 9.60 & 11.70 & 7.80 & 2.17 \\ 
+  GAR Census Data & 24.60 & 21.60 & 5.50 & 10.60 & 9.50 & 14.00 & 14.20 & 5.55 \\ 
+  Dalia Unweighted & 23.80 & 20.90 & 6.10 & 10.50 & 10.50 & 13.80 & 14.40 & 5.83 \\ 
+  \hline
+  \bfseries{March} &&&&&&&& \\
+   Method & Union & SPD & FDP & Gruene & Linke & AfD & Other & RMSE \\
+  \hline
+  SZ Rolling Average & 33.10 & 31.40 & 5.80 & 7.60 & 7.70 & 9.30 & 5.10 &  \\ 
+  GAV Exit Polls & 36.70 & 28.10 & 4.90 & 7.50 & 8.60 & 7.80 & 6.40 & 2.05 \\ 
+  GAR Census Data & 23.10 & 30.00 & 5.80 & 8.40 & 9.00 & 13.80 & 10.00 & 4.61 \\ 
+  Dalia Unweighted & 23.60 & 28.40 & 5.60 & 7.70 & 9.80 & 14.50 & 10.30 & 4.75 \\ 
+   \hline
+  \multicolumn{9}{p{0.88\linewidth}}{\scriptsize\textbf{Notes}: The benchmark is the rolling average of all german major polls as computed by \textit{Süddeutsche Zeitung}. GAV stands for Strata combined of the variables gender, age and self-reported vote at the last election. GAR indicates Strata of gender, age and religion. The last row of each month represents the raw results without weighting as collected by Dalia Research.}
+\end{tabular}
+\end{table}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=6in]{./Grafiken/longterm-poll-article2.png}
+  \caption{Weighted polls benchmarked to overall poll's rolling average} 
+\end{figure}
+
+
+
+
+
+
+What the result is of making it representative
+
+1. Election forecast Weighted with exit polls
+
+2. Election forecast weighted with election statics 
+
+3. Election forecast weighted with zensus
+
+Compare the three different weighten approaches
+
+Comment Moritz: I think we have to weight the data with Zensus data in any case at least for gender and age as long we don't want to use the Dalia weights; then we can either use election statistics or exit poll data (that we don't have)
+
+My approach would be:
+
+1. Weighting with Zensus (accounts for self-selection of the survey)
+2. Different mixes of weighting with election statistics with education
+(accounts for likely voter bias)

@@ -1,0 +1,78 @@
+<!-- Data and potential biases -->
+
+## Data sources
+
+
+###The Dalia Research' Europulse
+
+In this paper, we are using data from [Dalia Research](https://daliaresearch.com/), an online polling firm which is conducting market and opinion research exclusively through smartphones. To ensure to collect data from a broad variety of target populations, Dalia is using a diverse set of app and website categories such as sports, news, entertainment or games. To control that participants answer the survey seriously, an algorithm analyses the consistency and the response behaviour and computes a "trust score" to every respondent. Dalia praises its methodology as distinctively accounting for potential biases such as interviewer effect, social desirability bias or interviewer data entry errors. [@Dalia.2016] 
+
+Our forecasting project utilizes data of Dalia Research's Europulse Survey which is conducted quarterly in all EU countries. The survey consists of seven waves, but for this project we only use two waves of the survey from December 2016 and March 2017. The first wave is freely available on [Kaggle](https://www.kaggle.com/daliaresearch/trump-effect), the second wave was provided to us directly by Dalia Research.^[The data for the first wave was collected between 5th and 15th of December 2016. The second wave was conducted between 13th to 27th of March 2017.] Each wave consists of about 11000 individuals, of which roughly 1900 were from Germany which is the fraction of respondents we will focus on in the following analysis. The data is already pre-stratified by Dalia Research based on micro census data for age, gender.^[Dalia Research also provides weights from the micro census in their data. However, since we do not know the methodology used to obtain these weights we will employ our own weighting algorithm for Census adjustment.] 
+
+The Europulse data is not particularly collected for election forecasting purposes but contains data on a variety of questions such as online behaviour, media consumption and personal views on political and societal development in the European Union and the respondent's country of origin. Moreover, the survey contains information on the respondent's personal background, demographic data and his or her financial situation. These data can be utilized in order to improve the representativeness of the survey through weighting. This will be explained more detailed in the methodology section.
+
+The election-related variables collected in the Europulse survey are similar to traditional vote intention polling questions. First of all, the respondents are asked if and for which party they will vote in the upcoming election and for which party they voted in the previous election. Moreover, they are asked to rank political parties and describe the degree of certainty to cast a ballot for a particular party. Important for our analysis is a variable containing self-reported voting decision at the past German federal election, since we exploit this data compute survey weights that adjust the data to demographic composition of the past election in 2013.
+
+ 
+### Official election statistics and Census
+
+The data used for post-stratification and weighting come from several sources. To adjust our sample to demographic composition of the German population we use data of the German [Zensus 2011](https://www.zensus2011.de/DE/Home/home_node.html). The data is freely available and we obtained combined frequencies for characteristics such as age, gender, education, employment status and confession. The Census claims to reflect the actual demographic distribution of the German population and hence is suitable in order to post-stratify our sample to demographic criteria.
+
+Furthermore, we collected data from election polls conducted by Forschungsgruppe Wahlen e.V., Infratest dimap and from the official German election statistics [@KAS.2013]<!-- add further links / sources -->. While the latter contains only information on turnout and the demographic dimensions age and gender, Forschungsgruppe Wahlen e.V. has also issued election results and turnout along groups with different education, different employment status and confession. Such data is the closest estimate of the actual voting population and their voting behaviour across demographic groups and across the spectrum of political parties we can get.
+
+<!-- noch kurz: Als vergleichs daten nehmen wir daten von wahlrecht.de-->
+<!-- Put here: SZ data -->
+Finally, in order to set our forecasts into context we will use polling data from other institutes. For this we plan to get the respective information from [wahlrecht.de](wahlrecht.de). 
+
+
+
+## Raw forecasts and data quality (sources of bias)
+
+As with all surveys, the methodology of Dalia Research has several sources of potential biases. In the case of the Europulse survey they are primarily from flawed measurement and representation of the surveyed population, as listed in figure 1 [@Groves.2009].
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=5in]{./Grafiken/SourcesOfSurveyError}
+  \caption{Potential sources of survey error} 
+\end{figure}
+
+<!-- measurement error -->
+With regard to measuring vote intention for a particular party, the Europulse survey uses a similar approach as traditional surveys: it asks respondents directly which party they intent to vote for at the upcoming election. Whether such questions measure correctly the actual voting behaviour at the election day is questionable but the approach does not differ significantly from traditional polling methods.^[The extact question used for instance by _infratest dimap_, a major german polling firm, is: "What party would you vote for if there would be a Federal election next Sunday." [@infratest.2017] This wording is slightly different than in the Dalia questionaire but evaluating the impact of the formulation of questions shall not be content of this study.] However, online surveys, such as Europulse, can reasonably claim to avoid some sources of measurement error such as social desirability bias or interviewer bias. Since such surveys are often anonymous, the social pressure on the respondent is presumably negligible, and interaction with the interviewer does not bias the response.
+
+<!-- representativeness: Self-selection bias and sampling error --> 
+Regarding representativeness, the Europulse survey has some limitations in comparison to face-to-face or RDD interviews. First of all, Europulse' framework does not select participants at random but offers visitors of certain websites or app-users the opportunity to participate. Hence, this approach carries the risk of self-selection. Moreover, representativeness would require that the Europulse survey in principle should be available to the entire population. However, not everyone is using smartphones and even if they are, they might not use the applications Dalia targets for its surveys. The users Dalia Research actually tends to reach are likely to be much younger and technology oriented than the general population would be (see figure). This is in particular a problem for election polling, as older voters are systematically underrepresented in such online methodologies while turnout amongst the elderly tends to be higher compared to the young population.
+
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Internet usage by   age]{\includegraphics[width=0.45\textwidth]{./Grafiken/InternetnutzerAlter.png}}
+\hspace{0.05\textwidth}
+  \subfloat[Voter turnout by age]{\includegraphics[width=0.45\textwidth]{./Grafiken/WahlbeteiligungAlter.png}}
+  \caption{Internet usage and turnout by age}
+\end{figure}
+
+<!-- Dalia response -->
+Dalia Research tries to account for these problems. First, as we have mentioned, they try to increase the diversity of their respondents by presenting their surveys on various apps and platforms targeting different user groups. Second, they pre- and post-stratify their data. Pre-stratification is done on the basis of age and gender, using self-reported demographic information. For each age and gender strata they target a certain number of respondents so that their sample resembles roughly the German population. In a second step, they use data from the German Census and compute weights for cluster of age, gender, education and whether the respondent lives in an urban or rural area. The methodology how Dalia obtained these weights remained not transparent to us. For that reason we used our own approach for post-stratification that specifically addressed our purpose of election forecasting. Finally, Dalia tries to avoid selection bias since they to not inform respondents that they are answering an election related survey before they actually start it and in general Dalia Research has high completion rates, hence participants are only rarely dropping out after they started a survey.
+
+Despite these efforts, it is questionable whether the data can be regarded as representative. Below we present a simple frequency table of the seld-reported past election turnout as well as the intended vote at the next election for the most recent wave of Europulse. The tables show that the results are significantly diverging from other forecasts (see [www.wahlumfragen.org](https://www.wahlumfragen.org/bundestagswahl/wahlumfragen_bundestagswahl.php)).
+
+<!-- raw data graphics --->
+GRAPH
+<!--- INCLUDE HERE NEW GRAPH: Discuss with Alex what is reasonable to print here
+[\begin{figure}[ht]
+  \centering
+  \subfloat[]{\includegraphics[width=0.48\textwidth]{./Grafiken/VoteNextElection}}
+  \hspace{0.01\textwidth}
+  \subfloat[]{\includegraphics[width=0.48\textwidth]{./Grafiken/TurnoutByGender}}
+  \caption{Vote intent and self-reported turnout (Europulse December 2016)}
+\end{figure}]]
+
+discuss here high share for others as suggested by Simon
+--->
+
+The large divergence from can be due to a variety of flaws that bias Europulse. First of all, even if the sample represents the German population in terms of age groups and gender, it can be question whether the old female or male users are truly representative of their age group. Moreover, not revealing the survey content might sort out political motivated respondents, but interest in political matters is likely correlated to general willingness to respond to surveys. Hence, in order to utilize the data to election forecasting further weighting and post-stratification will be necessary.
+
+
+<!-- put here other data shortcommings of the weighting data -->
+Elaborate on shortcommings of the data: 
+-> e.g there is not specific AfD data across age groups and gender provided by the german election statistics
+-> cluster are not available for combined variables above three dimensions

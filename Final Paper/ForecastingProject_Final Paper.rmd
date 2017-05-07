@@ -1,8 +1,9 @@
 ---
-title: "Using Smartphone Polling to Forecast the German Federal Election 2017"
-subtitle: \Large{Comparing the performance of digital and traditional polls}
-author: \newline Moritz Hemmerlein & Alexander Sacharow
-abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representative samples and likely-voter bias skew gathered information and require adequate statistical adjustment. This paper compares different weighting methods to obtain a forecast from raw data, collected through smartphone polling. To assess the performance of our results, we benchmark them to leadings polling institute's rolling average."
+title: | 
+    | Smartphone Polling for the German Federal Election 2017
+subtitle: "Election Forecasting Project"
+author: "Moritz Hemmerlein & Alexander Sacharow"
+abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representative samples and likely-voter bias skew gathered information and require adequate statistical adjustment. This paper compares different weighting methods to obtain "
 header-includes:
     - \usepackage{fancyhdr}
     - \pagestyle{fancy}
@@ -58,55 +59,47 @@ rm(p, packages)
 \newpage
 
 
-<!-- Simon's remarks on design paper:
-- good motivation of the approach
-- relevant literature discussed
-- what's the matter with the large share of "Others" in the vote intent figure?
-- impressive data collection effort, in particular for data post-processing/unbiasing procedures
-- raking/poststratification section: good description, Goel/Obeng/Rothschild 2017) could have been credited a bit more transparently for the formulas used
-- you might elaborate a bit more on the benefits and uniqueness of such an approach in the context of German elections and the polling landscape
--->
 
 # Introduction 
 
-```{r child = 'Final Paper/Introduction.Rmd'}
+```{r child = 'Introduction.Rmd'}
 ```
 
 
 # Related Literature
 
 <!--
-#```{r child = './Final Paper/Related_literature.Rmd'}
-#```
+```{r child = './Final Paper/Related_literature.Rmd'}
+```
 -->
 
 # Data Sources and Quality 
 
-
+<!--
 ```{r child = './Final Paper/Data_sources_quality.Rmd'}
 ```
-
+-->
 
 
 # Methodology
 
 <!--
-#```{r child = './Final Paper/Methodology.Rmd'}
-#```
+```{r child = './Final Paper/Methodology.Rmd'}
+```
 -->
 
 # Results
 
 <!--
-#```{r child = './Final Paper/Results.Rmd'}
-#```
+```{r child = './Final Paper/Results.Rmd'}
+```
 -->
 
 # Conclusion
 
 <!--
-#```{r child = './Final Paper/Conclusion.Rmd'}
-#```
+```{r child = './Final Paper/Conclusion.Rmd'}
+```
 -->
 
 # References
