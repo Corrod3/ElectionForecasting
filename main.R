@@ -352,6 +352,23 @@ save(poll.GAV.w.DMar, file = "./Processed/GAV_w_DMar.RData")
 plot.final <- multiplot(pp1, pp2, pp3, pp4, cols=2)
 ggsave(filename = "./Grafiken/Plot_Final.png", plot = plot.final)
 
+### Raw for paper
+
+last.vote.DaliaMar <- DaliaMar %>% 
+  select(voted_party_last_election_de) %>%
+  count(voted_party_last_election_de) %>%
+  mutate(shares = 100*n / sum(n)) %>%
+  as.data.frame() %>% rename(vote_nextelection_de = voted_party_last_election_de)
+
+pp5 <- last.vote.DaliaMar %>% shares.plot() +
+  ggtitle("Self-reported vote 2013")
+pp6 <- poll.GAV.uw.DMar %>% shares.plot() +
+  ggtitle("Vote intent 2017")
+
+last.vote.Mar.plot <- multiplot(pp5, pp6, cols = 2)
+ggsave(filename = "./Grafiken/LastVoteMar.png", plot = last.vote.Mar.plot)
+
+
 
 
 ### Gewichtung nach demographischen Faktoren aus den Exit Polls ###############
