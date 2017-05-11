@@ -388,9 +388,9 @@ pp7[pp7$vote_nextelection_de == "Other", 2] <- (1-AfD.share)*10.9
 
 pp7 <- pp7 %>% shares.plot() + ggtitle("Election results 2013")
 
-lastvote.actualvote <- multiplot(pp5, pp7, cols = 2)
-
-ggsave(filename = "./Grafiken/LastVoteActualVote.png", plot = lastvote.actualvote)
+png("./Grafiken/LastVoteActualVote.png", width = 750, height = 467)
+multiplot(pp5, pp7, cols = 2)
+dev.off()
 
 
 ### Gewichtung nach demographischen Faktoren aus den Exit Polls ###############
