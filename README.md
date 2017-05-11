@@ -7,11 +7,11 @@ This repository is part of a course on Election Forecasting at Hertie School of 
 File                                  | Content   
 --------------------------------------|-------------------------------------- 
 ForecastingProject_Final Paper.rmd    | Final paper assignment mother file 
-main.R                                | presentation with plots of forcasts, control and demographic variables
-main.R                                | script for calculating scores, testing and generating plots
-clean.R                               | Script for cleaning, formating and annonymizing data
-prep.R                                | Script for preparing .R
-literature                            | BibTex for references (Citavi Export)
-titlepage                             | Title page for the thesis
+main.R                                | Main script which calls scripts, creates plots and post-stratification
+daliadata                             | script for cleaning and formating dalia data
+weighteningdata                       | Script for cleaning and formating remaining data
+packages.R                            | Script for preparing .R
+literature.bib                        | BibTex for references (Citavi Export)
+main_benchmark.R                      | Script for benchmark plot and calculation
 
 
