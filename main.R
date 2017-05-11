@@ -357,18 +357,40 @@ ggsave(filename = "./Grafiken/Plot_Final.png", plot = plot.final)
 last.vote.DaliaMar <- DaliaMar %>% 
   select(voted_party_last_election_de) %>%
   count(voted_party_last_election_de) %>%
-  mutate(shares = 100*n / sum(n)) %>%
+  mutate(shares = round(100*n / sum(n),1)) %>%
   as.data.frame() %>% rename(vote_nextelection_de = voted_party_last_election_de)
 
 pp5 <- last.vote.DaliaMar %>% shares.plot() +
-  ggtitle("Self-reported vote 2013")
+  ggtitle("Self-reported vote 2013") + 
+  scale_y_continuous(limits = c(0, 40))
 pp6 <- poll.GAV.uw.DMar %>% shares.plot() +
   ggtitle("Vote intent 2017")
+
 
 last.vote.Mar.plot <- multiplot(pp5, pp6, cols = 2)
 ggsave(filename = "./Grafiken/LastVoteMar.png", plot = last.vote.Mar.plot)
 
+## Last vote against actual results
+#ActualResults2013
+pp7 <- VoteByGender %>% filter(gender == "Total") %>% 
+  mutate(parties = str_replace(parties, "CDU|CSU", "Union"),
+         gender.vote = round(gender.vote*100,1)) %>%
+  select(-gender) %>%
+  group_by(parties) %>%
+  summarize_all(sum) %>% 
+  rename(shares = gender.vote) %>%
+  rename(vote_nextelection_de = parties) %>%
+  as.data.frame()
 
+pp7 <- plyr::rbind.fill(pp7, data.frame(vote_nextelection_de = "AfD"))
+pp7[pp7$vote_nextelection_de == "AfD", 2] <-  AfD.share*10.9
+pp7[pp7$vote_nextelection_de == "Other", 2] <- (1-AfD.share)*10.9 
+
+pp7 <- pp7 %>% shares.plot() + ggtitle("Election results 2013")
+
+lastvote.actualvote <- multiplot(pp5, pp7, cols = 2)
+
+ggsave(filename = "./Grafiken/LastVoteActualVote.png", plot = lastvote.actualvote)
 
 
 ### Gewichtung nach demographischen Faktoren aus den Exit Polls ###############
