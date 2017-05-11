@@ -52,7 +52,7 @@ Despite these efforts, it is questionable whether the data can be regarded as re
 <!-- raw data graphics --->
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.8\textwidth]{./Grafiken/LastVotePlotMar.png}
+  \includegraphics[width=0.8\textwidth]{./Grafiken/LastVoteActualVote.png}
   \caption{Self-reported vote 2013 and 2017 (Europulse March 2017)}
 \end{figure}
 
