@@ -19,7 +19,7 @@ The election-related variables collected in the Europulse survey are similar to 
 
 ## Raw forecasts and data quality
 
-As with all surveys, the methodology of Dalia Research has several sources of potential biases [@Groves.2009]. In the case of the Europulse survey they are primarily from flawed measurement and representation of the surveyed population, as listed in figure \ref{fig:error}.
+As with all surveys, the methodology of Dalia Research has several sources of potential biases [@Groves.2009]. In the case of the Europulse survey they are primarily from flawed measurement and representation of the surveyed population (see figure \ref{fig:error}).
 
 \begin{figure}[ht]
   \centering
