@@ -5,10 +5,8 @@ output:
 ---
 <!-- Data and potential biases -->
 
-## Data sources and potential biases
 
-
-### The Dalia Research' Europulse
+## The Dalia Research Europulse poll
 
 In this paper, we are using data from [Dalia Research](https://daliaresearch.com/), an online polling firm which is conducting market and opinion research exclusively through smartphones. To ensure to collect data from a broad variety of target populations, Dalia is using a diverse set of app and website categories such as sports, news, entertainment or games. To control that participants answer the survey seriously, an algorithm analyses the consistency and the response behaviour and computes a "trust score" to every respondent. Dalia praises its methodology as distinctively accounting for potential biases such as interviewer effect, social desirability bias or interviewer data entry errors. [@Dalia.2016] 
 
@@ -19,7 +17,7 @@ The Europulse data is not particularly collected for election forecasting purpos
 The election-related variables collected in the Europulse survey are similar to traditional vote intention polling questions. First of all, the respondents are asked if and for which party they will vote in the upcoming election and for which party they voted in the previous election. Moreover, they are asked to rank political parties and describe the degree of certainty to cast a ballot for a particular party. Important for our analysis is a variable containing self-reported voting decision at the past German federal election. We exploit this data in order to compute survey weights that adjust the data to demographic voter composition of the past election in 2013.
 
 
-### Raw forecasts and data quality
+## Raw forecasts and data quality
 
 As with all surveys, the methodology of Dalia Research has several sources of potential biases. In the case of the Europulse survey they are primarily from flawed measurement and representation of the surveyed population, as listed in figure \ref{fig:error} [@Groves.2009].
 
