@@ -11,9 +11,7 @@ Shall we use the average of December and March wave. Or focus entirely on March 
 
 We want to employ two approaches to generate election forecasts from our data. In the first approach, the survey data is adjusted in a two step procedure: First, the representativeness of survey data to the general population is increased by finding appropiate weights. Then, a likely voter model is used to obtain an election forecast. Our second approach does this in one step: The survey data will be directly adjusted to the likely voter population based on exit poll data from the German federal election in 2013. 
 
-## Raking and post-stratifiation
-
-**Alexander**
+## Post-stratifiation
 
 In order to follow both procedures, we need methods to compute weights for different strata of the survey sample aiming at increased representativeness. A classical way to get these weights is *raking*. With raking weights are assigned to each respondent in order to match the marginal distribution of characteristics in the 'true' population. For example, if we know the distribution of education level and employment status in the population we can compute a weight for each so that the weighted survey sample has the same distribution of the characteristics as the 'true' population. Basically, raking estimates a joint distributions for each combination of characteristics. 
 
