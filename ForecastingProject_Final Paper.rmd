@@ -2,7 +2,7 @@
 title: "Using Smartphone Polling to Forecast the German Federal Election 2017"
 subtitle: \Large{Comparing the performance of digital and traditional polls}
 author: \newline Moritz Hemmerlein & Alexander Sacharow
-abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representative samples and likely-voter bias skew gathered information and require adequate statistical adjustment. This paper compares different weighting methods to obtain a forecast from raw data, collected through smartphone polling. To assess the performance of our results, we benchmark them to leadings polling institute's rolling average."
+abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representative samples and likely-voter bias skew gathered information and require adequate statistical adjustment. This paper compares different weighting methods to obtain a forecast from raw data, collected through smartphone polling and uses the average of leading polling institutes as a benchmark. We find that post-stratification including revealed last votes are an effective tool adjust polls while stratification purely on demographic factors cannot offset the sampling bias for polls with 1000-2000 responses."
 header-includes:
     - \usepackage{fancyhdr}
     - \pagestyle{fancy}
@@ -73,10 +73,10 @@ rm(p, packages)
 
 # Related Literature
 
-<!--
-#```{r child = './Final Paper/Related_literature.Rmd'}
-#```
--->
+
+```{r child = './Final Paper/Related_literature.Rmd'}
+```
+
 
 # Data Sources and Quality 
 
@@ -85,24 +85,24 @@ rm(p, packages)
 
 # Methodology
 
-<!--
-#```{r child = './Final Paper/Methodology.Rmd'}
-#```
--->
+
+```{r child = './Final Paper/Methodology.Rmd'}
+```
+
 
 # Results
 
-<!--
-#```{r child = './Final Paper/Results.Rmd'}
-#```
--->
+
+```{r child = './Final Paper/Results.Rmd'}
+```
+
 
 # Conclusion
 
-<!--
-#```{r child = './Final Paper/Conclusion.Rmd'}
-#```
--->
+
+```{r child = './Final Paper/Conclusion.Rmd'}
+```
+
 
 # References
 
