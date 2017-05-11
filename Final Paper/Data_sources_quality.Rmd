@@ -21,39 +21,39 @@ The election-related variables collected in the Europulse survey are similar to 
 
 ### Raw forecasts and data quality
 
-As with all surveys, the methodology of Dalia Research has several sources of potential biases. In the case of the Europulse survey they are primarily from flawed measurement and representation of the surveyed population, as listed in figure 1 [@Groves.2009].
+As with all surveys, the methodology of Dalia Research has several sources of potential biases. In the case of the Europulse survey they are primarily from flawed measurement and representation of the surveyed population, as listed in figure \ref{fig:error} [@Groves.2009].
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=5in]{./Grafiken/SourcesOfSurveyError}
-  \caption{Potential sources of survey error} 
+  \caption{Potential sources of survey error} \label{fig:error}
 \end{figure}
 
 <!-- measurement error -->
 With regard to measuring vote intention for a particular party, the Europulse survey uses a similar approach as traditional surveys: it asks respondents directly which party they intent to vote for at the upcoming election. Whether such questions measure correctly the actual voting behaviour at the election day is questionable but the approach does not differ significantly from traditional polling methods.^[The extact question used for instance by _infratest dimap_, a major german polling firm, is: "What party would you vote for if there would be a Federal election next Sunday." [@infratest.2017] This wording is slightly different than in the Dalia questionaire but evaluating the impact of the formulation of questions shall not be content of this study.] However, online surveys, such as Europulse, can reasonably claim to avoid some sources of measurement error such as social desirability bias or interviewer bias. Since such surveys are often anonymous, the social pressure on the respondent is presumably negligible, and interaction with the interviewer does not bias the response.
 
 <!-- representativeness: Self-selection bias and sampling error --> 
-Regarding representativeness, the Europulse survey has some limitations in comparison to face-to-face or RDD interviews. First of all, Europulse' framework does not select participants at random but offers visitors of certain websites or app-users the opportunity to participate. Hence, this approach carries the risk of self-selection. Moreover, representativeness would require that the Europulse survey in principle should be available to the entire population. However, not everyone is using smartphones and even if they are, they might not use the applications Dalia targets for its surveys. The users Dalia Research actually tends to reach are likely to be much younger and technology oriented than the general population would be (see figure). This is in particular a problem for election polling, as older voters are systematically underrepresented in such online methodologies while turnout amongst the elderly tends to be higher compared to the young population.
+Regarding representativeness, the Europulse survey has some limitations in comparison to face-to-face or RDD interviews. First of all, Europulse' framework does not select participants at random but offers visitors of certain websites or app-users the opportunity to participate. Hence, this approach carries the risk of self-selection. Moreover, representativeness would require that the Europulse survey in principle should be available to the entire population. However, not everyone is using smartphones and even if they are, they might not use the applications Dalia targets for its surveys. The users Dalia Research actually tends to reach are likely to be much younger and technology oriented than the general population would be (see figure \ref{fig:voter}). This is in particular a problem for election polling, as older voters are systematically underrepresented in such online methodologies while turnout amongst the elderly tends to be higher compared to the young population.
 
 \begin{figure}[!tbp]
   \centering
   \subfloat[Internet usage by   age]{\includegraphics[width=0.45\textwidth]{./Grafiken/InternetnutzerAlter.png}}
 \hspace{0.05\textwidth}
   \subfloat[Voter turnout by age]{\includegraphics[width=0.45\textwidth]{./Grafiken/WahlbeteiligungAlter.png}}
-  \caption{Internet usage and turnout by age}
+  \caption{Internet usage and turnout by age} \label{fig:voter}
 \end{figure}
 
 <!-- Dalia response -->
 Dalia Research tries to account for these problems. First, as we have mentioned, they try to increase the diversity of their respondents by presenting their surveys on various apps and platforms targeting different user groups. Second, they pre- and post-stratify their data. Pre-stratification is done on the basis of age and gender, using self-reported demographic information. For each age and gender strata they target a certain number of respondents so that their sample resembles roughly the German population. In a second step, they use data from the German Census and compute weights for cluster of age, gender, education and whether the respondent lives in an urban or rural area. The methodology how Dalia obtained these weights was not available to us. For that reason we used our own approach for post-stratification that specifically addressed our purpose of election forecasting. Finally, Dalia tries to reduce selection bias since they to not inform respondents that they are answering an election related survey before they actually start it and in general Dalia Research has high completion rates, hence participants are only rarely dropping out after they started a survey.
 
-Despite these efforts, it is questionable whether the data can be regarded as representative. Below we present a simple frequency table of the self-reported past vote in the Federal Election 2013. The second figure shows that the Dalia sample significantly diverging from the actual voting results.
+Despite these efforts, it is questionable whether the data can be regarded as representative. Below we present a simple frequency table of the self-reported past vote in the Federal Election 2013. Figure \ref{fig:actvote} shows that the Dalia sample significantly diverging from the actual voting results.
 
 <!-- CHANGE GRAPHICS   -->
 <!-- raw data graphics --->
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\textwidth]{./Grafiken/LastVoteActualVote.png}
-  \caption{Self-reported vote 2013 and 2017 (Europulse March 2017)}
+  \caption{Self-reported vote and actual result 2013} \label{fig:actvote}
 \end{figure}
 
 <!--

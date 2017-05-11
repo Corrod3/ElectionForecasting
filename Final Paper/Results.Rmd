@@ -27,9 +27,9 @@ Our results show that the choice of weighting method has a considerable effect o
 \end{tabular}
 \end{table}
 
-As the table shows, the divergence of the raw data was relatively high compared to the average of official polls. The raw forecast has a RMSE of 5.83 for December and 4.75 in March. Yet, with our weighting approach using Census data we were able to improve this performance only by a negligible amount. Employing clusters of gender, age and religion our forecast showes an RMSE of 5.55 and 4.61 respectively. The weak performance might be due to several reasons. As stated earlier the Dalia data is stratified with age and gender by the time the poll in conducted. We decided, however, to account for age and gender through census data since we did not transparently evaluate Dalia's procedure for stratification. Yet, the very low difference of our estimate with Census data and the original data shows that our approach did not siginificantly differ from Dalia's approach. Moreover, the variable religion does not seem to have a reasonable impact on vote since its impact is neglibile as well. Additionally, the approach using exclusively Census data, does not account for likely voter bias at all.
+As the table shows, the divergence of the raw data was relatively high compared to the average of official polls. The raw forecast has a RMSE of 5.83 for December and 4.75 in March. Yet, with our weighting approach using Census data we were able to improve this performance only by a negligible amount. Employing clusters of gender, age and religion our forecasts show a RMSE of 5.55 and 4.61 respectively. The weak performance might be due to several reasons. As stated earlier the Dalia data is stratified with age and gender by the time the poll in conducted. We decided, however, to account for age and gender through census data since we did not transparently evaluate Dalia's procedure for stratification. Yet, the very low difference of our estimate with Census data and the original data shows that our approach did not siginificantly differ from Dalia's approach. Moreover, the variable religion does not seem to have a reasonable impact on our weights. In sum, the approach using exclusively Census data does not account for likely voter bias at all.
 
-In contrast, our approach using the election statistics does account for demographics of likely voter and thus performs very well compared to Census data. Weighting with cluster of age, gender and vote decision and taking into account self-reported vote at the past election yields results with only 2.17 and 2.05 RMSE respectively compared to our benchmark. Figure \ref{fig:weightedplot} contrasts the raw data with our weighted estimates for December and March data.
+In contrast, our approach using the election statistics does account for demographics of likely voter and thus performs very well compared to Census data. Weighting with cluster of age, gender and vote decision and taking into account self-reported vote at the past election yields results in RMSE values of 2.17 and 2.05 respectively compared to our benchmark. Figure \ref{fig:weightedplot} contrasts the raw data with our weighted estimates for December and March.
 
 \begin{figure}[ht]
   \centering
@@ -37,39 +37,12 @@ In contrast, our approach using the election statistics does account for demogra
   \caption{Weighted and unweighted polls} \label{fig:weightedplot}
 \end{figure}
 
-The results are very promising. They show the possibility of adjusting weakly representative raw data from online polling with publicly available election statistics in a way that the results are close to professionally conducted traditional polls. While our results are not conclusive to state the equal 
-
-
-
-
-
-
+The results are very promising. They show the possibility of adjusting online polling data with exclusively publicly available information in a way that they converge to professionally conducted traditional polls. While our results are not conclusive to assess the usefulness of online polls for election forecasting in general, we can, however, state that our two weighted samples are doing well. In addition, looking on the time dimension yields further insights. Figure \ref{fig:rollingaverage} shows the trend of the poll's rolling average since 2016. The dots display our adjusted data.
 
 \begin{figure}[ht!]
   \centering
   \includegraphics[width=6in]{./Grafiken/longterm-poll-article2.png}
-  \caption{Weighted polls benchmarked to overall poll's rolling average} 
+  \caption{Weighted polls benchmarked to overall poll's rolling average} \label{fig:rollingaverage}
 \end{figure}
 
-
-
-
-
-
-What the result is of making it representative
-
-1. Election forecast Weighted with exit polls
-
-2. Election forecast weighted with election statics 
-
-3. Election forecast weighted with zensus
-
-Compare the three different weighten approaches
-
-Comment Moritz: I think we have to weight the data with Zensus data in any case at least for gender and age as long we don't want to use the Dalia weights; then we can either use election statistics or exit poll data (that we don't have)
-
-My approach would be:
-
-1. Weighting with Zensus (accounts for self-selection of the survey)
-2. Different mixes of weighting with election statistics with education
-(accounts for likely voter bias)
+This shows, how close our data is to the benchmark as well as how it follows the huge shift in vote shares for the SPD after March 2017 - the so called "Schulz-Effect". Moreover, our estimates are lying within or close to the colored areas besides the rolling average which are displaying the confidence intervals. While that illustrates that they are often accurate there is still some considerable error, which leaves room for further improvement. This could be done either by using more detailed cluster, different approaches to account for likely voter bias or usage of different data sources such as exit polls of polling institutes.
