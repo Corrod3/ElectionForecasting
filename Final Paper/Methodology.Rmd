@@ -13,7 +13,11 @@ We want to employ two approaches to generate election forecasts from our data. I
 
 ## Post-stratifiation
 
-In order to follow both procedures, we need methods to compute weights for different strata of the survey sample aiming at increased representativeness. A classical way to get these weights is *raking*. With raking weights are assigned to each respondent in order to match the marginal distribution of characteristics in the 'true' population. For example, if we know the distribution of education level and employment status in the population we can compute a weight for each so that the weighted survey sample has the same distribution of the characteristics as the 'true' population. Basically, raking estimates a joint distributions for each combination of characteristics. 
+In order to follow both procedures, we need methods to compute weights for different strata of the survey sample aiming at increased representativeness. 
+
+A classical way to get these weights is *raking*. With raking weights are assigned to each respondent in order to match the marginal distribution of characteristics in the 'true' population. For example, if we know the distribution of education level and employment status in the population we can compute a weight for each so that the weighted survey sample has the same distribution of the characteristics as the 'true' population. 
+
+Basically, raking estimates a joint distributions for each combination of characteristics. 
 
 In formal terms, we can describe each combination of an individual and a characteristic with $x_{i,j} \in \{0,1\}$ where $i$ stands for the individual and $j$ for the characteristic. To illustrate, in the case of the characteristic gender ($j$): If $x_{i,j} = 1$ the individual $i$ is female and if $x_{i,j} = 0$ the individual $i$ is not female. Hence, each characteristic is modeled with a binary variable. $c_j$ expresses the prevalence of a characteristic in the population and raking estimates the weights $w_i$ such that:
 
