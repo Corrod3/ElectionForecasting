@@ -1,14 +1,14 @@
 <!-- Results -->
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=6in]{./Grafiken/RPlot.png}
-  \caption{Weighted and unweighted polls} 
-\end{figure}
+State result
+Interpret result
 
+
+Our results show that the choice of weighting method has a considerable effect on the performance of the forecast against our benchmark data. Moreover, we could show that proper and transparent weighting with publicly available elections statistics and Census data is feasible to obtain a representative and reasonable forecast from the online poll. Table \ref{tab:results} displays the SZ' rolling average for March 2017 and December 2016, our weighted results and the raw Dalia data together with calculated root mean squared error (RMSE) as indicator of accuracy of prediction.
 
 \begin{table}[ht]
 \centering
+  \label{tab:results}
 \begin{tabular}{l|lrrrrrrr}
   \hline
   \bfseries{December} &&&&&&&& \\
@@ -30,6 +30,21 @@
   \multicolumn{9}{p{0.88\linewidth}}{\scriptsize\textbf{Notes}: The benchmark is the rolling average of all german major polls as computed by \textit{Süddeutsche Zeitung}. GAV stands for Strata combined of the variables gender, age and self-reported vote at the last election. GAR indicates Strata of gender, age and religion. The last row of each month represents the raw results without weighting as collected by Dalia Research.}
 \end{tabular}
 \end{table}
+
+
+
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=6in]{./Grafiken/RPlot.png}
+  \caption{Weighted and unweighted polls} 
+\end{figure}
+
+
+
+
+
 
 \begin{figure}[ht!]
   \centering

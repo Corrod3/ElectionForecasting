@@ -15,6 +15,7 @@ header-includes:
     - \usepackage{subfig}
     - \usepackage{booktabs}
     - \usepackage{tabularx}
+   # - \usepackage{hyperref}
     - \onehalfspacing
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
@@ -92,10 +93,8 @@ rm(p, packages)
 
 # Results
 
-<!--
-#```{r child = './Final Paper/Results.Rmd'}
-#```
--->
+```{r child = './Final Paper/Results.Rmd'}
+```
 
 # Conclusion
 
