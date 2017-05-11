@@ -1,8 +1,8 @@
 ---
-title: "Using Smartphone Polling to Forecast the German Federal Election 2017^[The r scripts and the large parts of the raw data are available on our [GitHub repository](https://github.com/Corrod3/ElectionForecasting). For the remaining raw data please contact the authors, corresponding address: m.hemmerlein@mpp.hertie-school.org.]"
+title: "Using Smartphone Polling to Forecast the German Federal Election 2017^[The R scripts and large parts of the raw data are available on our [GitHub repository](https://github.com/Corrod3/ElectionForecasting). For the remaining raw data please contact the authors, corresponding address: m.hemmerlein@mpp.hertie-school.org.]"
 subtitle: \Large{Comparing the performance of digital and traditional polls}
 author: \newline Moritz Hemmerlein & Alexander Sacharow
-abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representative samples and likely-voter bias skew gathered information and require adequate statistical adjustment. This paper compares different weighting methods to obtain a forecast from raw data, collected through smartphone polling and uses the average of leading polling institutes as a benchmark. We find that post-stratification including revealed last votes are an effective tool adjust polls while stratification purely on demographic factors cannot offset the sampling bias for polls with 1000-2000 responses."
+abstract: "Using online surveys to forecast election outcomes imposes severe challenges to pollsters. Non-representative samples and likely voter bias skew gathered information and require adequate statistical adjustment. This paper compares different weighting methods to obtain a forecast from raw data, collected through smartphone polling and uses the average of leading polling institutes' polls as a benchmark. We find that post-stratification including revealed last votes are an effective tool to adjust polls while post-stratification purely on demographic factors cannot offset the sampling bias for polls with 1000-2000 responses."
 header-includes:
     - \usepackage{fancyhdr}
     - \pagestyle{fancy}
