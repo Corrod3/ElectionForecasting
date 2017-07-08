@@ -58,11 +58,13 @@ rm(p, packages)
 \newpage
 
 # Introduction
-blabla: problems of the data; idea how to poststratify; results
+Despite pre-stratification the Dalia Europulse Survey needs further post-stratificaton to be a meaningful election poll. We have tested different methods of post-stratification and found that exit-polls from a prior election was the most promising approach to correct the unweighted Dalia data. Approaches only based on census data could not perform 
 
 # Methodology
 weighting method
 variable selection
+
+
 
 # Data
 explain used external data: Bundeswahlleiter, Census
