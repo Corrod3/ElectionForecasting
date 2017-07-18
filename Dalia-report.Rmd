@@ -67,16 +67,15 @@ rm(p, packages)
 \newpage
 
 # Introduction
-<<<<<<< HEAD
 
 Using online polling data for election forecasting is fairly unexplored and required some initial reflection on advantages and shortcommings compared to traditional approaches. Analyzing potential sources of error shows that both approaches are not fundamentally different. While traditional polls are pre-stratified and post-stratified to ensure representativesness, online polling data is post-stratified using similar demographic information.
 
 We decided to employ conventional weighting methods used traditonally to make election forecasts on the Europulse online data. Our hypothesis was that the online data weighted in a similar fashion should not perform consiberably worse than conventional data when it comes to polling. Our analysis supported this claim. Benchmarking our estimates with the moving average of traditional polls the margin of error turned out to be fairly low.
 
 While we conducted some different approaches it turned out that one approach performed much better than the others. We will present solely this most promising approach in this summary.
-=======
-Despite pre-stratification the Dalia Europulse Survey needs further post-stratificaton to be a meaningful election poll. We have tested different methods of post-stratification and found that exit-polls from a prior election was the most promising approach to correct the unweighted Dalia data. Approaches only based on census data could not perform 
->>>>>>> origin/master
+
+
+<!-- Despite pre-stratification the Dalia Europulse Survey needs further post-stratificaton to be a meaningful election poll. We have tested different methods of post-stratification and found that exit-polls from a prior election was the most promising approach to correct the unweighted Dalia data. Approaches only based on census data could not perform  -->
 
 # Methodology
 
