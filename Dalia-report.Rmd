@@ -56,11 +56,11 @@ rm(p, packages)
 
 # Summary or TL;DR
 
-* For election forecasting Dalia's Europulse Data faces similar problems as conventional polling data; i.e identification of likely voter (representativeness for actual voting population) 
+* For election forecasting Dalia's Europulse data faces similar problems as conventional polling data; i.e identification of likely voter (representativeness for actual voting population) 
 
-* Conducting poststratfication with official election statistics ("exit polls") and information on self-reported voting behaviour at the last election as repoted in Europulse we obtained fairly accurate results
+* Conducting post-stratfication with official election statistics ("exit polls") and information on self-reported voting behaviour at the last election, we obtained fairly accurate results
 
-* The weighted Europuls poll yielded results close to the moving average of leading German polling institutes (RMSE of 2.05 for the March data)
+* The weighted Europulse poll yielded results close to the moving average of leading German polling institutes (RMSE of 2.05 for the March data)
 
 * There is room for further improvement of the weighting algorithm as well a usage of other benchmarks to evaluate the accuracy of the estimates
 
