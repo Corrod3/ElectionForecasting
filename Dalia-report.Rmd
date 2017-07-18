@@ -93,9 +93,19 @@ The data used for post-stratification and weighting comes from the German offici
 
 The big shortcomming of the data is that it is available in no more than two-dimensions, which means that the data is never clustered by more than two demographic variables. Potentially, other and more detailled exit poll data could be used to improve the post-stratification and further enhance accuracy and representativeness for actual voter.
 
+As benchmark data we used the rolling average as computed by the *[Süddeutsche Zeitung](http://www.sueddeutsche.de/politik/bundestagswahl-wie-wir-ueber-umfragen-berichten-1.3440233)*. The raw data and the computing method can be found on [GitHub](https://github.com/sueddeutsche).
+
 # Results
 
-Following, we display our results for the December and the March data respectively. The 
+Following, we display our results for the December and the March data respectively. The first figure shows the election forecast yielded by the unweighted raw data and benchmarks it with the weighted results. As the graph shows, the forecasts differ significantly. The raw data has a strong bias towards the smaller parties and non-voters. Weighting this data yields more reasonable results with improvements for the CDU/CSU and the SPD while the smaller parties loose. Moreover, the expectation of non-voters gets more accurate.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=6in]{./Grafiken/RPlot.png}
+  \caption{Weighted and unweighted polls} \label{fig:weightedplot}
+\end{figure}
+
+The table below summarises the numerical results and displays the the root-mean-squared error of the estimates with the benchmark data (polling institutes rolling average). As mentioned before, the weighting by gender and age using exit poll data yields a RMSE of 2.17 and 2.05 for December and March respectively.
 
 \begin{table}[ht]
 \centering
@@ -122,11 +132,7 @@ Following, we display our results for the December and the March data respective
 \end{tabular}
 \end{table}
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=6in]{./Grafiken/RPlot.png}
-  \caption{Weighted and unweighted polls} \label{fig:weightedplot}
-\end{figure}
+Graphically the results are shown in the graph below. As one can see, the weighted estimates (points in the graph) move smoothly with the moving average forecast that is used as a benchmark. 
 
 \begin{figure}[ht!]
   \centering
