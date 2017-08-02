@@ -56,36 +56,41 @@ rm(p, packages)
 
 # Summary or TL;DR
 
-* For election forecasting Dalia's Europulse data faces similar problems as conventional polling data; i.e identification of likely voter (representativeness for actual voting population) 
+* Unweighted Dalia Europulse data faces similar problems as other online polling approaches; pre-stratification is not sufficient to create a reasonable election poll
 
-* Conducting post-stratfication with official election statistics ("exit polls") and information on self-reported voting behaviour at the last election, we obtained fairly accurate results
+* Applying post-stratification leads to more accurate election forcasting, in particular if reported past vote decisions are used for stratification
 
-* The weighted Europulse poll yielded results close to the moving average of leading German polling institutes (RMSE of 2.05 for the March data)
+* Post-stratification purely on demographic information from the census data did not lead to significant improvements of accuracy, indicating that Dalia respondents are not representative for their demographic cluster
 
-* There is room for further improvement of the weighting algorithm as well a usage of other benchmarks to evaluate the accuracy of the estimates
+* The post-stratification with exit-poll data could be further fine-tuned with disaggregated exit poll data and more Europulse waves 
+
+<!-- * For election forecasting Dalia's Europulse data faces similar problems as conventional polling data; i.e identification of likely voter (representativeness for actual voting population) -->
+
+<!--* Conducting post-stratfication with official election statistics ("exit polls") and information on self-reported voting behaviour at the last election, we obtained fairly accurate results -->
+
+<!--* The weighted Europulse poll yielded results close to the moving average of leading German polling institutes (RMSE of 2.05 for the March data)-->
+
+<!-- * There is room for further improvement of the weighting algorithm as well a usage of other benchmarks to evaluate the accuracy of the estimates -->
 
 \newpage
 
-# Introduction
+# Introduction 
+<!-- Alternative title: Background-->
 
-Using online polling data for election forecasting is fairly unexplored and required some initial reflection on advantages and shortcommings compared to traditional approaches. Analyzing potential sources of error shows that both approaches are not fundamentally different. While traditional polls are pre-stratified and post-stratified to ensure representativesness, online polling data is post-stratified using similar demographic information.
+<!-- fundamental problems -->
+Online polling for election forecasting is still in its infancy and major polling institutions remain hesitant to use it. However, potential sources of error of online polls are not fundamentally different from traditional polls: The polls need to ensure representativeness and take into account likely-voter behaviour. Representativeness is inparticular difficult as internet usuage is still not universal, inparticular among elderly, and most online approaches rely on self-selection of participants and, consequently, ruling out random sampling . 
 
-We decided to employ conventional weighting methods used traditonally to make election forecasts on the Europulse online data. Our hypothesis was that the online data weighted in a similar fashion should not perform consiberably worse than conventional data when it comes to polling. Our analysis supported this claim. Benchmarking our estimates with the moving average of traditional polls the margin of error turned out to be fairly low.
-
-While we conducted some different approaches it turned out that one approach performed much better than the others. We will present solely this most promising approach in this summary.
-
-
-<!-- Despite pre-stratification the Dalia Europulse Survey needs further post-stratificaton to be a meaningful election poll. We have tested different methods of post-stratification and found that exit-polls from a prior election was the most promising approach to correct the unweighted Dalia data. Approaches only based on census data could not perform  -->
+<!-- What Dalia and we do to approach the problem -->
+Dalia tries to counter these problems by pre-stratification of the sample along age groups and gender clusters. We used this prestratified data and tested different post-stratification approaches to improve the accuracy of the election poll further. The different post-stratifications are based on data from exit polls of Bundestagswahl 2013 and demographic data from the Census 2011. To measure the accuracy of the Dalia poll we used the moving average of the leading German eleciton polling institutes.  
 
 # Methodology
 
+<!-- post-stratification -->
+To improve the accuarcy of the Dalia election poll we used post-stratification methodology. Post-stratification is based on weights which are computed from the different shares of clusters of characteristics in population and in the sample. For example, if women above 60 from a rural settlement make of 4% of the population but only 2% in the sample, the responses from individuals of this cluster should be weighted with 2. Post-stratification can make polls highly representative, but often they have practical limitations: The number of cluster grows exponentially with the number of characteristics. This leads often to empthy clusters or cluster with a low number of observations (n < 30). In the first case ad-hoc adjustments have to make post-stratification possible (combing clusters). In the second case the standard errors will be large, making the point estimator for the election result inaccurate. Nevertheless, we were able to employ post-stratification with three dimensional clusters (e.g. Age, Gender, Last Vote) and combing age clusters (in particular the higher age groups had to be merged to avoid empthy clusters)
 
-weighting method
+<!-- Alternative approaches -->
 
-variable selection
--> we chose xy, others can be chosen
-
-
+We also considered two other approaches for the adjustment of the polls: raking and model-based post-stratification. Raking in comparison to post-stratification relies solely on marginal probabilities, making it less accurate as post-stratificaiton but often more applicable as marginal probilities (one-dimensional distribution of a characteristic) are often available in public data. Model-based post-stratification on the other hand might also be a promising approch for small scale samples (n = 1000). Instead of using the actual responses in the clusteres, they are estimated with the help of an logistic regression. this reduces the problem of empthy clusters, but the methodology is relatively complex and at the point of our project the related R packages were not yet released.
 
 # Data
 
@@ -105,7 +110,7 @@ Following, we display our results for the December and the March data respective
   \caption{Weighted and unweighted polls} \label{fig:weightedplot}
 \end{figure}
 
-The table below summarises the numerical results and displays the the root-mean-squared error of the estimates with the benchmark data (polling institutes rolling average). As mentioned before, the weighting by gender and age using exit poll data yields a RMSE of 2.17 and 2.05 for December and March respectively.
+The table below summarises the numerical results and displays the the root-mean-squared error of the estimates with the benchmark data (polling institutes rolling average). The weighting by gender and age using exit poll data yields a RMSE of 2.17 and 2.05 for December and March respectively.
 
 \begin{table}[ht]
 \centering
